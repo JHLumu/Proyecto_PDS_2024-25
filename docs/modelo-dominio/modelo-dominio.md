@@ -41,8 +41,6 @@ classDiagram
         OPCION_MULTIPLE
         COMPLETAR_HUECOS
         FLASHCARD
-        TRADUCCION_CODIGO
-        CORREGIR_CODIGO
     }
     
     class Progreso {
@@ -74,7 +72,6 @@ classDiagram
         SECUENCIAL
         REPETICION_ESPACIADA
         ALEATORIA
-        ADAPTATIVA
     }
     
     class Estadisticas {
