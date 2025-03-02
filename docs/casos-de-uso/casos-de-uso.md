@@ -1,5 +1,25 @@
 # Piolify - Casos de Uso
 
+## Índice
+- [1. Registrar Usuario](#1-registrar-usuario)
+- [2. Iniciar Sesión Usuario](#2-iniciar-sesión-usuario)
+- [3. Seleccionar un curso](#3-seleccionar-un-curso)
+- [4. Elegir estrategia de aprendizaje](#4-elegir-estrategia-de-aprendizaje)
+- [5. Iniciar Sesión de Aprendizaje](#5-iniciar-sesion-de-aprendizaje-de-un-curso)
+- [6. Interactuar con ejercicios](#6-interactuar-con-ejerciciospreguntas)
+- [7. Guardar progreso del curso](#7-guardar-progreso-del-curso)
+- [8. Registrar estadísticas](#8-registrar-estadísticas-de-usuario)
+- [9. Consultar estadísticas](#9-consultar-estadísticas-de-usuario)
+- [10. Crear un curso](#10-crear-un-curso)
+- [11. Compartir curso](#11-compartir-curso)
+- [12. Instalar curso](#12-instalar-curso-de-otro-usuario)
+- [13. Añadir Amigo](#13-añadir-amigo)
+- [14. Eliminar Amigo](#14-eliminar-amigo)
+- [15. Obtener Logro](#15-obtener-logro)
+  
+---
+
+
 ## 1. Registrar Usuario
 
 ### Actor Principal
@@ -25,6 +45,8 @@ El usuario se registra para tener acceso completo a la plataforma.
 ### Postcondiciones:
 
 * El usuario queda registrado en el sistema.
+
+---
 
 ## 2. Iniciar Sesión Usuario
 
@@ -54,65 +76,90 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 ### Postcondiciones
 * El usuario queda autenticado en el sistema y tiene acceso completo a la plataforma.
 
+---
+
 ## 3. Seleccionar un curso
 
 * **Actor**: Usuario
 * **Descripción**: El usuario visualiza el catálogo de cursos (o tipos de contenido) disponibles y selecciona el que desea realizar.
+
+---
 
 ## 4. Elegir estrategia de aprendizaje
 
 * **Actor**: Usuario
 * **Descripción**: Antes de iniciar el curso, el usuario decide cuál estrategia utilizar (por ejemplo, secuencial, aleatoria, repetición espaciada o adaptativa).
 
+---
+
 ## 5. Iniciar Sesion de Aprendizaje de un curso
 
 * **Actor**: Usuario
 * **Descripción**: La aplicación inicia el curso mostrando una serie de ejercicios cuyo orden depende de la estrategia elegida, permitiendo al usuario interactuar con cada elemento.
+
+---
 
 ## 6. Interactuar con ejercicios/preguntas
 
 * **Actor**: Usuario
 * **Descripción**: Durante el curso, el usuario responde o interactúa con los distintos tipos de ejercicios (Completar Huecos, Corregir Código, Traducir Código, Completar Huecos o Opción Múltiple), según el dominio y tipo de contenido.
 
+---
+
 ## 7. Guardar progreso del curso
 
 * **Actor**: Usuario
 * **Descripción**: Permite al usuario guardar el estado actual del curso para poder pausarlo y reanudarlo posteriormente desde el mismo punto.
+
+---
 
 ## 8. Registrar estadísticas de Usuario
 
 * **Actor**: Sistema
 * **Descripción**: La aplicación registra datos de uso (tiempo de estudio, racha de días, etc.) durante una sesión de aprendizaje del usuario.
 
+---
+
 ## 9. Consultar estadísticas de Usuario
 
 * **Actor**: Usuario:
 * **DescripcióN**: El usuario accede a sus estadísticas de uso.
+
+---
 
 ## 10. Crear un curso
 
 * **Actor**: Usuario (o creador de contenido)
 * **Descripción**: Se permite la creación de nuevos cursos definiéndolos (por ejemplo, mediante ficheros JSON o YAML), facilitando la extensión a nuevos dominios.
 
+---
+
 ## 11. Compartir curso
 
 * **Actor**: Usuario
 * **Descripción**: El usuario puede compartir un curso creado con otros usuarios.
+
+---
 
 ## 12. Instalar curso de otro usuario.
 
 * **Actor**: Usuario
 * **Descripción**: El usuario puede instalar un curso que le ha compartido otro usuario.
 
+---
+
 ## 13. Añadir Amigo
 
 * **Actor**: Usuario
 * **Descripción**: El usuario puede enviar una petición de amistad a otro usuario, y este puede aceptarlo o rechazarlo.
 
+---
 
 ## 14. Eliminar Amigo
 * **Actor**: Usuario
 * **Descripción**: El usuario puede eliminar la amistad que tiene con un usuario.
+
+---
 
 ## 15. Obtener Logro
 * **Actor**: Sistema
