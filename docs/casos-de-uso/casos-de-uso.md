@@ -8,8 +8,6 @@ Usuario.
 ### Descripción
 El usuario se registra para tener acceso completo a la plataforma.
 
-### Diagrama:
-
 ### Flujo Básico:
 
 1. El usuario inicia el proceso de registro.
@@ -53,6 +51,8 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 1. El sistema muestra un mensaje de error.
 2. Si el usuario decide volver a introducir las credenciales, el flujo vuelve al paso 2 del flujo básico.
 
+### Postcondiciones
+* El usuario queda autenticado en el sistema y tiene acceso completo a la plataforma.
 
 ## 3. Seleccionar un curso
 
