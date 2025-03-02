@@ -7,6 +7,11 @@ Piolify es un sistema de aprendizaje interactivo, centrado inicialmente en el do
 
 Aunque el enfoque actual es la programación en Java, la arquitectura del sistema ha sido diseñada para ser altamente extensible, facilitando la incorporación de nuevos dominios y tipos de ejercicios en el futuro, como otros lenguajes de programación, matemáticas, o cualquier área del conocimiento que se desee explorar.
 
+## Documentación
+
+- [Casos de Uso](docs/casos-de-uso)
+- [Modelo de Dominio](docs/modelo-dominio/modelo-dominio.md)
+
 ## Profesor responsable
 - Jesús Sánchez Cuadrado [@jesusc-umu](https://github.com/jesusc-umu)
 
