@@ -13,7 +13,7 @@
 - [10. Crear un curso](#10-crear-un-curso)
 - [11. Compartir curso](#11-compartir-curso)
 - [12. Instalar curso](#12-instalar-curso-de-otro-usuario)
-- [13. Añadir Amigo](#13-añadir-amigo)
+- [13. Añadir Amigo](#13-añadir-amigo) Revisad los casos de uso y tratad de "compactarlos". De hecho, fijaros que hay casos de uso que tenéis que realmente no tienen funcionalidad, eso es una pista de que posiblemente no sea correcto y deba agregarse a otro caso de uso más grande.
 - [14. Eliminar Amigo](#14-eliminar-amigo)
 - [15. Obtener Logro](#15-obtener-logro)
   
@@ -81,87 +81,53 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 ## 3. Seleccionar un curso
 
 * **Actor**: Usuario
-* **Descripción**: El usuario visualiza el catálogo de cursos (o tipos de contenido) disponibles y selecciona el que desea realizar.
+* **Descripción**: El usuario visualiza el catálogo de cursos (o tipos de contenido) disponibles y selecciona el que desea realizar. Antes de iniciar el curso, el usuario decide cuál estrategia utilizar (por ejemplo, secuencial, aleatoria, repetición espaciada o adaptativa). Una vez iniciado el curso, se muestra una serie de ejercicios cuyo orden depende de la estrategia elegida, permitiendo al usuario interactuar con los distintos tipos de ejercicios (Completar Huecos, Corregir Código, Traducir Código o Opción Múltiple), según el dominio y tipo de contenido. Durante la sesión, la aplicación registra datos de uso (tiempo de esutido, racha de días, etc...)
 
 ---
 
-## 4. Elegir estrategia de aprendizaje
-
-* **Actor**: Usuario
-* **Descripción**: Antes de iniciar el curso, el usuario decide cuál estrategia utilizar (por ejemplo, secuencial, aleatoria, repetición espaciada o adaptativa).
-
----
-
-## 5. Iniciar Sesion de Aprendizaje de un curso
-
-* **Actor**: Usuario
-* **Descripción**: La aplicación inicia el curso mostrando una serie de ejercicios cuyo orden depende de la estrategia elegida, permitiendo al usuario interactuar con cada elemento.
-
----
-
-## 6. Interactuar con ejercicios/preguntas
-
-* **Actor**: Usuario
-* **Descripción**: Durante el curso, el usuario responde o interactúa con los distintos tipos de ejercicios (Completar Huecos, Corregir Código, Traducir Código, Completar Huecos o Opción Múltiple), según el dominio y tipo de contenido.
-
----
-
-## 7. Guardar progreso del curso
+## 4. Guardar progreso del curso
 
 * **Actor**: Usuario
 * **Descripción**: Permite al usuario guardar el estado actual del curso para poder pausarlo y reanudarlo posteriormente desde el mismo punto.
 
 ---
 
-## 8. Registrar estadísticas de Usuario
 
-* **Actor**: Sistema
-* **Descripción**: La aplicación registra datos de uso (tiempo de estudio, racha de días, etc.) durante una sesión de aprendizaje del usuario.
-
----
-
-## 9. Consultar estadísticas de Usuario
+## 5. Consultar estadísticas de Usuario
 
 * **Actor**: Usuario:
 * **DescripcióN**: El usuario accede a sus estadísticas de uso.
 
 ---
 
-## 10. Crear un curso
+## 6. Crear un curso
 
 * **Actor**: Usuario (o creador de contenido)
 * **Descripción**: Se permite la creación de nuevos cursos definiéndolos (por ejemplo, mediante ficheros JSON o YAML), facilitando la extensión a nuevos dominios.
 
 ---
 
-## 11. Compartir curso
+## 7. Compartir e Instalar curso
 
 * **Actor**: Usuario
-* **Descripción**: El usuario puede compartir un curso creado con otros usuarios.
+* **Descripción**: El usuario puede compartir un curso creado con otros usuarios, que pueden añadirlo a su biblioteca interna.
 
 ---
 
-## 12. Instalar curso de otro usuario.
-
-* **Actor**: Usuario
-* **Descripción**: El usuario puede instalar un curso que le ha compartido otro usuario.
-
----
-
-## 13. Añadir Amigo
+## 8. Añadir Amigo
 
 * **Actor**: Usuario
 * **Descripción**: El usuario puede enviar una petición de amistad a otro usuario, y este puede aceptarlo o rechazarlo.
 
 ---
 
-## 14. Eliminar Amigo
+## 9. Eliminar Amigo
 * **Actor**: Usuario
 * **Descripción**: El usuario puede eliminar la amistad que tiene con un usuario.
 
 ---
 
-## 15. Obtener Logro
+## 10. Obtener Logro
 * **Actor**: Sistema
 * **Descripción**: El usuario obtiene un logro en función de una acción que haya realizado o debido a estadísticas de uso alcanzadas. El sistema puede lanzar este caso de uso dado a algún evento.
 
