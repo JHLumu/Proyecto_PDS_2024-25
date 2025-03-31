@@ -7,13 +7,15 @@ public class Usuario {
 	private String genero;
 	private String email;
 	private String password;
+	private String imagenPerfil;
 	
-	public Usuario(String nombre, String apellidos, String genero, String email, String password) {
+	public Usuario(String nombre, String apellidos, String genero, String email, String password, String imagenPerfil) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.genero = genero;
 		this.email = email;
 		this.password = password;
+		this.imagenPerfil = "/fotoUser.png"; // foto por defecto
 	}
 
 	public String getNombre() {
@@ -43,7 +45,11 @@ public class Usuario {
 	public String getEmail() {
 		return email;
 	}
-
+	
+	public String getImagenPerfil() {
+		return imagenPerfil;
+	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -54,6 +60,10 @@ public class Usuario {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public void setImagenPerfil(String imagenPerfil) {
+		this.imagenPerfil = imagenPerfil;
 	}
 	
 	

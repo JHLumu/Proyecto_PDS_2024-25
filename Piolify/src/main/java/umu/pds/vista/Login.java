@@ -18,6 +18,9 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import umu.pds.utils.Utils;
+
 import java.awt.Cursor;
 import javax.swing.JPasswordField;
 
@@ -96,29 +99,7 @@ public class Login {
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_6.gridx = 1;
 		gbc_lblNewLabel_6.gridy = 5;
-		// Cargar el icono original
-		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/mascotaSaluda.png"));
-		// Obtener la imagen del icono
-		Image originalImage = originalIcon.getImage();
-
-		// Obtener dimensiones originales
-		int originalWidth  = originalImage.getWidth(null);
-		int originalHeight = originalImage.getHeight(null);
-
-		// Nuevo ancho
-		int newWidth = 100;
-
-		// Calcular el nuevo alto manteniendo la proporción (aspect ratio)
-		int newHeight = (originalHeight * newWidth) / originalWidth;
-
-		// Escalar la imagen
-		Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-
-		// Crear un nuevo ImageIcon con la imagen escalada
-		ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-		// Asignar el icono escalado al JLabel
-		lblNewLabel_6.setIcon(scaledIcon);
+		lblNewLabel_6.setIcon(Utils.escalarImagen("/mascota.png", 100));
 
 		panel.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		

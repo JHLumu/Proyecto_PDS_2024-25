@@ -1,78 +1,17 @@
 package umu.pds.utils;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class Utils {
 
-    // JPanel con degradado de fondo
-    public static class JPanelGradient extends JPanel {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private Color color1;
-        private Color color2;
-
-        // Constructor que recibe los colores como parámetros
-        public JPanelGradient(Color color1, Color color2) {
-            this.color1 = color1;
-            this.color2 = color2;
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g;
-            int width = getWidth();
-            int height = getHeight();
-
-            // Usar los colores proporcionados para el degradado
-            GradientPaint gp = new GradientPaint(0, 0, color1, 0, height, color2); // Degradado vertical
-
-            g2d.setPaint(gp);
-            g2d.fillRect(0, 0, width, height);
-        }
-    }
-
-    // JLabel para escribir texto con sombra
-    public static class JLabelWithShadow extends JLabel {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private Color shadowColor;
-
-        // Constructor que recibe el texto y el color de la sombra como parámetros
-        public JLabelWithShadow(String text, Color shadowColor) {
-            super(text);
-            this.shadowColor = shadowColor;
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2d = (Graphics2D) g.create();
-
-            // Usar el color de la sombra proporcionado
-            g2d.setColor(shadowColor);
-            g2d.drawString(getText(), getInsets().left + 2, getInsets().top + getFontMetrics(getFont()).getAscent() + 2);
-
-            // Dibuja el texto normal
-            g2d.setColor(getForeground());
-            g2d.drawString(getText(), getInsets().left, getInsets().top + getFontMetrics(getFont()).getAscent());
-
-            g2d.dispose();
-        }
-    }
 
     public static ImageIcon createCircularIcon(BufferedImage original, int diameter) {
         if (original == null) {
@@ -107,6 +46,53 @@ public class Utils {
 
         // 7) Retornamos el ImageIcon circular
         return new ImageIcon(circleBuffer);
+    }
+    
+    public static ImageIcon escalarImagen(String imagePath, int width) {
+        try {
+            ImageIcon originalIcon;
+            
+            // Determina si es un recurso o una ruta de archivo
+            if (imagePath.startsWith("/")) {
+                // Es un recurso del classpath
+                URL imageUrl = Utils.class.getResource(imagePath);
+                if (imageUrl == null) {
+                    System.err.println("No se pudo encontrar el recurso: " + imagePath);
+                    return null;
+                }
+                originalIcon = new ImageIcon(imageUrl);
+            } else {
+                // Es una ruta de archivo
+                File file = new File(imagePath);
+                if (!file.exists()) {
+                    System.err.println("No se pudo encontrar el archivo: " + imagePath);
+                    return null;
+                }
+                originalIcon = new ImageIcon(imagePath);
+            }
+            
+            // Obtener dimensiones originales
+            int originalWidth = originalIcon.getIconWidth();
+            int originalHeight = originalIcon.getIconHeight();
+            
+            // Si la imagen es inválida o ya tiene el tamaño deseado
+            if (originalWidth <= 0 || originalHeight <= 0 || originalWidth == width) {
+                return originalIcon;
+            }
+            
+            // Calcular el nuevo alto manteniendo la proporción
+            int height = (originalHeight * width) / originalWidth;
+            
+            // Escalar la imagen
+            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            
+            // Crear un nuevo ImageIcon con la imagen escalada
+            return new ImageIcon(scaledImage);
+        } catch (Exception e) {
+            System.err.println("Error al escalar la imagen: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

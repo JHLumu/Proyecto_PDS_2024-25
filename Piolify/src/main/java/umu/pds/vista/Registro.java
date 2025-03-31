@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import umu.pds.modelo.Usuario;
 import umu.pds.utils.Utils;
 
 import javax.imageio.ImageIO;
@@ -53,6 +54,7 @@ public class Registro extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JRadioButton rdbtnNewRadioButton;
 	private JRadioButton rdbtnNewRadioButton_1;
+	private String rutaImagenPefil = "/fotoUser.png";
 
 	/**
 	 * Launch the application.
@@ -334,6 +336,7 @@ public class Registro extends JFrame {
 	                }
 	                icono.setDescription(descripcion);
 	                lblNewLabel.setIcon(icono);
+	                rutaImagenPefil = descripcion;
 	            } catch (IOException ex) {
 	                JOptionPane.showMessageDialog(contentPane, "No se pudo cargar la imagen desde el enlace.", "Error",
 	                        JOptionPane.ERROR_MESSAGE);
@@ -354,6 +357,7 @@ public class Registro extends JFrame {
 	                }
 	                icono.setDescription(ruta);
 	                lblNewLabel.setIcon(icono);
+	                rutaImagenPefil = ruta;
 	            } catch (IOException ex) {
 	                JOptionPane.showMessageDialog(contentPane, "No se pudo cargar la imagen desde el archivo.", "Error",
 	                        JOptionPane.ERROR_MESSAGE);
@@ -404,6 +408,8 @@ public class Registro extends JFrame {
 			JOptionPane.showMessageDialog(this, "Seleccione un género.", "Falta género", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
+		
+		Usuario usuario = new Usuario(nombre, apellidos, genero, correo, contraseña, rutaImagenPefil);
 		
 		// Confirmación
 		JOptionPane.showMessageDialog(this, "Registro exitoso. ¡Bienvenido/a a Piolify!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
