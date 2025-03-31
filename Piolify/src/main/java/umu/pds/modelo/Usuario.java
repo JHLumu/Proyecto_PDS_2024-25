@@ -9,13 +9,22 @@ public class Usuario {
 	private String password;
 	private String imagenPerfil;
 	
-	public Usuario(String nombre, String apellidos, String genero, String email, String password, String imagenPerfil) {
+	public Usuario(String nombre, String apellidos, String genero, String email, String password) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.genero = genero;
 		this.email = email;
 		this.password = password;
 		this.imagenPerfil = "/fotoUser.png"; // foto por defecto
+	}
+	
+	public Usuario(String nombre, String apellidos, String genero, String email, String password, String imagenPerfil) {
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.genero = genero;
+		this.email = email;
+		this.password = password;
+		this.imagenPerfil = imagenPerfil;
 	}
 
 	public String getNombre() {

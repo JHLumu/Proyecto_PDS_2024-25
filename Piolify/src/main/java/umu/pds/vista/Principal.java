@@ -23,6 +23,9 @@ import java.awt.Font;
 import javax.swing.border.LineBorder;
 
 import umu.pds.utils.Utils;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.TitledBorder;
 
 public class Principal extends JFrame {
 
@@ -120,14 +123,14 @@ public class Principal extends JFrame {
 		panelCentro.setBackground(new Color(255, 255, 255));
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		GridBagLayout gbl_panelCentro = new GridBagLayout();
-		gbl_panelCentro.columnWidths = new int[]{50, 0, 50, 0};
-		gbl_panelCentro.rowHeights = new int[]{50, 0, 50, 0};
+		gbl_panelCentro.columnWidths = new int[]{30, 0, 30, 0};
+		gbl_panelCentro.rowHeights = new int[]{30, 0, 30, 0};
 		gbl_panelCentro.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_panelCentro.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		panelCentro.setLayout(gbl_panelCentro);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel.setBorder(null);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -135,8 +138,8 @@ public class Principal extends JFrame {
 		gbc_panel.gridy = 1;
 		panelCentro.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel.columnWidths = new int[]{20, 0, 0};
+		gbl_panel.rowHeights = new int[]{20, 0, 20, 0, 40, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
