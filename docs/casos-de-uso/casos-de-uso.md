@@ -13,7 +13,7 @@
 - [10. Crear un curso](#10-crear-un-curso)
 - [11. Compartir curso](#11-compartir-curso)
 - [12. Instalar curso](#12-instalar-curso-de-otro-usuario)
-- [13. Añadir Amigo](#13-añadir-amigo) Revisad los casos de uso y tratad de "compactarlos". De hecho, fijaros que hay casos de uso que tenéis que realmente no tienen funcionalidad, eso es una pista de que posiblemente no sea correcto y deba agregarse a otro caso de uso más grande.
+- [13. Añadir Amigo](#13-añadir-amigo)
 - [14. Eliminar Amigo](#14-eliminar-amigo)
 - [15. Obtener Logro](#15-obtener-logro)
   
@@ -78,56 +78,47 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 
 ---
 
-## 3. Seleccionar un curso
-
-* **Actor**: Usuario
-* **Descripción**: El usuario visualiza el catálogo de cursos (o tipos de contenido) disponibles y selecciona el que desea realizar. Antes de iniciar el curso, el usuario decide cuál estrategia utilizar (por ejemplo, secuencial, aleatoria, repetición espaciada o adaptativa). Una vez iniciado el curso, se muestra una serie de ejercicios cuyo orden depende de la estrategia elegida, permitiendo al usuario interactuar con los distintos tipos de ejercicios (Completar Huecos, Corregir Código, Traducir Código o Opción Múltiple), según el dominio y tipo de contenido. Durante la sesión, la aplicación registra datos de uso (tiempo de esutido, racha de días, etc...)
-
----
-
-## 4. Guardar progreso del curso
-
-* **Actor**: Usuario
-* **Descripción**: Permite al usuario guardar el estado actual del curso para poder pausarlo y reanudarlo posteriormente desde el mismo punto.
+## 3. Realizar un curso
+* **Actor**: Estudiante
+* **Descripciön**: El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que desea realizar. Antes de iniciar el curso, decide cuál estrategia utilizar (secuencial, aleatoria, repetición espaciada o adaptativa). Una vez iniciado el curso, se muestra una serie de ejercicios cuyo orden depende de la estrategia elegida, permitiendo al usuario interactuar con los distintos tipos de ejercicios (Completar Huecos, Corregir Código, Traducir Código u Opción Múltiple), según el dominio y tipo de contenido. Durante la sesión, el sistema registra datos de uso del estudiante (tiempo de estudio, racha de días, etc...) y el progreso que realiza durante la realización del curso, permitiendo al usuario guardar el estado actual del curso para poder pausarlo y reanudarlo posteriormente desde el mismo punto.
 
 ---
 
+## 4. Consultar estadísticas y progreso de los cursos
 
-## 5. Consultar estadísticas de Usuario
-
-* **Actor**: Usuario:
-* **DescripcióN**: El usuario accede a sus estadísticas de uso.
-
----
-
-## 6. Crear un curso
-
-* **Actor**: Usuario (o creador de contenido)
-* **Descripción**: Se permite la creación de nuevos cursos definiéndolos (por ejemplo, mediante ficheros JSON o YAML), facilitando la extensión a nuevos dominios.
+* **Actor**: Estudiante
+* **Descripción**: El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc) y al progreso realizado en los cursos (porcentaje de completado de cada curso).
 
 ---
 
-## 7. Compartir e Instalar curso
+## 5. Crear un curso
 
-* **Actor**: Usuario
-* **Descripción**: El usuario puede compartir un curso creado con otros usuarios, que pueden añadirlo a su biblioteca interna.
+* **Actor**: Creador
+* **Descripción**:El creador puede crear un curso proporcionando un nombre, descripción, dificultad esperada de todo el curso y de manera opcional una imagen. La definición del curso se realiza a través de un fichero estructurado en formato JSON o YAML. EL curso puede dividirse en varios bloques a los que se les puede asignar tambien un nombre y descripción a cada uno. Dentro de cada bloque el creador puede añadir una secuencia ordenada de ejercicios. Para poder introducir un ejercicio, el creador debe especificar su contenido según el tipo de ejercicio escogido (Completar Huecos, Corregir Código, Traducir Código u Opción Múltiple), junto a una o varias respuestas correcta. Adicionalmente se le puede añadir recursos complementarios (imagenes, videos, enlaces).
 
 ---
 
-## 8. Añadir Amigo
+## 6. Instalar curso
 
-* **Actor**: Usuario
+* **Actor**: Estudiante
+* **Descripción**: Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sistema el archivo JSON/YAML del curso. Una vez se haya adjuntado, la aplicación muestra el curso y el estudiante puede acceder a él en cualquier momento.
+
+---
+
+## 7. Añadir Amigo
+
+* **Actor**: Estudiante/Creador
 * **Descripción**: El usuario puede enviar una petición de amistad a otro usuario, y este puede aceptarlo o rechazarlo.
 
 ---
 
-## 9. Eliminar Amigo
-* **Actor**: Usuario
+## 8. Eliminar Amigo
+* **Actor**: Estudiante/Creador
 * **Descripción**: El usuario puede eliminar la amistad que tiene con un usuario.
 
 ---
 
-## 10. Obtener Logro
+## 9. Obtener Logro
 * **Actor**: Sistema
 * **Descripción**: El usuario obtiene un logro en función de una acción que haya realizado o debido a estadísticas de uso alcanzadas. El sistema puede lanzar este caso de uso dado a algún evento.
 
