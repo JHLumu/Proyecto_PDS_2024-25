@@ -3,19 +3,13 @@
 ## Índice
 - [1. Registrar Usuario](#1-registrar-usuario)
 - [2. Iniciar Sesión Usuario](#2-iniciar-sesión-usuario)
-- [3. Seleccionar un curso](#3-seleccionar-un-curso)
-- [4. Elegir estrategia de aprendizaje](#4-elegir-estrategia-de-aprendizaje)
-- [5. Iniciar Sesión de Aprendizaje](#5-iniciar-sesion-de-aprendizaje-de-un-curso)
-- [6. Interactuar con ejercicios](#6-interactuar-con-ejerciciospreguntas)
-- [7. Guardar progreso del curso](#7-guardar-progreso-del-curso)
-- [8. Registrar estadísticas](#8-registrar-estadísticas-de-usuario)
-- [9. Consultar estadísticas](#9-consultar-estadísticas-de-usuario)
-- [10. Crear un curso](#10-crear-un-curso)
-- [11. Compartir curso](#11-compartir-curso)
-- [12. Instalar curso](#12-instalar-curso-de-otro-usuario)
-- [13. Añadir Amigo](#13-añadir-amigo)
-- [14. Eliminar Amigo](#14-eliminar-amigo)
-- [15. Obtener Logro](#15-obtener-logro)
+- [3. Seleccionar un curso](#3-realizar-un-curso)
+- [4. Consultar Estadísticas y Progresos de Cursos](#4-consultar-estadísticas-y-progreso-de-los-cursos)
+- [5. Crear Curso](#5-crear-un-curso)
+- [6. Instalar un curso](#6-instalar-un-curso)
+- [7. Añadir Amigo](#7-añadir-amigo)
+- [8. Eliminar Amigo](#8-eliminar-amigo)
+- [9. Obtener Logro](#15-obtener-logro)
   
 ---
 
