@@ -2,33 +2,23 @@ package umu.pds.vista;
 
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import java.awt.Cursor;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.CompoundBorder;
 import javax.swing.JPasswordField;
 
 public class Login {
@@ -36,7 +26,7 @@ public class Login {
 	private JFrame frmLoginPiolify;
 	private JTextField textField;
 	private JPasswordField passwordField;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -64,12 +54,14 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frmLoginPiolify = new JFrame();
 		frmLoginPiolify.setTitle("Login - Piolify");
 		frmLoginPiolify.setBounds(100, 100, 912, 634);
 		frmLoginPiolify.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLoginPiolify.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/mascota.png")));
 		frmLoginPiolify.getContentPane().setLayout(new BorderLayout(0, 0));
+		
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(240, 230, 140));
@@ -239,8 +231,17 @@ public class Login {
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton_1.gridx = 2;
 		gbc_btnNewButton_1.gridy = 8;
+		btnNewButton_1.addActionListener(e -> {
+			Registro ventanaRegistro = new Registro();
+			ventanaRegistro.setVisible(true);
+			frmLoginPiolify.dispose();
+		});
 		panel_2.add(btnNewButton_1, gbc_btnNewButton_1);
 		
 	}
+
+	public Window getFrame() {
+		return frmLoginPiolify;
+    }
 
 }

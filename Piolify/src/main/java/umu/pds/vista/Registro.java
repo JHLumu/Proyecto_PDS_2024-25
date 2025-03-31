@@ -51,6 +51,8 @@ public class Registro extends JFrame {
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton rdbtnNewRadioButton;
+	private JRadioButton rdbtnNewRadioButton_1;
 
 	/**
 	 * Launch the application.
@@ -75,7 +77,7 @@ public class Registro extends JFrame {
 		setTitle("Registro - Piolify");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Registro.class.getResource("/mascota.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 868, 642);
+		setBounds(100, 100, 912, 634);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 
@@ -188,7 +190,7 @@ public class Registro extends JFrame {
 		gbc_lblNewLabel_3.gridy = 7;
 		panel_1.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Hombre");
+		rdbtnNewRadioButton = new JRadioButton("Hombre");
 		rdbtnNewRadioButton.setBackground(new Color(255, 255, 255));
 		buttonGroup.add(rdbtnNewRadioButton);
 		GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
@@ -198,7 +200,7 @@ public class Registro extends JFrame {
 		gbc_rdbtnNewRadioButton.gridy = 8;
 		panel_1.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Mujer");
+		rdbtnNewRadioButton_1 = new JRadioButton("Mujer");
 		rdbtnNewRadioButton_1.setBackground(new Color(255, 255, 255));
 		buttonGroup.add(rdbtnNewRadioButton_1);
 		GridBagConstraints gbc_rdbtnNewRadioButton_1 = new GridBagConstraints();
@@ -274,8 +276,12 @@ public class Registro extends JFrame {
 		btnNewButton_1.setBackground(new Color(210, 180, 140));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Login login = new Login();
+				login.getFrame().setVisible(true);
 			}
 		});
+
 		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
@@ -289,8 +295,10 @@ public class Registro extends JFrame {
 		btnNewButton.setBackground(new Color(152, 251, 152));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				registrarUsuario();
 			}
 		});
+		
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
@@ -301,6 +309,7 @@ public class Registro extends JFrame {
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	private void seleccionarFotoPerfil() {
 	    // Opciones para URL o archivo local
 	    String[] opciones = { "Introducir enlace", "Seleccionar archivo" };
@@ -318,12 +327,12 @@ public class Registro extends JFrame {
 	                BufferedImage imagen = ImageIO.read(new URL(urlImagen));
 	                ImageIcon icono = new ImageIcon(imagen.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
 	                icono = Utils.createCircularIcon(imagen, 100);
-	                // Limpiar el prefijo "file:" en caso de que lo tenga (por ejemplo, si se hubiese copiado una URL local)
+
 	                String descripcion = urlImagen;
 	                if(descripcion.startsWith("file:")){
 	                    descripcion = descripcion.substring(5);
 	                }
-	                icono.setDescription(descripcion); // Guardar la URL (limpia) como descripción
+	                icono.setDescription(descripcion);
 	                lblNewLabel.setIcon(icono);
 	            } catch (IOException ex) {
 	                JOptionPane.showMessageDialog(contentPane, "No se pudo cargar la imagen desde el enlace.", "Error",
@@ -331,7 +340,6 @@ public class Registro extends JFrame {
 	            }
 	        }
 	    } else if (seleccion == 1) {
-	        // Cargar imagen desde archivo local
 	        JFileChooser fileChooser = new JFileChooser();
 	        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif"));
 	        int resultado = fileChooser.showOpenDialog(contentPane);
@@ -340,13 +348,11 @@ public class Registro extends JFrame {
 	                BufferedImage imagen = ImageIO.read(fileChooser.getSelectedFile());
 	                ImageIcon icono = new ImageIcon(imagen.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
 	                icono = Utils.createCircularIcon(imagen, 100);
-	                // Obtenemos la ruta completa
 	                String ruta = fileChooser.getSelectedFile().getAbsolutePath();
-	                // Si por alguna razón la cadena empieza por "file:" (normalmente no ocurre con getAbsolutePath())
 	                if(ruta.startsWith("file:")){
 	                    ruta = ruta.substring(5);
 	                }
-	                icono.setDescription(ruta); // Guardar la ruta local (limpia) como descripción
+	                icono.setDescription(ruta);
 	                lblNewLabel.setIcon(icono);
 	            } catch (IOException ex) {
 	                JOptionPane.showMessageDialog(contentPane, "No se pudo cargar la imagen desde el archivo.", "Error",
@@ -355,5 +361,55 @@ public class Registro extends JFrame {
 	        }
 	    }
 	}
+	
+	private boolean contraseñasCoinciden() {
+		@SuppressWarnings("deprecation")
+		boolean coinciden = passwordField.getText().equals(passwordField_1.getText());
 
+		if (!coinciden) {
+			Toolkit.getDefaultToolkit().beep(); // Sonido de error
+			passwordField.setBackground(new Color(255, 200, 200));
+			passwordField_1.setBackground(new Color(255, 200, 200));
+		}
+
+		return coinciden;
+	}
+	
+	private void registrarUsuario() {
+		
+		String nombre = textField.getText().trim();
+		String apellidos = textField_1.getText().trim();
+		String correo = textField_2.getText().trim();
+		String genero = "";
+		String contraseña = new String(passwordField.getPassword());
+		String confirmar = new String(passwordField_1.getPassword());
+
+		// Validar campos vacíos
+		if (nombre.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmar.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		// Validar que las contraseñas coinciden
+		if (!contraseñasCoinciden()) {
+			JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de contraseña", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		if (rdbtnNewRadioButton.isSelected()) {
+			genero = "Hombre";
+		} else if (rdbtnNewRadioButton_1.isSelected()) {
+			genero = "Mujer";
+		} else {
+			JOptionPane.showMessageDialog(this, "Seleccione un género.", "Falta género", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		// Confirmación
+		JOptionPane.showMessageDialog(this, "Registro exitoso. ¡Bienvenido/a a Piolify!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+		
+		dispose();
+		Login login = new Login();
+		login.getFrame().setVisible(true);
+	}
 }
