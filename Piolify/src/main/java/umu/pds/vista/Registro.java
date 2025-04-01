@@ -8,6 +8,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import umu.pds.modelo.Usuario;
 import umu.pds.utils.Utils;
+import umu.pds.vista.elementos.PioButton;
+import umu.pds.vista.elementos.PioColores;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -87,7 +89,7 @@ public class Registro extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(240, 230, 140));
+		panel.setBackground(PioColores.AMARILLO_LABEL);
 		contentPane.add(panel, BorderLayout.WEST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 309, 0, 0};
@@ -97,7 +99,7 @@ public class Registro extends JFrame {
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblNewLabel_7 = new JLabel("Únete a nosotros");
-		lblNewLabel_7.setForeground(new Color(255, 255, 255));
+		lblNewLabel_7.setForeground(PioColores.BLANCO);
 		lblNewLabel_7.setFont(new Font("Arial", Font.BOLD, 20));
 		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
 		gbc_lblNewLabel_7.fill = GridBagConstraints.VERTICAL;
@@ -107,7 +109,7 @@ public class Registro extends JFrame {
 		panel.add(lblNewLabel_7, gbc_lblNewLabel_7);
 		
 		JLabel lblNewLabel_8 = new JLabel("Pulse para elegir una foto");
-		lblNewLabel_8.setForeground(Color.DARK_GRAY);
+		lblNewLabel_8.setForeground(PioColores.GRIS_TEXT);
 		lblNewLabel_8.setFont(new Font("Arial", Font.BOLD, 15));
 		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
 		gbc_lblNewLabel_8.fill = GridBagConstraints.VERTICAL;
@@ -133,7 +135,7 @@ public class Registro extends JFrame {
 		});
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBackground(PioColores.BLANCO);
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 180, 180, 0, 0};
@@ -152,7 +154,7 @@ public class Registro extends JFrame {
 		
 		textField = new JTextField();
 		textField.setBorder(null);
-		textField.setBackground(new Color(245, 245, 245));
+		textField.setBackground(PioColores.GRIS_FIELDS);
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 2;
@@ -173,7 +175,7 @@ public class Registro extends JFrame {
 		
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_1.setBackground(new Color(245, 245, 245));
+		textField_1.setBackground(PioColores.GRIS_FIELDS);
 		textField_1.setBorder(null);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.gridwidth = 2;
@@ -193,7 +195,7 @@ public class Registro extends JFrame {
 		panel_1.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
 		rdbtnNewRadioButton = new JRadioButton("Hombre");
-		rdbtnNewRadioButton.setBackground(new Color(255, 255, 255));
+		rdbtnNewRadioButton.setBackground(PioColores.BLANCO);
 		buttonGroup.add(rdbtnNewRadioButton);
 		GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
 		gbc_rdbtnNewRadioButton.fill = GridBagConstraints.VERTICAL;
@@ -203,7 +205,7 @@ public class Registro extends JFrame {
 		panel_1.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
 		
 		rdbtnNewRadioButton_1 = new JRadioButton("Mujer");
-		rdbtnNewRadioButton_1.setBackground(new Color(255, 255, 255));
+		rdbtnNewRadioButton_1.setBackground(PioColores.BLANCO);
 		buttonGroup.add(rdbtnNewRadioButton_1);
 		GridBagConstraints gbc_rdbtnNewRadioButton_1 = new GridBagConstraints();
 		gbc_rdbtnNewRadioButton_1.fill = GridBagConstraints.VERTICAL;
@@ -222,7 +224,7 @@ public class Registro extends JFrame {
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_2.setBackground(new Color(245, 245, 245));
+		textField_2.setBackground(PioColores.GRIS_FIELDS);
 		textField_2.setBorder(null);
 		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
 		gbc_textField_2.gridwidth = 2;
@@ -243,7 +245,7 @@ public class Registro extends JFrame {
 		
 		passwordField = new JPasswordField();
 		passwordField.setBorder(null);
-		passwordField.setBackground(new Color(245, 245, 245));
+		passwordField.setBackground(PioColores.GRIS_FIELDS);
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.gridwidth = 2;
@@ -263,7 +265,7 @@ public class Registro extends JFrame {
 		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		passwordField_1.setBackground(new Color(245, 245, 245));
+		passwordField_1.setBackground(PioColores.GRIS_FIELDS);
 		passwordField_1.setBorder(null);
 		GridBagConstraints gbc_passwordField_1 = new GridBagConstraints();
 		gbc_passwordField_1.gridwidth = 2;
@@ -273,9 +275,8 @@ public class Registro extends JFrame {
 		gbc_passwordField_1.gridy = 17;
 		panel_1.add(passwordField_1, gbc_passwordField_1);
 		
-		JButton btnNewButton_1 = new JButton("Cancelar");
-		btnNewButton_1.setBorderPainted(false);
-		btnNewButton_1.setBackground(new Color(210, 180, 140));
+		JButton btnNewButton_1 = new PioButton("Cancelar");
+		btnNewButton_1.setBackground(PioColores.MARRON_BUTTON);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -284,7 +285,6 @@ public class Registro extends JFrame {
 			}
 		});
 
-		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
@@ -292,16 +292,14 @@ public class Registro extends JFrame {
 		gbc_btnNewButton_1.gridy = 19;
 		panel_1.add(btnNewButton_1, gbc_btnNewButton_1);
 		
-		JButton btnNewButton = new JButton("Registrar");
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setBackground(new Color(152, 251, 152));
+		JButton btnNewButton = new PioButton("Registrar");
+		btnNewButton.setBackground(PioColores.VERDE_BUTTON);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				registrarUsuario();
 			}
 		});
 		
-		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -372,8 +370,8 @@ public class Registro extends JFrame {
 
 		if (!coinciden) {
 			Toolkit.getDefaultToolkit().beep(); // Sonido de error
-			passwordField.setBackground(new Color(255, 200, 200));
-			passwordField_1.setBackground(new Color(255, 200, 200));
+			passwordField.setBackground(PioColores.ROJO_ERROR);
+			passwordField_1.setBackground(PioColores.ROJO_ERROR);
 		}
 
 		return coinciden;

@@ -23,6 +23,9 @@ import java.awt.Font;
 import javax.swing.border.LineBorder;
 
 import umu.pds.utils.Utils;
+import umu.pds.vista.elementos.PioButton;
+import umu.pds.vista.elementos.PioColores;
+
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
@@ -64,7 +67,7 @@ public class Principal extends JFrame {
 		
 		JPanel panelNorte = new JPanel();
 		panelNorte.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelNorte.setBackground(new Color(245, 222, 179));
+		panelNorte.setBackground(PioColores.AMARILLO_LABEL);
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new BoxLayout(panelNorte, BoxLayout.X_AXIS));
 		
@@ -79,34 +82,30 @@ public class Principal extends JFrame {
 		panelNorte.add(rigidArea);
 		
 		JLabel lblNewLabel_1 = new JLabel("Piolify");
-		lblNewLabel_1.setForeground(Color.DARK_GRAY);
+		lblNewLabel_1.setForeground(PioColores.GRIS_TEXT);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelNorte.add(lblNewLabel_1);
 		
 		Component glue = Box.createGlue();
 		panelNorte.add(glue);
 		
-		JButton btnNewButton = new JButton("Mis Cursos");
-		btnNewButton.setBackground(new Color(210, 180, 140));
-		btnNewButton.setBorderPainted(false);
+		JButton btnNewButton = new PioButton("Mis Cursos");
+		btnNewButton.setBackground(PioColores.MARRON_BUTTON);
 		panelNorte.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Crear Curso");
-		btnNewButton_1.setBackground(new Color(210, 180, 140));
-		btnNewButton_1.setBorderPainted(false);
+		JButton btnNewButton_1 = new PioButton("Crear Curso");
+		btnNewButton_1.setBackground(PioColores.MARRON_BUTTON);
 		panelNorte.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("Estadísticas");
-		btnNewButton_2.setBackground(new Color(210, 180, 140));
-		btnNewButton_2.setBorderPainted(false);
+		JButton btnNewButton_2 = new PioButton("Estadísticas");
+		btnNewButton_2.setBackground(PioColores.MARRON_BUTTON);
 		panelNorte.add(btnNewButton_2);
 		
 		Component glue_1 = Box.createGlue();
 		panelNorte.add(glue_1);
 		
-		JButton btnNewButton_3 = new JButton("Mi Perfil");
-		btnNewButton_3.setBackground(new Color(210, 180, 140));
-		btnNewButton_3.setBorderPainted(false);
+		JButton btnNewButton_3 = new PioButton("Mi Perfil");
+		btnNewButton_3.setBackground(PioColores.MARRON_BUTTON);
 		panelNorte.add(btnNewButton_3);
 		
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
@@ -120,7 +119,7 @@ public class Principal extends JFrame {
 		panelNorte.add(rigidArea_2);
 		
 		JPanel panelCentro = new JPanel();
-		panelCentro.setBackground(new Color(255, 255, 255));
+		panelCentro.setBackground(PioColores.BLANCO);
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		GridBagLayout gbl_panelCentro = new GridBagLayout();
 		gbl_panelCentro.columnWidths = new int[]{30, 0, 30, 0};
@@ -145,7 +144,7 @@ public class Principal extends JFrame {
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblNewLabel_2 = new JLabel("Bienvenido a Piolify");
-		lblNewLabel_2.setForeground(Color.DARK_GRAY);
+		lblNewLabel_2.setForeground(PioColores.GRIS_TEXT);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.fill = GridBagConstraints.VERTICAL;

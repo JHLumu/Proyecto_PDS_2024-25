@@ -20,6 +20,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import umu.pds.utils.Utils;
+import umu.pds.vista.elementos.*;
 
 import java.awt.Cursor;
 import javax.swing.JPasswordField;
@@ -67,7 +68,7 @@ public class Login {
 		
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(240, 230, 140));
+		panel.setBackground(PioColores.AMARILLO_LABEL);
 		frmLoginPiolify.getContentPane().add(panel, BorderLayout.WEST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 309, 0, 0};
@@ -77,8 +78,8 @@ public class Login {
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblNewLabel = new JLabel("Bienvenido a");
-		lblNewLabel.setBackground(new Color(255, 255, 255));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBackground(PioColores.BLANCO);
+		lblNewLabel.setForeground(PioColores.BLANCO);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -105,7 +106,7 @@ public class Login {
 		
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBackground(PioColores.BLANCO);
 		frmLoginPiolify.getContentPane().add(panel_1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0};
@@ -115,8 +116,7 @@ public class Login {
 		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("Login");
-		lblNewLabel_1.setBackground(new Color(189, 183, 107));
-		lblNewLabel_1.setForeground(new Color(210, 180, 140));
+		lblNewLabel_1.setForeground(PioColores.MARRON_BUTTON);
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 28));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
@@ -125,7 +125,7 @@ public class Login {
 		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
+		panel_2.setBackground(PioColores.BLANCO);
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
 		gbc_panel_2.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_2.fill = GridBagConstraints.BOTH;
@@ -149,7 +149,7 @@ public class Login {
 		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField.setBackground(new Color(245, 245, 245));
+		textField.setBackground(PioColores.GRIS_FIELDS);
 		textField.setBorder(null);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 3;
@@ -171,7 +171,7 @@ public class Login {
 		
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		passwordField.setBackground(new Color(245, 245, 245));
+		passwordField.setBackground(PioColores.GRIS_FIELDS);
 		passwordField.setBorder(null);
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.gridwidth = 3;
@@ -181,10 +181,8 @@ public class Login {
 		gbc_passwordField.gridy = 4;
 		panel_2.add(passwordField, gbc_passwordField);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setBackground(new Color(210, 180, 140));
-		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		JButton btnNewButton = new PioButton("Login");
+		btnNewButton.setBackground(PioColores.MARRON_BUTTON);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
 		gbc_btnNewButton.gridwidth = 3;
@@ -202,10 +200,8 @@ public class Login {
 		gbc_lblNewLabel_5.gridy = 8;
 		panel_2.add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
-		JButton btnNewButton_1 = new JButton("Registrarse");
-		btnNewButton_1.setBorderPainted(false);
-		btnNewButton_1.setBackground(new Color(210, 180, 140));
-		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		JButton btnNewButton_1 = new PioButton("Registrarse");
+		btnNewButton_1.setBackground(PioColores.MARRON_BUTTON);
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton_1.gridwidth = 2;
