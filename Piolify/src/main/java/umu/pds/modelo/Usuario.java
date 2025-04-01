@@ -74,6 +74,13 @@ public class Usuario {
 	public void setImagenPerfil(String imagenPerfil) {
 		this.imagenPerfil = imagenPerfil;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nombre=" + nombre + ", apellidos=" + apellidos + ", genero=" + genero + ", email=" + email
+				+ ", password=" + password + ", imagenPerfil=" + imagenPerfil + "]";
+	}
+	
 	
 	
 }
