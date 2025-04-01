@@ -12,5 +12,6 @@ public class PioColores {
     public static final Color GRIS_FIELDS = new Color(245, 245, 245);
     public static final Color VERDE_BUTTON = new Color(152,251,152);
     public static final Color ROJO_ERROR = new Color(255, 200, 200);
+    public static final Color ROJO = new Color(255, 0, 0);
 
 }
