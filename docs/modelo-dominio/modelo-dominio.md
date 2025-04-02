@@ -5,130 +5,107 @@ A continuación se presenta el diagrama de clases que representa el modelo de do
 ```mermaid
 %%{ init: {"theme": "neutral"} }%%
 classDiagram
+    EstrategiaAprendizaje <|-- Secuencial
+    EstrategiaAprendizaje <|-- Aleatoria
+    EstrategiaAprendizaje <|-- Repeticion_Espaciada
+    Ejercicio <|-- Opcion_Multiple
+    Ejercicio <|-- Completar_Huecos
+    Ejercicio <|-- Flashcard
+    Usuario  <|-- Estudiante
+    Usuario <|-- Creador
+
     direction LR
     
     class Usuario {
-        +String nombre
-        +String email
-        +String contraseña
-        +agregarAmigo(Usuario)
+        +nombre
+        +email
+        +contraseña
+        +genero
+        +imagen
     }
     
     class Curso {
-        +String titulo
-        +String descripcion
-        +String dificultad
-        +String autor
-        +importar(String json)
-        +exportar() String
+        +titulo
+        +descripcion
+        +dificultad
+        +autor
     }
     
     class Bloque {
-        +String titulo
-        +String descripcion
+        +titulo
+        +descripcion
     }
     
     class Ejercicio {
-        +String contenido
-        +int dificultad
-        +Object respuestaCorrecta
-        +evaluar(respuesta)
-        +mostrar()
-    }
-    
-    class TipoEjercicio {
-        <<enumeration>>
-        OPCION_MULTIPLE
-        COMPLETAR_HUECOS
-        FLASHCARD
+        +contenido
+        +dificultad
+        +respuestaCorrecta
     }
     
     class Progreso {
-        +Date ultimoAcceso
-        +int puntuacion
-        +List ejerciciosCompletados
-        +guardarProgreso()
-        +cargarProgreso()
-        +calcularPorcentajeCompletado()
+        +ultimoAcceso
+        +puntuacion
+        +ejerciciosCompletados
+
     }
     
     class SesionAprendizaje {
-        +DateTime fechaInicio
-        +DateTime fechaFin
-        +int ejerciciosCompletados
-        +int aciertos
-        +iniciarSesion()
-        +finalizarSesion()
-        +siguienteEjercicio()
+        +fechaInicio
+        +fechaFin
+        +aciertos
     }
     
     class EstrategiaAprendizaje {
-        +obtenerSiguienteEjercicio()
-        +inicializar(List ejercicios)
-    }
-    
-    class TipoEstrategia {
-        <<enumeration>>
-        SECUENCIAL
-        REPETICION_ESPACIADA
-        ALEATORIA
+
     }
     
     class Estadisticas {
-        +int tiempoTotal
-        +int diasRacha
-        +int mejorRacha
-        +int ejerciciosCompletados
-        +double precision
-        +actualizarRacha()
-        +registrarActividad()
+        +tiempoTotal
+        +diasRacha
+        +mejorRacha
+        +ejerciciosCompletados
+        +precision
+
     }
-    
+
+
     class Amistad {
-        +Date fechaCreacion
-        +String estado
-        +enviarSolicitud()
-        +aceptarSolicitud()
-        +rechazarSolicitud()
+        +fechaCreacion
+        +estado
     }
     
     class ResultadoEjercicio {
-        +DateTime fecha
-        +Object contenidoRespuesta
-        +boolean esCorrecta
-        +int tiempoRespuesta
-        +String mensajeFeedback
-        +String sugerenciaMejora
-        +String materialAdicional
-        +generarFeedback()
+        +fecha
+        +contenidoRespuesta
+        +tiempoRespuesta
     }
     
+
     class Logro {
-        +String nombre
-        +String descripcion
-        +String imagen
-        +Date fechaObtencion
-        +verificarCondicion(Usuario)
+        +nombre
+        +descripcion
+        +imagen
+        +fechaObtencion
+
     }
     
-    Usuario "1" --> "0..*" Progreso : tiene
-    Usuario "1" --> "1" Estadisticas : posee
+  
     Usuario "1" --> "0..*" Amistad : inicia
     Usuario "1" --> "0..*" Amistad : recibe
-    Usuario "1" --> "0..*" SesionAprendizaje : realiza
-    Usuario "1" --> "0..*" Logro : obtiene
-    
+    Estudiante "1" --> "0..*" Logro : obtiene
+    Creador "0..1" --> "1*" Curso : crea
     Curso "1" --> "1..*" Bloque : contiene
     Bloque "1" --> "1..*" Ejercicio : incluye
     
-    Ejercicio "1" --> "1" TipoEjercicio : es de
-    Ejercicio "1" --> "0..*" ResultadoEjercicio : genera
-    
-    EstrategiaAprendizaje "1" --> "1" TipoEstrategia : es de
-    
+    Ejercicio "0..*" <-- "1" ResultadoEjercicio : asociado a
+    Estadisticas "0..*" <-- "1" Logro : genera
+
     Progreso "1" --> "1" Curso : asociado a
     SesionAprendizaje "1" --> "1" EstrategiaAprendizaje : utiliza
     SesionAprendizaje "1" --> "1" Progreso : actualiza
     SesionAprendizaje "1" --> "0..*" ResultadoEjercicio : registra
-    
-    ResultadoEjercicio "0..*" --> "1" Usuario : pertenece a
+    Estudiante "1" --> "0..*" SesionAprendizaje : realiza
+    Estudiante "1" --> "0..*" Progreso : tiene
+    Estudiante "1" --> "1" Estadisticas : posee
+    Usuario "0..*" <-- "1" ResultadoEjercicio : pertenece a 
+  
