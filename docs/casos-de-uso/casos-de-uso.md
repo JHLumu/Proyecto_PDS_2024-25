@@ -6,10 +6,10 @@
 - [3. Seleccionar un curso](#3-realizar-un-curso)
 - [4. Consultar Estadísticas y Progresos de Cursos](#4-consultar-estadísticas-y-progreso-de-los-cursos)
 - [5. Crear Curso](#5-crear-un-curso)
-- [6. Instalar un curso](#6-instalar-un-curso)
+- [6. Instalar un curso](#6-instalar-curso)
 - [7. Añadir Amigo](#7-añadir-amigo)
-- [8. Eliminar Amigo](#8-eliminar-amigo)
-- [9. Obtener Logro](#15-obtener-logro)
+- [8. Gestionar Peticiones de Amistad](#8-gestionar-peticiones-de-amistad)
+- [9. Obtener Logro](#9-obtener-logro)
   
 ---
 
@@ -22,21 +22,21 @@ Usuario.
 ### Descripción
 El usuario se registra para tener acceso completo a la plataforma.
 
-### Flujo Básico:
+### Flujo Básico
 
 1. El usuario inicia el proceso de registro.
 2. El usuario introduce los datos necesarios (Nombre, Nombre de Usuario, Correo Electrónico, Contraseña) en la pantalla de registro.
 3. El sistema comprueba los datos introducidos por el usuario.
 4. El sistema valida los datos ingresados y registra al usuario, mostrando un mensaje de confirmación.
 
-### Flujo Alternativo:
+### Flujo Alternativo
 
 #### 3a. Los datos introducidos por el usuario no son correctos.
     
 1. El sistema muestra un mensaje de error informando los datos que son incorrectos.
 2. Si el usuario decide volver a introducir las credenciales, el flujo vuelve al paso 2 del flujo básico.
 
-### Postcondiciones:
+### Postcondiciones
 
 * El usuario queda registrado en el sistema.
 
@@ -54,14 +54,14 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 ### Precondiciones
 * El usuario debe estar registrado en el sistema.
 
-### Flujo Básico:
+### Flujo Básico
 
 1. El usuario accede al proceso de inicio de sesión.
 2. El usuario introduce las credenciales necesarias (Nombre de Usuario/Correo Electrónico y Contraseña).
 3. El sistema comprueba los datos introducidos.
 4. El sistema autentica al usuario y le permite el acceso a la plataforma.
 
-### Flujo Alternativo:
+### Flujo Alternativo
 
 #### 3a. Las credenciales introducidas por el usuario son incorrectas.
 1. El sistema muestra un mensaje de error.
@@ -94,21 +94,77 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 
 ## 6. Instalar curso
 
-* **Actor**: Estudiante
-* **Descripción**: Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sistema el archivo JSON/YAML del curso. Una vez se haya adjuntado, la aplicación muestra el curso y el estudiante puede acceder a él en cualquier momento.
+### Actor Principal
+Estudiante.
+
+### Descripción
+Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sistema el archivo JSON/YAML del curso. Una vez se haya adjuntado, la aplicación muestra el curso y el estudiante puede acceder a él en cualquier momento.
+
+### Precondiciones
+
+* El estudiante debe estar registrado en el sistema y haber iniciado sesión.
+* El archivo JSON/YAML del curso debe mantener la estructura esperada por el sistema.
+
+### Flujo Básico
+
+1. El estudiante accede a su biblioteca interna de cursos.
+2. El sistema muestra la biblioteca interna del estudiante.
+3. El estudiante escoge la opción de añadir un nuevo curso.
+4. El estudiante selecciona el archivo JSON/YAML del curso que desea instalar.
+5. El sistema verifica la estructura del archivo JSON/YAML.
+6. El sistema registra el curso en la biblioteca interna del estudiante y le notifica que se ha añadido correctamente.
+7. El sistema muestra en la biblioteca interna del estudiante el curso añadido, pudiendo acceder desde ese momento.
+
+### Flujo Alternativo
+
+#### 4a. El sistema comprueba que el archivo seleccionado no cumple con la estructura esperada.
+1. El sistema notifica al estudiante que no se ha podido añadir el curso debido a que no cumple la estructura que el sistema espera.
+2. El sistema muestra una opción al estudiante de visualizar la estructura esperada en el archivo JSON/YAML, y otra opción para reintentar la instalación del curso.
+3. Si el estudiante escoge la segunda opción, se vuelve al paso 3 del flujo básico.
+
+### Postcondiciones
+* El curso añadido por el estudiante debe almacenarse en el sistema.
 
 ---
 
 ## 7. Añadir Amigo
 
-* **Actor**: Estudiante/Creador
-* **Descripción**: El usuario puede enviar una petición de amistad a otro usuario, y este puede aceptarlo o rechazarlo.
+### Actor Principal
+Usuario.
 
+### Descripción
+El usuario puede enviar una petición de amistad a otro usuario, y este puede aceptarlo o rechazarlo.
+
+### Precondiciones
+* Tanto el usuario que envía la petición como el que la recibe deben estar registrados en el sistema.
+* El usuario emisor debe haber iniciado sesión en el sistema.
+
+### Flujo Básico
+1. El usuario accede a la opción de añadir amigos, dentro de la sección social definida dentro del sistema.
+2. El sistema ofrece al usuario la búsqueda de usuarios registrados del sistema.
+3. El usuario introduce el nombre del usuario al que desea envíar la petición y lo escoge.
+4. El sistema muestra la opción de añadir amigo al usuario, y el usuario la selecciona.
+5. El sistema notifica al emisor que la petición de amistad se ha enviado correctamente, y al receptor que ha recibido una nueva petición de amistad.
 ---
 
-## 8. Eliminar Amigo
-* **Actor**: Estudiante/Creador
-* **Descripción**: El usuario puede eliminar la amistad que tiene con un usuario.
+### Flujo Alternativo
+
+#### 4a. El usuario receptor al que el emisor quiere enviar la petición ya esta añadido como amigo.
+1. El sistema notifica al usuario emisor que el usuario receptor ya está añadido como amigo.
+2. El sistema accede a la sección de amigos del sistema.
+
+### Postcondiciones
+* La petición de amistad debe quedar registrada en el sistema.
+* El estado de la petición de amistad debe ser "Pendiente".
+
+
+## 8. Gestionar Peticiones de Amistad
+
+### Actor Principal
+Usuario.
+
+### Descripción
+El usuario puede ver las solicitudes de amistad pendientes que ha recibido y decidir si las acepta o las rechaza.
 
 ---
 
