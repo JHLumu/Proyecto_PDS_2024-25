@@ -7,7 +7,7 @@
 - [4. Consultar Estadísticas y Progresos de Cursos](#4-consultar-estadísticas-y-progreso-de-los-cursos)
 - [5. Crear Curso](#5-crear-un-curso)
 - [6. Instalar un curso](#6-instalar-curso)
-- [7. Añadir Amigo](#7-añadir-amigo)
+- [7. Enviar Petición de Amistad](#7-enviar-peticion-de-amistad)
 - [8. Gestionar Peticiones de Amistad](#8-gestionar-peticiones-de-amistad)
 - [9. Obtener Logro](#9-obtener-logro)
   
@@ -80,8 +80,21 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 
 ## 4. Consultar estadísticas y progreso de los cursos
 
-* **Actor**: Estudiante
-* **Descripción**: El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc) y al progreso realizado en los cursos (porcentaje de completado de cada curso).
+### Actor Principal
+Estudiante.
+
+### Descripción
+El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc) y al progreso realizado en los cursos (porcentaje de completado de cada curso).
+
+### Precondiciones
+* El estudiante debe estar registrado en el sistema y haber iniciado sesión.
+
+### Flujo Básico
+1. El estudiante accede a la sección de estadísticas definida en el sistema.
+2. El sistema muestra al estudiante una lista de los cursos en los que ha realizado al menos una sesión y un resumen de las estadísticas generales del estudiante: Tiempo de estudio en total, rachas de días máximo, porcentaje de aciertos total, ejercicios completados en total.
+3. El estudiante selecciona de la lista un curso que ha realizado.
+4. El sistema muestra estadísticas específicas del estudiante en dicho curso: Tiempo de estudio dedicado al curso, racha de días máximo en el curso, porcentaje de aciertos en el curso, ejercicios completados del curso.
+
 
 ---
 
@@ -127,7 +140,7 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 
 ---
 
-## 7. Añadir Amigo
+## 7. Enviar Peticion de Amistad
 
 ### Actor Principal
 Usuario.
@@ -166,6 +179,36 @@ Usuario.
 ### Descripción
 El usuario puede ver las solicitudes de amistad pendientes que ha recibido y decidir si las acepta o las rechaza.
 
+### Precondiciones
+* El usuarrio debe estar registrado en el sistema y haber iniciado sesión.
+
+### Flujo Básico
+1. El usuario accede a la opción de ver peticiones de amistad, dentro de la sección social definida dentro del sistema.
+2. El sistema muestra una lista de peticiones de amistad que ha enviado y recibido el usuario, con su estado correspondiente.
+3. El usuario selecciona la petición de amistad que desea gestionar, pudiendo realizar las siguientes acciones:
+   * Si la petición de amistad ha sido enviada por el usuario, puede cancelar la petición de amistad.
+   * Si la petición de amistad ha sido recibida, puede aceptar o cancelar la petición de amistad.
+4. El usuario realiza la accion que desea sobre la petición de amistad escogida.
+5. El sistema solicita al usuario una confirmación sobre la realización de la acción.
+6. El usuario confirma la acción al sistema, notificando el sistema que la acción se ha realizado correctamente.
+
+### Flujo Alternativo
+
+#### 6a. La acción que se realiza es aceptar una petición de amistad.
+1. La petición de amistad pasa del estado "Pendiente" a "Aceptada" y se elimina de la lista de peticiones de amistad tanto del usuario emisor como del usuario receptor.
+2. El sistema registra la amistad entre ambos usuarios.
+3. El sistema notifica al usuario emisor que la petición de amistad realizada al usuario receptor se ha aceptado.
+
+##### 6b. La acción que se realiza es rechazar una petición de amistad.
+1. La petición de amistad pasa del estado "Pendiente" a "Rechazada" y se elimina de la lista de peticiones de amistad tanto del usuario emisor como del usuario receptor.
+2. El sistema notifica al usuario emisor que la petición de amistad realizada al usuario receptor se ha cancelado.
+
+#### 6c. La acción que se realizada es cancelar una petición de amistad.
+1. La petición de amistad se elimina de la lista de peticiones tanto del usuario emisor como del usuario receptor.
+
+### Postcondiciones
+* El sistema debe reflejar la lista de peticiones de amistad actualizadas tanto del usuario emisor como del usuario receptor.
+* El sistema debe actualizar la lista de amigos tanto del usuario emisor como del usuario receptor.
 ---
 
 ## 9. Obtener Logro
