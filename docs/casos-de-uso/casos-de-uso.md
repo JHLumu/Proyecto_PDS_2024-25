@@ -68,13 +68,50 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 2. Si el usuario decide volver a introducir las credenciales, el flujo vuelve al paso 2 del flujo básico.
 
 ### Postcondiciones
-* El usuario queda autenticado en el sistema y tiene acceso completo a la plataforma.
+* El usuario queda autenticado en el sistema y tiene acceso completo a la plataforma y a sus datos.
 
 ---
 
 ## 3. Realizar un curso
-* **Actor**: Estudiante
-* **Descripciön**: El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que desea realizar. Antes de iniciar el curso, decide cuál estrategia utilizar (secuencial, aleatoria, repetición espaciada o adaptativa). Una vez iniciado el curso, se muestra una serie de ejercicios cuyo orden depende de la estrategia elegida, permitiendo al usuario interactuar con los distintos tipos de ejercicios (Completar Huecos, Corregir Código, Traducir Código u Opción Múltiple), según el dominio y tipo de contenido. Durante la sesión, el sistema registra datos de uso del estudiante (tiempo de estudio, racha de días, etc...) y el progreso que realiza durante la realización del curso, permitiendo al usuario guardar el estado actual del curso para poder pausarlo y reanudarlo posteriormente desde el mismo punto.
+
+### Actor Principal
+Estudiante.
+
+### Descripción.
+El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que desea realizar.
+
+### Precondiciones
+* El estudiante debe estar registrado en el sistema y haber iniciado sesión.
+
+### Flujo Básico
+1. El estudiante accede a la biblioteca interna de cursos.
+2. El sistema muestra la biblioteca interna del estudiante, con una lista de los cursos actuales que dispone.
+3. El estudiante selecciona el curso que desea realizar.
+4. El sistema solicita al estudiante que escoja la estrategia de aprendizaje que desea para la sesión de aprendizaje, mostrando las tres opciones con una breve descripción:
+   * Estrategia secuencial.
+   * Estrategia de repetición espaciada.
+   * Estrategia adaptativa.
+5. El usuario escoge la estrategia de aprendizaje que desee utilizar, registrando la elección el sistema.
+6. El sistema muestra la lista de bloques del curso, pudiendo seleccionar el estudiante aquellos bloques que estén desbloqueados (bloques que ya haya completado, bloques que se hayan desbloqueado por completar los anteriores).
+7. El estudiante selecciona el bloque que desee realizar.
+8. El sistema inicia la sesión de aprendizaje mostrando una secuencia de ejercicios cuyo orden depende de la estrategia de aprendizaje elegida.
+9. El estudiante responde cada uno de estos ejercicios, registrando el sistema varias estadísticas y el progreso realizado en la sesión (tiempo de estudio, porcentaje de aciertos y ejercicios completados). Para cada ejercicio que responde, si el estudiante acierta, el sistema le notifica que la respuesta es correcta. En caso contrario, muestra una respuesta correcta esperada.
+10. El estudiante termina de responder la secuencia de ejercicios, notificando el sistema que ha completado el bloque y volviendo a la biblioteca interna de cursos.
+
+### Flujo Alternativo
+
+#### 7a. El estudiante escoge un bloque de aprendizaje inacabado.
+1. El sistema recupera el punto en el que el estudiante estuvo antes de salirse de la sesión.
+2. El sistema continúa la sesión de aprendizaje desde ese punto.
+
+#### 9a. El estudiante se sale de la sesión de aprendizaje sin terminar la secuencia de ejercicios.
+1. El sistema guarda el estado actual de la sesión de aprendizaje y del curso.
+2. El estudiante regresa a la biblioteca interna de loscursos, pudiendo reanudar la sesión de aprendizaje desde el mismo punto.
+
+### Postcondiciones
+
+* El sistema debe actualizar las estadísticas generales y específicas del estudiante.
+* El sistema debe actualizar la lista de bloques de aprendizaje, desbloqueando bloques de aprendizaje si es necesario y si se ha completado un bloque.
 
 ---
 
@@ -100,8 +137,21 @@ El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc
 
 ## 5. Crear un curso
 
-* **Actor**: Creador
-* **Descripción**:El creador puede crear un curso proporcionando un nombre, descripción, dificultad esperada de todo el curso y de manera opcional una imagen. La definición del curso se realiza a través de un fichero estructurado en formato JSON o YAML. EL curso puede dividirse en varios bloques a los que se les puede asignar tambien un nombre y descripción a cada uno. Dentro de cada bloque el creador puede añadir una secuencia ordenada de ejercicios. Para poder introducir un ejercicio, el creador debe especificar su contenido según el tipo de ejercicio escogido (Completar Huecos, Corregir Código, Traducir Código u Opción Múltiple), junto a una o varias respuestas correcta. Adicionalmente se le puede añadir recursos complementarios (imagenes, videos, enlaces).
+### Actor principal
+Creador.
+
+### Descripción
+El creador puede crear un curso proporcionando un nombre, descripción, dificultad esperada de todo el curso y de manera opcional una imagen. La definición del curso se realiza a través de un fichero estructurado en formato JSON o YAML. EL curso puede dividirse en varios bloques a los que se les puede asignar tambien un nombre y descripción a cada uno. Dentro de cada bloque el creador puede añadir una secuencia ordenada de ejercicios. Para poder introducir un ejercicio, el creador debe especificar su contenido según el tipo de ejercicio escogido (Completar Huecos, Corregir Código, Traducir Código u Opción Múltiple), junto a una o varias respuestas correcta. Adicionalmente se le puede añadir recursos complementarios (imagenes, videos, enlaces).
+
+### Precondiciones
+* El creador debe estar registrado en el sistema y haber iniciado sesión.
+
+### Flujo Básico
+
+### Flujo Alternativo
+
+### Postcondiciones
+
 
 ---
 
@@ -212,8 +262,22 @@ El usuario puede ver las solicitudes de amistad pendientes que ha recibido y dec
 ---
 
 ## 9. Obtener Logro
-* **Actor**: Sistema
-* **Descripción**: El usuario obtiene un logro en función de una acción que haya realizado o debido a estadísticas de uso alcanzadas. El sistema puede lanzar este caso de uso dado a algún evento.
+
+### Actor principal
+Sistema.
+
+### Descripción
+El usuario obtiene un logro en función de una acción que haya realizado o debido a estadísticas de uso alcanzadas. El sistema puede lanzar este caso de uso dado a algún evento.
+
+### Precondiciones
+* El usuario debe estar registrado en el sistema.
+* Se ha cumplido unas condiciones específicas para el logro.
+
+### Flujo Básico
+
+### Flujo Alternativo
+
+### Postcondiciones
 
 
 
