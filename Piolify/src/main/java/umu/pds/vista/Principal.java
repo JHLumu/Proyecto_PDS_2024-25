@@ -4,11 +4,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
 import java.awt.Component;
+
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -17,6 +23,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Font;
@@ -34,6 +42,23 @@ public class Principal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	// Panel con CardLayout para gestionar las vistas
+	private JPanel panelCentroCardLayout;
+	private CardLayout cardLayout;
+	
+	// Constantes para identificar las tarjetas
+	public static final String PANEL_PRINCIPAL = "principal";
+	public static final String PANEL_ESTADISTICAS = "estadisticas";
+	public static final String PANEL_MIS_CURSOS = "miscursos";
+	public static final String PANEL_CREAR_CURSO = "crearcurso";
+	public static final String PANEL_PERFIL = "perfil";
+	
+	// Botones para mantener referencia y poder actualizar su estado
+	private JButton btnMisCursos;
+	private JButton btnCrearCurso;
+	private JButton btnEstadisticas;
+	private JButton btnPerfil;
 
 	/**
 	 * Launch the application.
@@ -65,10 +90,49 @@ public class Principal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
+		// Panel de navegación superior
+		JPanel panelNorte = crearPanelNavegacion();
+		contentPane.add(panelNorte, BorderLayout.NORTH);
+		
+		// Inicializar CardLayout y su panel contenedor
+		cardLayout = new CardLayout();
+		panelCentroCardLayout = new JPanel(cardLayout);
+		contentPane.add(panelCentroCardLayout, BorderLayout.CENTER);
+		
+		// Añadir panel principal
+		panelCentroCardLayout.add(crearPanelPrincipal(), PANEL_PRINCIPAL);
+		
+		// Añadir panel de estadísticas
+		panelCentroCardLayout.add(new Estadisticas(), PANEL_ESTADISTICAS);
+		
+		// Aquí añadirías los demás paneles conforme los necesites
+		// Por ahora, crearemos paneles temporales para las otras secciones
+		JPanel panelMisCursos = new JPanel();
+		panelMisCursos.setBackground(Color.WHITE);
+		panelMisCursos.add(new JLabel("Contenido de Mis Cursos (Por implementar)"));
+		panelCentroCardLayout.add(panelMisCursos, PANEL_MIS_CURSOS);
+		
+		JPanel panelCrearCurso = new JPanel();
+		panelCrearCurso.setBackground(Color.WHITE);
+		panelCrearCurso.add(new JLabel("Contenido de Crear Curso (Por implementar)"));
+		panelCentroCardLayout.add(panelCrearCurso, PANEL_CREAR_CURSO);
+		
+		JPanel panelPerfil = new JPanel();
+		panelPerfil.setBackground(Color.WHITE);
+		panelPerfil.add(new JLabel("Contenido de Mi Perfil (Por implementar)"));
+		panelCentroCardLayout.add(panelPerfil, PANEL_PERFIL);
+		
+		// Mostrar el panel principal por defecto
+		cardLayout.show(panelCentroCardLayout, PANEL_PRINCIPAL);
+	}
+	
+	/**
+	 * Crea el panel de navegación superior
+	 */
+	private JPanel crearPanelNavegacion() {
 		JPanel panelNorte = new JPanel();
 		panelNorte.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelNorte.setBackground(PioColores.AMARILLO_LABEL);
-		contentPane.add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new BoxLayout(panelNorte, BoxLayout.X_AXIS));
 		
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
@@ -89,24 +153,56 @@ public class Principal extends JFrame {
 		Component glue = Box.createGlue();
 		panelNorte.add(glue);
 		
-		JButton btnNewButton = new PioButton("Mis Cursos");
-		btnNewButton.setBackground(PioColores.MARRON_BUTTON);
-		panelNorte.add(btnNewButton);
+		// Botón Mis Cursos
+		btnMisCursos = new PioButton("Mis Cursos");
+		btnMisCursos.setBackground(PioColores.MARRON_BUTTON);
+		btnMisCursos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelCentroCardLayout, PANEL_MIS_CURSOS);
+				actualizarBotonesActivos(btnMisCursos);
+			}
+		});
+		panelNorte.add(btnMisCursos);
 		
-		JButton btnNewButton_1 = new PioButton("Crear Curso");
-		btnNewButton_1.setBackground(PioColores.MARRON_BUTTON);
-		panelNorte.add(btnNewButton_1);
+		// Botón Crear Curso
+		btnCrearCurso = new PioButton("Crear Curso");
+		btnCrearCurso.setBackground(PioColores.MARRON_BUTTON);
+		btnCrearCurso.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelCentroCardLayout, PANEL_CREAR_CURSO);
+				actualizarBotonesActivos(btnCrearCurso);
+			}
+		});
+		panelNorte.add(btnCrearCurso);
 		
-		JButton btnNewButton_2 = new PioButton("Estadísticas");
-		btnNewButton_2.setBackground(PioColores.MARRON_BUTTON);
-		panelNorte.add(btnNewButton_2);
+		// Botón Estadísticas
+		btnEstadisticas = new PioButton("Estadísticas");
+		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
+		btnEstadisticas.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelCentroCardLayout, PANEL_ESTADISTICAS);
+				actualizarBotonesActivos(btnEstadisticas);
+			}
+		});
+		panelNorte.add(btnEstadisticas);
 		
 		Component glue_1 = Box.createGlue();
 		panelNorte.add(glue_1);
 		
-		JButton btnNewButton_3 = new PioButton("Mi Perfil");
-		btnNewButton_3.setBackground(PioColores.MARRON_BUTTON);
-		panelNorte.add(btnNewButton_3);
+		// Botón Mi Perfil
+		btnPerfil = new PioButton("Mi Perfil");
+		btnPerfil.setBackground(PioColores.MARRON_BUTTON);
+		btnPerfil.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelCentroCardLayout, PANEL_PERFIL);
+				actualizarBotonesActivos(btnPerfil);
+			}
+		});
+		panelNorte.add(btnPerfil);
 		
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
 		panelNorte.add(rigidArea_3);
@@ -118,9 +214,31 @@ public class Principal extends JFrame {
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
 		panelNorte.add(rigidArea_2);
 		
+		return panelNorte;
+	}
+	
+	/**
+	 * Actualiza el estado visual de los botones de navegación
+	 * @param botonActivo el botón que debe aparecer como activo
+	 */
+	private void actualizarBotonesActivos(JButton botonActivo) {
+		// Restablecer todos los botones
+		btnMisCursos.setBackground(PioColores.MARRON_BUTTON);
+		btnCrearCurso.setBackground(PioColores.MARRON_BUTTON);
+		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
+		btnPerfil.setBackground(PioColores.MARRON_BUTTON);
+		
+		// Destacar botón activo (se puede definir un color MARRON_BUTTON_ACTIVO en PioColores)
+		// Por ahora usaremos un color más oscuro
+		botonActivo.setBackground(PioColores.MARRON_BUTTON.darker());
+	}
+	
+	/**
+	 * Crea el panel principal (home)
+	 */
+	private JPanel crearPanelPrincipal() {
 		JPanel panelCentro = new JPanel();
 		panelCentro.setBackground(PioColores.BLANCO);
-		contentPane.add(panelCentro, BorderLayout.CENTER);
 		GridBagLayout gbl_panelCentro = new GridBagLayout();
 		gbl_panelCentro.columnWidths = new int[]{30, 0, 30, 0};
 		gbl_panelCentro.rowHeights = new int[]{30, 0, 30, 0};
@@ -172,6 +290,9 @@ public class Principal extends JFrame {
 		gbc_lblNewLabel_5.gridx = 1;
 		gbc_lblNewLabel_5.gridy = 5;
 		panel.add(lblNewLabel_5, gbc_lblNewLabel_5);
+		
+		return panelCentro;
 	}
+	
 
 }
