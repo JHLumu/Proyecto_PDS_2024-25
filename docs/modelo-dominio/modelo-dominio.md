@@ -3,6 +3,7 @@
 A continuación se presenta el diagrama de clases que representa el modelo de dominio de nuestra aplicación:
 
 ```mermaid
+
 %%{ init: {"theme": "neutral"} }%%
 classDiagram
     EstrategiaAprendizaje <|-- Secuencial
@@ -11,8 +12,7 @@ classDiagram
     Ejercicio <|-- Opcion_Multiple
     Ejercicio <|-- Completar_Huecos
     Ejercicio <|-- Flashcard
-    Usuario  <|-- Estudiante
-    Usuario <|-- Creador
+
 
     direction LR
     
@@ -92,8 +92,8 @@ classDiagram
   
     Usuario "1" --> "0..*" Amistad : inicia
     Usuario "1" --> "0..*" Amistad : recibe
-    Estudiante "1" --> "0..*" Logro : obtiene
-    Creador "0..1" --> "1*" Curso : crea
+    Usuario "1" --> "0..*" Logro : obtiene
+    Usuario "0..1" --> "1*" Curso : crea
     Curso "1" --> "1..*" Bloque : contiene
     Bloque "1" --> "1..*" Ejercicio : incluye
     
@@ -104,8 +104,9 @@ classDiagram
     SesionAprendizaje "1" --> "1" EstrategiaAprendizaje : utiliza
     SesionAprendizaje "1" --> "1" Progreso : actualiza
     SesionAprendizaje "1" --> "0..*" ResultadoEjercicio : registra
-    Estudiante "1" --> "0..*" SesionAprendizaje : realiza
-    Estudiante "1" --> "0..*" Progreso : tiene
-    Estudiante "1" --> "1" Estadisticas : posee
+    Usuario "1" --> "0..*" SesionAprendizaje : realiza
+    Usuario "1" --> "0..*" Progreso : tiene
+    Usuario "1" --> "1" Estadisticas : posee
     Usuario "0..*" <-- "1" ResultadoEjercicio : pertenece a 
   
+
