@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -17,12 +16,10 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import umu.pds.controlador.Piolify;
-import umu.pds.modelo.Usuario;
 import umu.pds.utils.Utils;
 import umu.pds.vista.elementos.*;
 
@@ -221,6 +218,9 @@ public class Login {
 		});
 		panel_2.add(btnNewButton_1, gbc_btnNewButton_1);
 		
+		// Boton enter para boton login
+		frmLoginPiolify.getRootPane().setDefaultButton(btnNewButton);
+		
 	}
 
 	public Window getFrame() {
@@ -237,12 +237,11 @@ public class Login {
 	    }
 
 	    try {
-	        Piolify controlador = new Piolify();
-	        boolean autenticado = controlador.autenticarUsuario(email, password);
+	        Piolify controlador = Piolify.getUnicaInstancia();
+	        boolean autenticado = controlador.iniciarSesion(email, password);
 
 	        if (autenticado) {
-	            Usuario usuario = controlador.obtenerUsuarioPorEmail(email);
-	            Principal ventanaPrincipal = new Principal(usuario, controlador);
+	            Principal ventanaPrincipal = new Principal();
 	            ventanaPrincipal.setVisible(true);
 	            frmLoginPiolify.dispose();
 	        } else {

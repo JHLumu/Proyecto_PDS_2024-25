@@ -30,22 +30,22 @@ public class Usuario {
 	private String imagenPerfil;
 	
 	// Relaciones
-    @OneToMany(mappedBy = "usuario1", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario1", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Amistad> amistadesSolicitadas = new ArrayList<>();
     
-    @OneToMany(mappedBy = "usuario2", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario2", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Amistad> amistadesRecibidas = new ArrayList<>();
     
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Logro> logros = new ArrayList<>();
    
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Estadisticas estadisticas;
 	
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(mappedBy = "autor", fetch = FetchType.EAGER)
     private List<Curso> cursosCreados = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Curso> biblioteca = new ArrayList<>(); // Cursos que el usuario tiene en su biblioteca
 
     
@@ -151,13 +151,21 @@ public class Usuario {
 		this.estadisticas = estadisticas;
 	}
 
+	public List<Curso> getBiblioteca() {
+		return biblioteca;
+	}
 
+	public void setBiblioteca(List<Curso> biblioteca) {
+		this.biblioteca = biblioteca;
+	}
     
 	@Override
 	public String toString() {
 		return "Usuario [nombre=" + nombre + ", apellidos=" + apellidos + ", genero=" + genero + ", email=" + email
 				+ ", password=" + password + ", imagenPerfil=" + imagenPerfil + "]";
 	}
+
+
 	
 	
 	

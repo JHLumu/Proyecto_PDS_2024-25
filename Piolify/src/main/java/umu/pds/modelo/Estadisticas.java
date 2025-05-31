@@ -22,6 +22,62 @@ public class Estadisticas {
 	
 	@OneToOne
 	private Usuario usuario;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getTiempoTotal() {
+		return tiempoTotal;
+	}
+
+	public void setTiempoTotal(int tiempoTotal) {
+		this.tiempoTotal = tiempoTotal;
+	}
+
+	public int getRachaDias() {
+		return rachaDias;
+	}
+
+	public void setRachaDias(int rachaDias) {
+		this.rachaDias = rachaDias;
+	}
+
+	public int getMejorRacha() {
+		return mejorRacha;
+	}
+
+	public void setMejorRacha(int mejorRacha) {
+		this.mejorRacha = mejorRacha;
+	}
+
+	public int getTotalEjerciciosCompletados() {
+		return totalEjerciciosCompletados;
+	}
+
+	public void setTotalEjerciciosCompletados(int totalEjerciciosCompletados) {
+		this.totalEjerciciosCompletados = totalEjerciciosCompletados;
+	}
+
+	public double getPrecision() {
+		return precision;
+	}
+
+	public void setPrecision(double precision) {
+		this.precision = precision;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 	
 }

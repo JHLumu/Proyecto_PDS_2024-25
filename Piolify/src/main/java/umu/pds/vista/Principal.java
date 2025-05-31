@@ -4,8 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
+
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -16,7 +15,6 @@ import javax.swing.ImageIcon;
 
 import java.awt.Component;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JButton;
@@ -29,9 +27,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.border.EtchedBorder;
 import java.awt.Font;
-import javax.swing.border.LineBorder;
 
 import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Usuario;
@@ -39,15 +35,11 @@ import umu.pds.utils.Utils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
 
 public class Principal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Piolify controlador;
 	private Usuario usuarioActual;
 	private JLabel lblFotoPerfil;
 
@@ -76,7 +68,7 @@ public class Principal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Principal frame = new Principal(null, new Piolify());
+					Principal frame = new Principal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,10 +81,10 @@ public class Principal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Principal(Usuario usuario, Piolify controlador) {
+	public Principal() {
 		
-		this.controlador = controlador;
-		this.usuarioActual = usuario;
+		Piolify.getUnicaInstancia().añadirObservador(this::actualizarImagenPerfil);
+		usuarioActual = Piolify.getUnicaInstancia().getUsuarioActual();
 		
 		setTitle("Piolify");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/mascota.png")));
@@ -117,7 +109,13 @@ public class Principal extends JFrame {
 		panelCentroCardLayout.add(crearPanelPrincipal(), PANEL_PRINCIPAL);
 		
 		// Añadir panel de estadísticas
-		panelCentroCardLayout.add(new Estadisticas(), PANEL_ESTADISTICAS);
+		panelCentroCardLayout.add(new DashboardEstadisticas(usuarioActual), PANEL_ESTADISTICAS);
+		
+		panelCentroCardLayout.add(new Biblioteca(usuarioActual), PANEL_MIS_CURSOS);
+		
+		// perfilusuario
+		panelCentroCardLayout.add(new PerfilUsuario(usuarioActual), PANEL_PERFIL);
+		
 		
 		// Aquí añadirías los demás paneles conforme los necesites
 		// Por ahora, crearemos paneles temporales para las otras secciones
@@ -130,11 +128,6 @@ public class Principal extends JFrame {
 		panelCrearCurso.setBackground(Color.WHITE);
 		panelCrearCurso.add(new JLabel("Contenido de Crear Curso (Por implementar)"));
 		panelCentroCardLayout.add(panelCrearCurso, PANEL_CREAR_CURSO);
-		
-		JPanel panelPerfil = new JPanel();
-		panelPerfil.setBackground(Color.WHITE);
-		panelPerfil.add(new JLabel("Contenido de Mi Perfil (Por implementar)"));
-		panelCentroCardLayout.add(panelPerfil, PANEL_PERFIL);
 		
 		// Mostrar el panel principal por defecto
 		cardLayout.show(panelCentroCardLayout, PANEL_PRINCIPAL);
@@ -310,7 +303,8 @@ public class Principal extends JFrame {
 	}
 	
 	private void actualizarImagenPerfil() {
-	    String ruta = usuarioActual.getImagenPerfil();
+	    Usuario usuario = Piolify.getUnicaInstancia().getUsuarioActual();
+	    String ruta = usuario.getImagenPerfil();
 	    Image imagen = null;
 
 	    try {
@@ -332,5 +326,11 @@ public class Principal extends JFrame {
 	    }
 	}
 	
+    @Override
+    public void dispose() {
+        Piolify.getUnicaInstancia().borrarObservador(this::actualizarImagenPerfil);
+        super.dispose();
+    }
+    
 
 }

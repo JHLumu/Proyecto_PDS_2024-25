@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import umu.pds.controlador.Piolify;
-import umu.pds.modelo.Usuario;
 import umu.pds.utils.Utils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
@@ -28,7 +27,6 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.JPasswordField;
-import java.awt.Color;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -127,7 +125,7 @@ public class Registro extends JFrame {
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 3;
-		lblNewLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fotoUser.png")));
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/fotoUser.png")));
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -308,10 +306,12 @@ public class Registro extends JFrame {
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 19;
 		panel_1.add(btnNewButton, gbc_btnNewButton);
+		
+		// boton enter para registrar usuario
+		getRootPane().setDefaultButton(btnNewButton);
 	}
 	
 	
-	@SuppressWarnings("deprecation")
 	private void seleccionarFotoPerfil() {
 	    // Opciones para URL o archivo local
 	    String[] opciones = { "Introducir enlace", "Seleccionar archivo" };
@@ -409,7 +409,7 @@ public class Registro extends JFrame {
 	    
 	    // USAR EL CONTROLADOR PARA GUARDAR EN BD
 	    try {
-	        Piolify controlador = new Piolify();
+	        Piolify controlador = Piolify.getUnicaInstancia();
 	        boolean exito = controlador.registrarUsuario(nombre, apellidos, genero, correo, contraseña, rutaImagenPefil);
 	        
 	        if (exito) {
