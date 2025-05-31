@@ -13,38 +13,28 @@ import javax.swing.ImageIcon;
 public class Utils {
 
 
-    public static ImageIcon createCircularIcon(BufferedImage original, int diameter) {
-        if (original == null) {
-            return new ImageIcon(); // o algún icono por defecto
-        }
+    public static ImageIcon createCircularIcon(Image img, int diameter) {
+        if (img == null) return null;
 
-        // 1) Tomamos el tamaño mínimo de la imagen para hacer un cuadrado centrado
-        int size = Math.min(original.getWidth(), original.getHeight());
-
-        // 2) Calculamos coordenadas para recortar la parte central
-        int x = (original.getWidth()  - size) / 2;
-        int y = (original.getHeight() - size) / 2;
-
-        // 3) Obtenemos el "subimage" cuadrado
-        BufferedImage squareSubimage = original.getSubimage(x, y, size, size);
-
-        // 4) Creamos un buffer ARGB de 'diameter' x 'diameter'
-        BufferedImage circleBuffer = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = circleBuffer.createGraphics();
-        try {
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-            // 5) Hacemos el clip circular (0, 0, diameter, diameter)
-            g2.setClip(new Ellipse2D.Float(0, 0, diameter, diameter));
-
-            // 6) Dibujamos la subimagen cuadrada, redimensionándola a diameter x diameter
-            g2.drawImage(squareSubimage, 0, 0, diameter, diameter, null);
-
-        } finally {
+        // Convertir a BufferedImage si no lo es
+        BufferedImage original;
+        if (img instanceof BufferedImage) {
+            original = (BufferedImage) img;
+        } else {
+            original = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2 = original.createGraphics();
+            g2.drawImage(img, 0, 0, null);
             g2.dispose();
         }
 
-        // 7) Retornamos el ImageIcon circular
+        // Crear imagen circular
+        BufferedImage circleBuffer = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = circleBuffer.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setClip(new Ellipse2D.Float(0, 0, diameter, diameter));
+        g2.drawImage(original, 0, 0, diameter, diameter, null);
+        g2.dispose();
+
         return new ImageIcon(circleBuffer);
     }
     

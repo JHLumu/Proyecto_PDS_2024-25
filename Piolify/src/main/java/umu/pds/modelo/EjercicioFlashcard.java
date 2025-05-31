@@ -17,8 +17,9 @@ public class EjercicioFlashcard extends Ejercicio {
 	}
 
 	@Override
-	public void validarRespuesta() {
+	public boolean validarRespuesta(String respuestaUsuario) {
 		// TODO Auto-generated method stub
+		return false;
 		
 	}
 

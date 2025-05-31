@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
 	<persistence-unit name="Piolify">
+    <class>umu.pds.modelo.Usuario</class>
+    <class>umu.pds.modelo.Curso</class>
+    <class>umu.pds.modelo.Bloque</class>
+    <class>umu.pds.modelo.Ejercicio</class>
+    <class>umu.pds.modelo.EjercicioOpcionMultiple</class>
+    <class>umu.pds.modelo.EjercicioRellenarHuecos</class>
+    <class>umu.pds.modelo.EjercicioFlashcard</class>
+    <class>umu.pds.modelo.Amistad</class>
+    <class>umu.pds.modelo.Logro</class>
+    <class>umu.pds.modelo.Estadisticas</class>
+    <class>umu.pds.modelo.ProgresoCurso</class>
 		<properties>
 			<property name="jakarta.persistence.jdbc.driver"
 				value="org.sqlite.JDBC" />

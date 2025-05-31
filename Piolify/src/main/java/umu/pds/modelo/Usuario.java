@@ -1,7 +1,27 @@
 package umu.pds.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String nombre;
 	private String apellidos;
 	private String genero;
@@ -9,15 +29,30 @@ public class Usuario {
 	private String password;
 	private String imagenPerfil;
 	
-	public Usuario(String nombre, String apellidos, String genero, String email, String password) {
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.genero = genero;
-		this.email = email;
-		this.password = password;
-		this.imagenPerfil = "/fotoUser.png"; // foto por defecto
-	}
+	// Relaciones
+    @OneToMany(mappedBy = "usuario1", cascade = CascadeType.ALL)
+    private List<Amistad> amistadesSolicitadas = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "usuario2", cascade = CascadeType.ALL)
+    private List<Amistad> amistadesRecibidas = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Logro> logros = new ArrayList<>();
+   
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Estadisticas estadisticas;
 	
+    @OneToMany(mappedBy = "autor")
+    private List<Curso> cursosCreados = new ArrayList<>();
+
+    @ManyToMany
+    private List<Curso> biblioteca = new ArrayList<>(); // Cursos que el usuario tiene en su biblioteca
+
+    
+    public Usuario() {
+        
+    }
+    
 	public Usuario(String nombre, String apellidos, String genero, String email, String password, String imagenPerfil) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -25,6 +60,15 @@ public class Usuario {
 		this.email = email;
 		this.password = password;
 		this.imagenPerfil = imagenPerfil;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
@@ -54,11 +98,7 @@ public class Usuario {
 	public String getEmail() {
 		return email;
 	}
-	
-	public String getImagenPerfil() {
-		return imagenPerfil;
-	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -70,11 +110,49 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public String getImagenPerfil() {
+		return imagenPerfil;
+	}
+
 	public void setImagenPerfil(String imagenPerfil) {
 		this.imagenPerfil = imagenPerfil;
 	}
 
+	public List<Amistad> getAmistadesSolicitadas() {
+		return amistadesSolicitadas;
+	}
+
+	public void setAmistadesSolicitadas(List<Amistad> amistadesSolicitadas) {
+		this.amistadesSolicitadas = amistadesSolicitadas;
+	}
+
+	public List<Amistad> getAmistadesRecibidas() {
+		return amistadesRecibidas;
+	}
+
+	public void setAmistadesRecibidas(List<Amistad> amistadesRecibidas) {
+		this.amistadesRecibidas = amistadesRecibidas;
+	}
+
+	public List<Logro> getLogros() {
+		return logros;
+	}
+
+	public void setLogros(List<Logro> logros) {
+		this.logros = logros;
+	}
+
+	public Estadisticas getEstadisticas() {
+		return estadisticas;
+	}
+
+	public void setEstadisticas(Estadisticas estadisticas) {
+		this.estadisticas = estadisticas;
+	}
+
+
+    
 	@Override
 	public String toString() {
 		return "Usuario [nombre=" + nombre + ", apellidos=" + apellidos + ", genero=" + genero + ", email=" + email

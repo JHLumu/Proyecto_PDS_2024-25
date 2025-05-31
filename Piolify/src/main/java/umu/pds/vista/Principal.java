@@ -12,6 +12,8 @@ import java.awt.CardLayout;
 
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
@@ -20,6 +22,7 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -30,6 +33,8 @@ import javax.swing.border.EtchedBorder;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 
+import umu.pds.controlador.Piolify;
+import umu.pds.modelo.Usuario;
 import umu.pds.utils.Utils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
@@ -42,7 +47,10 @@ public class Principal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	
+	private Piolify controlador;
+	private Usuario usuarioActual;
+	private JLabel lblFotoPerfil;
+
 	// Panel con CardLayout para gestionar las vistas
 	private JPanel panelCentroCardLayout;
 	private CardLayout cardLayout;
@@ -60,6 +68,7 @@ public class Principal extends JFrame {
 	private JButton btnEstadisticas;
 	private JButton btnPerfil;
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -67,7 +76,7 @@ public class Principal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Principal frame = new Principal();
+					Principal frame = new Principal(null, new Piolify());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -76,10 +85,15 @@ public class Principal extends JFrame {
 		});
 	}
 
+
 	/**
 	 * Create the frame.
 	 */
-	public Principal() {
+	public Principal(Usuario usuario, Piolify controlador) {
+		
+		this.controlador = controlador;
+		this.usuarioActual = usuario;
+		
 		setTitle("Piolify");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/mascota.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -207,9 +221,10 @@ public class Principal extends JFrame {
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
 		panelNorte.add(rigidArea_3);
 		
-		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(Utils.escalarImagen("/fotoUser.png", 50));
-		panelNorte.add(lblNewLabel_3);
+		lblFotoPerfil = new JLabel("");
+		actualizarImagenPerfil(); // Actualiza la imagen de perfil al iniciar
+		//lblFotoPerfil.setIcon(Utils.escalarImagen(usuarioActual.getImagenPerfil(), 50));
+		panelNorte.add(lblFotoPerfil);
 		
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
 		panelNorte.add(rigidArea_2);
@@ -292,6 +307,29 @@ public class Principal extends JFrame {
 		panel.add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
 		return panelCentro;
+	}
+	
+	private void actualizarImagenPerfil() {
+	    String ruta = usuarioActual.getImagenPerfil();
+	    Image imagen = null;
+
+	    try {
+	        if (ruta == null || ruta.isEmpty()) {
+	            imagen = new ImageIcon(getClass().getResource("/fotoUser.png")).getImage();
+	        } else if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
+	            imagen = javax.imageio.ImageIO.read(new java.net.URL(ruta));
+	        } else if (ruta.startsWith("/") && getClass().getResource(ruta) != null) {
+	            imagen = new ImageIcon(getClass().getResource(ruta)).getImage();
+	        } else {
+	            imagen = new ImageIcon(ruta).getImage();
+	        }
+	    } catch (Exception e) {
+	        imagen = new ImageIcon(getClass().getResource("/fotoUser.png")).getImage();
+	    }
+
+	    if (imagen != null) {
+	        lblFotoPerfil.setIcon(Utils.createCircularIcon(imagen, 50));
+	    }
 	}
 	
 

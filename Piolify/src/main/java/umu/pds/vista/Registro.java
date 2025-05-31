@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Usuario;
 import umu.pds.utils.Utils;
 import umu.pds.vista.elementos.PioButton;
@@ -57,6 +58,7 @@ public class Registro extends JFrame {
 	private JRadioButton rdbtnNewRadioButton;
 	private JRadioButton rdbtnNewRadioButton_1;
 	private String rutaImagenPefil = "/fotoUser.png";
+
 
 	/**
 	 * Launch the application.
@@ -378,42 +380,47 @@ public class Registro extends JFrame {
 	}
 	
 	private void registrarUsuario() {
-		
-		String nombre = textField.getText().trim();
-		String apellidos = textField_1.getText().trim();
-		String correo = textField_2.getText().trim();
-		String genero = "";
-		String contraseña = new String(passwordField.getPassword());
-		String confirmar = new String(passwordField_1.getPassword());
+	    String nombre = textField.getText().trim();
+	    String apellidos = textField_1.getText().trim();
+	    String correo = textField_2.getText().trim();
+	    String genero = "";
+	    String contraseña = new String(passwordField.getPassword());
+	    String confirmar = new String(passwordField_1.getPassword());
 
-		// Validar campos vacíos
-		if (nombre.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmar.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
-			return;
-		}
+	    // Validaciones
+	    if (nombre.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmar.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+	        return;
+	    }
 
-		// Validar que las contraseñas coinciden
-		if (!contraseñasCoinciden()) {
-			JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de contraseña", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
-		if (rdbtnNewRadioButton.isSelected()) {
-			genero = "Hombre";
-		} else if (rdbtnNewRadioButton_1.isSelected()) {
-			genero = "Mujer";
-		} else {
-			JOptionPane.showMessageDialog(this, "Seleccione un género.", "Falta género", JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-		
-		Usuario usuario = new Usuario(nombre, apellidos, genero, correo, contraseña, rutaImagenPefil);
-		
-		// Confirmación
-		JOptionPane.showMessageDialog(this, "Registro exitoso. ¡Bienvenido/a a Piolify!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-		
-		dispose();
-		Login login = new Login();
-		login.getFrame().setVisible(true);
+	    if (!contraseñasCoinciden()) {
+	        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de contraseña", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+	    
+	    if (rdbtnNewRadioButton.isSelected()) {
+	        genero = "Hombre";
+	    } else if (rdbtnNewRadioButton_1.isSelected()) {
+	        genero = "Mujer";
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Seleccione un género.", "Falta género", JOptionPane.WARNING_MESSAGE);
+	        return;
+	    }
+	    
+	    // USAR EL CONTROLADOR PARA GUARDAR EN BD
+	    try {
+	        Piolify controlador = new Piolify();
+	        boolean exito = controlador.registrarUsuario(nombre, apellidos, genero, correo, contraseña, rutaImagenPefil);
+	        
+	        if (exito) {
+	            JOptionPane.showMessageDialog(this, "Registro exitoso. ¡Bienvenido/a a Piolify!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	            dispose();
+	            Login login = new Login();
+	            login.getFrame().setVisible(true);
+	        }
+	        
+	    } catch (RuntimeException e) {
+	        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error de registro", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
 }

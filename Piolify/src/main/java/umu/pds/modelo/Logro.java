@@ -2,12 +2,27 @@ package umu.pds.modelo;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "logros")
 public class Logro {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String nombre;
 	private String descripcion;
 	private String imagen;
 	private Date fecha;
+	
+	@ManyToOne
+	private Usuario usuario;
 	
 	public String getNombre() {
 		return nombre;
@@ -33,6 +48,7 @@ public class Logro {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	
 	
 	
 

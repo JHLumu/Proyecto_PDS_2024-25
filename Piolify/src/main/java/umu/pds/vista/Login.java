@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -19,6 +21,8 @@ import java.awt.Image;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import umu.pds.controlador.Piolify;
+import umu.pds.modelo.Usuario;
 import umu.pds.utils.Utils;
 import umu.pds.vista.elementos.*;
 
@@ -189,6 +193,8 @@ public class Login {
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 6;
+		btnNewButton.addActionListener(e -> autenticarUsuario());
+		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel_2.add(btnNewButton, gbc_btnNewButton);
 		
 		JLabel lblNewLabel_5 = new JLabel("No tengo una cuenta");
@@ -220,5 +226,30 @@ public class Login {
 	public Window getFrame() {
 		return frmLoginPiolify;
     }
+	
+	private void autenticarUsuario() {
+	    String email = textField.getText().trim();
+	    String password = new String(passwordField.getPassword());
 
+	    if (email.isEmpty() || password.isEmpty()) {
+	        JOptionPane.showMessageDialog(frmLoginPiolify, "Por favor, complete todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+	        return;
+	    }
+
+	    try {
+	        Piolify controlador = new Piolify();
+	        boolean autenticado = controlador.autenticarUsuario(email, password);
+
+	        if (autenticado) {
+	            Usuario usuario = controlador.obtenerUsuarioPorEmail(email);
+	            Principal ventanaPrincipal = new Principal(usuario, controlador);
+	            ventanaPrincipal.setVisible(true);
+	            frmLoginPiolify.dispose();
+	        } else {
+	            JOptionPane.showMessageDialog(frmLoginPiolify, "Credenciales incorrectas", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+	        }
+	    } catch (RuntimeException e) {
+	        JOptionPane.showMessageDialog(frmLoginPiolify, "Error: " + e.getMessage(), "Error de autenticación", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
 }
