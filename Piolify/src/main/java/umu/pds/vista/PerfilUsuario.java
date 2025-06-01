@@ -13,13 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -36,7 +32,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Usuario;
-import umu.pds.utils.Utils;
+import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
@@ -418,24 +414,10 @@ public class PerfilUsuario extends JPanel {
 
 	private void actualizarImagenPerfil() {
 		String ruta = nuevaRutaImagen;
-		Image imagen = null;
-
-		try {
-			if (ruta == null || ruta.isEmpty()) {
-				imagen = new ImageIcon(getClass().getResource("/fotoUser.png")).getImage();
-			} else if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
-				imagen = javax.imageio.ImageIO.read(new java.net.URL(ruta));
-			} else if (ruta.startsWith("/") && getClass().getResource(ruta) != null) {
-				imagen = new ImageIcon(getClass().getResource(ruta)).getImage();
-			} else {
-				imagen = new ImageIcon(ruta).getImage();
-			}
-		} catch (Exception e) {
-			imagen = new ImageIcon(getClass().getResource("/fotoUser.png")).getImage();
-		}
+		Image imagen = ImageUtils.cargarImagen(ruta);
 
 		if (imagen != null) {
-			lblFotoPerfil.setIcon(Utils.createCircularIcon(imagen, 140));
+			lblFotoPerfil.setIcon(ImageUtils.createCircularIcon(imagen, 140));
 		}
 	}
 
@@ -450,12 +432,13 @@ public class PerfilUsuario extends JPanel {
 					"Cargar Imagen desde URL", JOptionPane.PLAIN_MESSAGE);
 
 			if (urlImagen != null && !urlImagen.isEmpty()) {
-				try {
-					BufferedImage imagen = ImageIO.read(new URL(urlImagen));
+				
+				Image img = ImageUtils.cargarImagen(urlImagen);
+				if (img != null) {
 					nuevaRutaImagen = urlImagen;
 					imagenCambiada = true;
 					actualizarImagenPerfil();
-				} catch (Exception ex) {
+				} else {
 					JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen desde el enlace.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
@@ -466,14 +449,13 @@ public class PerfilUsuario extends JPanel {
 			fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif"));
 			int resultado = fileChooser.showOpenDialog(this);
 			if (resultado == JFileChooser.APPROVE_OPTION) {
-				try {
-					File archivo = fileChooser.getSelectedFile();
-					BufferedImage imagen = ImageIO.read(archivo);
+				File archivo = fileChooser.getSelectedFile();
+				if (ImageUtils.esImagenValida(archivo.getAbsolutePath())) {
 					nuevaRutaImagen = archivo.getAbsolutePath();
 					imagenCambiada = true;
 					actualizarImagenPerfil();
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen desde el archivo.", "Error",
+				} else {
+					JOptionPane.showMessageDialog(this, "El archivo seleccionado no es una imagen válida.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -530,20 +512,18 @@ public class PerfilUsuario extends JPanel {
 			}
 
 			// Actualizar datos del usuario
-			usuario.setNombre(textField.getText().trim());
-			usuario.setApellidos(textField_1.getText().trim());
-			usuario.setGenero(rdbtnHombre.isSelected() ? "Hombre" : "Mujer");
+			
+			
+			String nombre = textField.getText().trim();
+			String apellidos = textField_1.getText().trim();
+			String genero = rdbtnHombre.isSelected() ? "Hombre" : "Mujer";
 
-			if (imagenCambiada) {
-				usuario.setImagenPerfil(nuevaRutaImagen);
-			}
-
-			if (cambiarPassword) {
-				usuario.setPassword(passwordNueva);
-			}
+			
+			
+			controlador.getUsuarioController().actualizarUsuario(usuario, nombre, apellidos, genero, nuevaRutaImagen, passwordNueva, imagenCambiada, cambiarPassword);
 
 			// Guardar en base de datos
-			controlador.modificarUsuario(usuario);
+			controlador.getUsuarioController().modificarUsuario(usuario);
 			
 			
 			JOptionPane.showMessageDialog(this, "Perfil actualizado correctamente", "Éxito",

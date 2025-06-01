@@ -20,7 +20,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import umu.pds.controlador.Piolify;
-import umu.pds.utils.Utils;
+import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.*;
 
 import java.awt.Cursor;
@@ -101,7 +101,7 @@ public class Login {
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_6.gridx = 1;
 		gbc_lblNewLabel_6.gridy = 5;
-		lblNewLabel_6.setIcon(Utils.escalarImagen("/mascota.png", 100));
+		lblNewLabel_6.setIcon(ImageUtils.escalarImagen("/mascota.png", 100));
 
 		panel.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
@@ -231,22 +231,20 @@ public class Login {
 	    String email = textField.getText().trim();
 	    String password = new String(passwordField.getPassword());
 
-	    if (email.isEmpty() || password.isEmpty()) {
-	        JOptionPane.showMessageDialog(frmLoginPiolify, "Por favor, complete todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
-	        return;
-	    }
-
 	    try {
 	        Piolify controlador = Piolify.getUnicaInstancia();
-	        boolean autenticado = controlador.iniciarSesion(email, password);
+	        boolean autenticado = controlador.getUsuarioController().iniciarSesion(email, password);
 
 	        if (autenticado) {
-	            Principal ventanaPrincipal = new Principal();
-	            ventanaPrincipal.setVisible(true);
 	            frmLoginPiolify.dispose();
 	        } else {
 	            JOptionPane.showMessageDialog(frmLoginPiolify, "Credenciales incorrectas", "Error de autenticación", JOptionPane.ERROR_MESSAGE);
 	        }
+	        
+	    } catch (IllegalArgumentException e) {
+	    	
+	    	JOptionPane.showMessageDialog(frmLoginPiolify, "Error: " + e.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+	    	
 	    } catch (RuntimeException e) {
 	        JOptionPane.showMessageDialog(frmLoginPiolify, "Error: " + e.getMessage(), "Error de autenticación", JOptionPane.ERROR_MESSAGE);
 	    }

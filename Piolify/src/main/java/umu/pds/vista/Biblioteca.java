@@ -67,7 +67,7 @@ public class Biblioteca extends JPanel {
             try {
                 Curso nuevoCurso = CursoSerializer.importarCurso(archivo.getAbsolutePath());
                 usuario.getBiblioteca().add(nuevoCurso);
-                controlador.modificarUsuario(usuario); // Guarda el usuario actualizado
+                controlador.getUsuarioController().modificarUsuario(usuario); // Guarda el usuario actualizado
                 refrescarCursos();
                 JOptionPane.showMessageDialog(this, "Curso importado correctamente.");
             } catch (Exception ex) {

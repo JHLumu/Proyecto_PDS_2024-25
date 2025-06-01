@@ -7,7 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import umu.pds.controlador.Piolify;
-import umu.pds.utils.Utils;
+import umu.pds.utils.RegistroUsuarioDTO;
+import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
@@ -328,7 +329,7 @@ public class Registro extends JFrame {
 	            try {
 	                BufferedImage imagen = ImageIO.read(new URL(urlImagen));
 	                ImageIcon icono = new ImageIcon(imagen.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
-	                icono = Utils.createCircularIcon(imagen, 100);
+	                icono = ImageUtils.createCircularIcon(imagen, 100);
 
 	                String descripcion = urlImagen;
 	                if(descripcion.startsWith("file:")){
@@ -350,7 +351,7 @@ public class Registro extends JFrame {
 	            try {
 	                BufferedImage imagen = ImageIO.read(fileChooser.getSelectedFile());
 	                ImageIcon icono = new ImageIcon(imagen.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
-	                icono = Utils.createCircularIcon(imagen, 100);
+	                icono = ImageUtils.createCircularIcon(imagen, 100);
 	                String ruta = fileChooser.getSelectedFile().getAbsolutePath();
 	                if(ruta.startsWith("file:")){
 	                    ruta = ruta.substring(5);
@@ -366,58 +367,44 @@ public class Registro extends JFrame {
 	    }
 	}
 	
-	private boolean contraseñasCoinciden() {
-		@SuppressWarnings("deprecation")
-		boolean coinciden = passwordField.getText().equals(passwordField_1.getText());
-
-		if (!coinciden) {
-			Toolkit.getDefaultToolkit().beep(); // Sonido de error
-			passwordField.setBackground(PioColores.ROJO_ERROR);
-			passwordField_1.setBackground(PioColores.ROJO_ERROR);
-		}
-
-		return coinciden;
-	}
-	
 	private void registrarUsuario() {
 	    String nombre = textField.getText().trim();
 	    String apellidos = textField_1.getText().trim();
-	    String correo = textField_2.getText().trim();
+	    String email = textField_2.getText().trim();
 	    String genero = "";
-	    String contraseña = new String(passwordField.getPassword());
+	    String password = new String(passwordField.getPassword());
 	    String confirmar = new String(passwordField_1.getPassword());
 
-	    // Validaciones
-	    if (nombre.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmar.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
-	        return;
-	    }
-
-	    if (!contraseñasCoinciden()) {
-	        JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error de contraseña", JOptionPane.ERROR_MESSAGE);
-	        return;
-	    }
 	    
 	    if (rdbtnNewRadioButton.isSelected()) {
 	        genero = "Hombre";
 	    } else if (rdbtnNewRadioButton_1.isSelected()) {
 	        genero = "Mujer";
-	    } else {
-	        JOptionPane.showMessageDialog(this, "Seleccione un género.", "Falta género", JOptionPane.WARNING_MESSAGE);
-	        return;
 	    }
 	    
 	    // USAR EL CONTROLADOR PARA GUARDAR EN BD
 	    try {
 	        Piolify controlador = Piolify.getUnicaInstancia();
-	        boolean exito = controlador.registrarUsuario(nombre, apellidos, genero, correo, contraseña, rutaImagenPefil);
+	        RegistroUsuarioDTO dto = new RegistroUsuarioDTO.Builder()
+	        	    .nombre(nombre)
+	        	    .apellidos(apellidos)
+	        	    .genero(genero)
+	        	    .email(email)
+	        	    .password(password)
+	        	    .confirmar(confirmar)
+	        	    .rutaImagenPerfil(rutaImagenPefil)
+	        	    .build();
+
+	        boolean exito = controlador.getUsuarioController().registrarUsuario(dto);
 	        
 	        if (exito) {
-	            JOptionPane.showMessageDialog(this, "Registro exitoso. ¡Bienvenido/a a Piolify!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	        	JOptionPane.showMessageDialog(this, "Registro exitoso. ¡Bienvenido/a a Piolify!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	            dispose();
-	            Login login = new Login();
-	            login.getFrame().setVisible(true);
 	        }
+	        
+	    } catch (IllegalArgumentException e) {
+	    	
+	    	JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
 	        
 	    } catch (RuntimeException e) {
 	        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error de registro", JOptionPane.ERROR_MESSAGE);

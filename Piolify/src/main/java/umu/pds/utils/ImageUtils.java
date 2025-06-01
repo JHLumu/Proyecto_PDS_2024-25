@@ -8,9 +8,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Utils {
+public class ImageUtils {
 
 
     public static ImageIcon createCircularIcon(Image img, int diameter) {
@@ -45,7 +46,7 @@ public class Utils {
             // Determina si es un recurso o una ruta de archivo
             if (imagePath.startsWith("/")) {
                 // Es un recurso del classpath
-                URL imageUrl = Utils.class.getResource(imagePath);
+                URL imageUrl = ImageUtils.class.getResource(imagePath);
                 if (imageUrl == null) {
                     System.err.println("No se pudo encontrar el recurso: " + imagePath);
                     return null;
@@ -82,6 +83,46 @@ public class Utils {
             System.err.println("Error al escalar la imagen: " + e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+    
+    /**
+     * Carga una imagen desde una ruta local, URL o recurso del classpath.
+     */
+    public static Image cargarImagen(String ruta) {
+        try {
+            if (ruta == null || ruta.isEmpty()) {
+                return getImagenPorDefecto();
+            } else if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
+                return ImageIO.read(new URL(ruta));
+            } else if (ruta.startsWith("/") && ImageUtils.class.getResource(ruta) != null) {
+                return new ImageIcon(ImageUtils.class.getResource(ruta)).getImage();
+            } else {
+                return ImageIO.read(new File(ruta));
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar imagen: " + e.getMessage());
+            return getImagenPorDefecto();
+        }
+    }
+
+    /**
+     * Imagen por defecto en caso de error.
+     */
+    public static Image getImagenPorDefecto() {
+        return new ImageIcon(ImageUtils.class.getResource("/fotoUser.png")).getImage();
+    }
+
+
+    /**
+     * Valida si una ruta contiene una imagen válida.
+     */
+    public static boolean esImagenValida(String ruta) {
+        try {
+            BufferedImage img = ImageIO.read(new File(ruta));
+            return img != null;
+        } catch (Exception e) {
+            return false;
         }
     }
 

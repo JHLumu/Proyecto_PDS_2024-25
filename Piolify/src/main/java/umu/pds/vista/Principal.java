@@ -11,7 +11,6 @@ import java.awt.CardLayout;
 
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 
 import java.awt.Component;
 
@@ -31,7 +30,7 @@ import java.awt.Font;
 
 import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Usuario;
-import umu.pds.utils.Utils;
+import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
@@ -146,7 +145,7 @@ public class Principal extends JFrame {
 		panelNorte.add(rigidArea_1);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(Utils.escalarImagen("/mascotaSaluda.png", 50));
+		lblNewLabel.setIcon(ImageUtils.escalarImagen("/mascotaSaluda.png", 50));
 		panelNorte.add(lblNewLabel);
 		
 		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
@@ -305,24 +304,10 @@ public class Principal extends JFrame {
 	private void actualizarImagenPerfil() {
 	    Usuario usuario = Piolify.getUnicaInstancia().getUsuarioActual();
 	    String ruta = usuario.getImagenPerfil();
-	    Image imagen = null;
-
-	    try {
-	        if (ruta == null || ruta.isEmpty()) {
-	            imagen = new ImageIcon(getClass().getResource("/fotoUser.png")).getImage();
-	        } else if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
-	            imagen = javax.imageio.ImageIO.read(new java.net.URL(ruta));
-	        } else if (ruta.startsWith("/") && getClass().getResource(ruta) != null) {
-	            imagen = new ImageIcon(getClass().getResource(ruta)).getImage();
-	        } else {
-	            imagen = new ImageIcon(ruta).getImage();
-	        }
-	    } catch (Exception e) {
-	        imagen = new ImageIcon(getClass().getResource("/fotoUser.png")).getImage();
-	    }
+	    Image imagen = ImageUtils.cargarImagen(ruta);
 
 	    if (imagen != null) {
-	        lblFotoPerfil.setIcon(Utils.createCircularIcon(imagen, 50));
+	        lblFotoPerfil.setIcon(ImageUtils.createCircularIcon(imagen, 50));
 	    }
 	}
 	

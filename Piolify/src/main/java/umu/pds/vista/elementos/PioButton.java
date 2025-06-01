@@ -1,6 +1,5 @@
 package umu.pds.vista.elementos;
 
-import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.swing.JButton;
