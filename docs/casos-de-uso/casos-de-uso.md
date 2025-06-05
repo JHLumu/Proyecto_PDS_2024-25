@@ -6,12 +6,11 @@
 - [3. Modificar Información Personal](#3-modificar-información-personal)
 - [4. Cambiar contraseña](#4-cambiar-contraseña)
 - [5. Seleccionar un curso](#5-realizar-un-curso)
-- [6 Consultar Estadísticas y Progresos de Cursos](#6-consultar-estadísticas-y-progreso-de-los-cursos)
-- [7. Crear Curso](#7-crear-un-curso)
-- [8. Instalar un curso](#8-instalar-curso)
-- [9. Enviar Petición de Amistad](#9-enviar-peticion-de-amistad)
-- [10. Gestionar Peticiones de Amistad](#10-gestionar-peticiones-de-amistad)
-- [11. Obtener Logro](#11-obtener-logro)
+- [6 Consultar Estadísticas y Progresos de Cursos](#6-consultar-estadísticas-y-logros)
+- [7. Instalar un curso](#8-importar-curso)
+- [8. Enviar Petición de Amistad](#9-enviar-peticion-de-amistad)
+- [9. Gestionar Peticiones de Amistad](#10-gestionar-peticiones-de-amistad)
+- [10. Obtener Logro](#11-obtener-logro)
   
 ---
 
@@ -152,7 +151,7 @@ El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que
 * El estudiante debe estar registrado en el sistema y haber iniciado sesión.
 
 ### Flujo Básico
-1. El estudiante accede a la biblioteca interna de cursos.
+1. El estudiante accede a la sección de cursos del sistema.
 2. El sistema muestra la biblioteca interna del estudiante, con una lista de los cursos actuales que dispone.
 3. El estudiante selecciona el curso que desea realizar.
 4. El sistema solicita al estudiante que escoja la estrategia de aprendizaje que desea para la sesión de aprendizaje, mostrando las tres opciones con una breve descripción:
@@ -183,47 +182,29 @@ El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que
 
 ---
 
-## 6. Consultar estadísticas y progreso de los cursos
+## 6. Consultar estadísticas y logros
 
 ### Actor Principal
 Estudiante.
 
 ### Descripción
-El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc) y al progreso realizado en los cursos (porcentaje de completado de cada curso).
+El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc), al progreso realizado en los cursos (porcentaje de completado de cada curso) y a los logros que ha obtenido.
 
 ### Precondiciones
 * El estudiante debe estar registrado en el sistema y haber iniciado sesión.
 
 ### Flujo Básico
 1. El estudiante accede a la sección de estadísticas definida en el sistema.
-2. El sistema muestra al estudiante una lista de los cursos en los que ha realizado al menos una sesión y un resumen de las estadísticas generales del estudiante: Tiempo de estudio en total, rachas de días máximo, porcentaje de aciertos total, ejercicios completados en total.
+2. El sistema muestra al estudiante:
+   * Una lista de los cursos en los que ha realizado al menos una sesión y un resumen de las estadísticas generales del estudiante: Tiempo de estudio en total, rachas de días máximo, porcentaje de aciertos total, ejercicios completados en total.
+   * Una lista de logros que ha obtenido el usuario.
 3. El estudiante selecciona de la lista un curso que ha realizado.
 4. El sistema muestra estadísticas específicas del estudiante en dicho curso: Tiempo de estudio dedicado al curso, racha de días máximo en el curso, porcentaje de aciertos en el curso, ejercicios completados del curso.
 
 
 ---
 
-## 7. Crear un curso
-
-### Actor principal
-Creador.
-
-### Descripción
-El creador puede crear un curso proporcionando un nombre, descripción, dificultad esperada de todo el curso y de manera opcional una imagen. La definición del curso se realiza a través de un fichero estructurado en formato JSON o YAML. EL curso puede dividirse en varios bloques a los que se les puede asignar tambien un nombre y descripción a cada uno. Dentro de cada bloque el creador puede añadir una secuencia ordenada de ejercicios. Para poder introducir un ejercicio, el creador debe especificar su contenido según el tipo de ejercicio escogido (Completar Huecos, Corregir Código, Traducir Código u Opción Múltiple), junto a una o varias respuestas correcta. Adicionalmente se le puede añadir recursos complementarios (imagenes, videos, enlaces).
-
-### Precondiciones
-* El creador debe estar registrado en el sistema y haber iniciado sesión.
-
-### Flujo Básico
-
-### Flujo Alternativo
-
-### Postcondiciones
-
-
----
-
-## 8. Instalar curso
+## 7. Importar curso
 
 ### Actor Principal
 Estudiante.
@@ -238,9 +219,9 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 
 ### Flujo Básico
 
-1. El estudiante accede a su biblioteca interna de cursos.
-2. El sistema muestra la biblioteca interna del estudiante.
-3. El estudiante escoge la opción de añadir un nuevo curso.
+1. El estudiante accede a la sección de cursos de la aplicación.
+2. El sistema muestra una opción para importar un curso.
+3. El estudiante escoge la opción de importar un curso.
 4. El estudiante selecciona el archivo JSON/YAML del curso que desea instalar.
 5. El sistema verifica la estructura del archivo JSON/YAML.
 6. El sistema registra el curso en la biblioteca interna del estudiante y le notifica que se ha añadido correctamente.
@@ -258,7 +239,7 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 
 ---
 
-## 9. Enviar Peticion de Amistad
+## 8. Enviar Peticion de Amistad
 
 ### Actor Principal
 Usuario.
@@ -289,7 +270,7 @@ El usuario puede enviar una petición de amistad a otro usuario, y este puede ac
 * El estado de la petición de amistad debe ser "Pendiente".
 
 
-## 10. Gestionar Peticiones de Amistad
+## 9. Gestionar Peticiones de Amistad
 
 ### Actor Principal
 Usuario.
@@ -329,7 +310,7 @@ El usuario puede ver las solicitudes de amistad pendientes que ha recibido y dec
 * El sistema debe actualizar la lista de amigos tanto del usuario emisor como del usuario receptor.
 ---
 
-## 11. Obtener Logro
+## 10. Obtener Logro
 
 ### Actor principal
 Sistema.
