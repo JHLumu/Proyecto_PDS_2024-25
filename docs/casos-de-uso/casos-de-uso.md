@@ -3,13 +3,15 @@
 ## Índice
 - [1. Registrar Usuario](#1-registrar-usuario)
 - [2. Iniciar Sesión Usuario](#2-iniciar-sesión-usuario)
-- [3. Seleccionar un curso](#3-realizar-un-curso)
-- [4. Consultar Estadísticas y Progresos de Cursos](#4-consultar-estadísticas-y-progreso-de-los-cursos)
-- [5. Crear Curso](#5-crear-un-curso)
-- [6. Instalar un curso](#6-instalar-curso)
-- [7. Enviar Petición de Amistad](#7-enviar-peticion-de-amistad)
-- [8. Gestionar Peticiones de Amistad](#8-gestionar-peticiones-de-amistad)
-- [9. Obtener Logro](#9-obtener-logro)
+- [3. Modificar Información Personal](#3-modificar-información-personal)
+- [4. Cambiar contraseña](#4-cambiar-contraseña)
+- [5. Seleccionar un curso](#5-realizar-un-curso)
+- [6 Consultar Estadísticas y Progresos de Cursos](#6-consultar-estadísticas-y-progreso-de-los-cursos)
+- [7. Crear Curso](#7-crear-un-curso)
+- [8. Instalar un curso](#8-instalar-curso)
+- [9. Enviar Petición de Amistad](#9-enviar-peticion-de-amistad)
+- [10. Gestionar Peticiones de Amistad](#10-gestionar-peticiones-de-amistad)
+- [11. Obtener Logro](#11-obtener-logro)
   
 ---
 
@@ -31,7 +33,7 @@ El usuario se registra para tener acceso completo a la plataforma.
 
 ### Flujo Alternativo
 
-#### 3a. Los datos introducidos por el usuario no son correctos.
+#### 3a. Los datos introducidos por el usuario no son correctos
     
 1. El sistema muestra un mensaje de error informando los datos que son incorrectos.
 2. Si el usuario decide volver a introducir las credenciales, el flujo vuelve al paso 2 del flujo básico.
@@ -63,7 +65,7 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 
 ### Flujo Alternativo
 
-#### 3a. Las credenciales introducidas por el usuario son incorrectas.
+#### 3a. Las credenciales introducidas por el usuario son incorrectas
 1. El sistema muestra un mensaje de error.
 2. Si el usuario decide volver a introducir las credenciales, el flujo vuelve al paso 2 del flujo básico.
 
@@ -72,7 +74,73 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 
 ---
 
-## 3. Realizar un curso
+## 3. Modificar Información Personal
+
+### Actor Principal
+Usuario.
+
+### Descripción
+El usuario puede actualizar su información personal.
+
+### Precondiciones
+* El usuario debe estar registrado en el sistema y haber iniciado sesión.
+
+### Flujo Básico
+1. El usuario accede a la información de su perfil.
+2. El sistema muestra al usuario su información registrada en el sistema ( Nombre, Apellidos, Email, Género).
+3. El sistema permite al usuario modificar su información personal (Nombre, Apellidos).
+4. El usuario actualiza su información personal.
+5. El usuario notifica al sistema que quiere guardar los cambios.
+6. El sistema actualiza la información del usuario registrada en el sistema y notifica del éxito de los cambios.
+
+### Flujo Alternativo
+
+#### 5a. El usuario introduce información no válida.
+1. El sistema notifica al usuario de que la información introducida no es válida.
+
+#### 6a. El sistema no ha podido actualizar la información del usuario
+1. El sistema notifica al usuario del fracaso a la hora de aplicar los cambios.
+
+### Postcondiciones
+* El sistema debe actualizar la información personal del usuario
+* El sistema debe reflejar la información personal actualizada del usuario.
+
+---
+
+## 4. Cambiar contraseña
+
+### Actor Principal
+Usuario.
+
+### Descripción
+El usuario cambia su contraseña actual por una nueva, verificando el sistema si el que realiza el cambio es el propietario de la cuenta.
+
+### Precondiciones
+* El usuario debe estar registrado en el sistema y haber iniciado sesión.
+
+### Flujo Básico
+1. El usuario accede a la información de su perfil.
+2. El sistema solicita al usuario la contraseña actual y la contraseña nueva dos veces (como método de confirmación de que esa es la nueva contraseña que quiere).
+3. El usuario introduce la contraseña actual y la contraseña nueva.
+4. El usuario notifica al sistema que quiere aplicar el cambio.
+5. El sistema verifica que la contraseña actual introducida por el usuario coincide con la almacenada en el sistema.
+6. El sistema verifica que la contraseña nueva y la confirmación son idénticas.
+7. El sistema actualiza la contraseña almacenada en el sistema, notificando al usuario del éxito del cambio.
+
+### Flujo Alternativo
+
+#### 4a. El usuario no introduce toda la información solicitada por el sistema
+  1. El sistema notifica al usuario que no ha introducido toda la información necesaria para el cambio de contraseña.
+
+#### 5a. La contraseña actual introducida es incorrecta.
+  1. El sistema notifica al usuario de que la contraseña actual es incorrecta.
+
+#### 5a. La contraseña nueva y la confiramción de contraseña nueva son distintas.
+  1. El sistema notifica al usuario de que las contraseñas nuevas introducidas no coinciden.
+
+---
+
+## 5. Realizar un curso
 
 ### Actor Principal
 Estudiante.
@@ -100,11 +168,11 @@ El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que
 
 ### Flujo Alternativo
 
-#### 7a. El estudiante escoge un bloque de aprendizaje inacabado.
+#### 7a. El estudiante escoge un bloque de aprendizaje inacabado
 1. El sistema recupera el punto en el que el estudiante estuvo antes de salirse de la sesión.
 2. El sistema continúa la sesión de aprendizaje desde ese punto.
 
-#### 9a. El estudiante se sale de la sesión de aprendizaje sin terminar la secuencia de ejercicios.
+#### 9a. El estudiante se sale de la sesión de aprendizaje sin terminar la secuencia de ejercicios
 1. El sistema guarda el estado actual de la sesión de aprendizaje y del curso.
 2. El estudiante regresa a la biblioteca interna de loscursos, pudiendo reanudar la sesión de aprendizaje desde el mismo punto.
 
@@ -115,7 +183,7 @@ El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que
 
 ---
 
-## 4. Consultar estadísticas y progreso de los cursos
+## 6. Consultar estadísticas y progreso de los cursos
 
 ### Actor Principal
 Estudiante.
@@ -135,7 +203,7 @@ El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc
 
 ---
 
-## 5. Crear un curso
+## 7. Crear un curso
 
 ### Actor principal
 Creador.
@@ -155,7 +223,7 @@ El creador puede crear un curso proporcionando un nombre, descripción, dificult
 
 ---
 
-## 6. Instalar curso
+## 8. Instalar curso
 
 ### Actor Principal
 Estudiante.
@@ -180,7 +248,7 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 
 ### Flujo Alternativo
 
-#### 4a. El sistema comprueba que el archivo seleccionado no cumple con la estructura esperada.
+#### 4a. El sistema comprueba que el archivo seleccionado no cumple con la estructura esperada
 1. El sistema notifica al estudiante que no se ha podido añadir el curso debido a que no cumple la estructura que el sistema espera.
 2. El sistema muestra una opción al estudiante de visualizar la estructura esperada en el archivo JSON/YAML, y otra opción para reintentar la instalación del curso.
 3. Si el estudiante escoge la segunda opción, se vuelve al paso 3 del flujo básico.
@@ -190,7 +258,7 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 
 ---
 
-## 7. Enviar Peticion de Amistad
+## 9. Enviar Peticion de Amistad
 
 ### Actor Principal
 Usuario.
@@ -212,7 +280,7 @@ El usuario puede enviar una petición de amistad a otro usuario, y este puede ac
 
 ### Flujo Alternativo
 
-#### 4a. El usuario receptor al que el emisor quiere enviar la petición ya esta añadido como amigo.
+#### 4a. El usuario receptor al que el emisor quiere enviar la petición ya esta añadido como amigo
 1. El sistema notifica al usuario emisor que el usuario receptor ya está añadido como amigo.
 2. El sistema accede a la sección de amigos del sistema.
 
@@ -221,7 +289,7 @@ El usuario puede enviar una petición de amistad a otro usuario, y este puede ac
 * El estado de la petición de amistad debe ser "Pendiente".
 
 
-## 8. Gestionar Peticiones de Amistad
+## 10. Gestionar Peticiones de Amistad
 
 ### Actor Principal
 Usuario.
@@ -244,16 +312,16 @@ El usuario puede ver las solicitudes de amistad pendientes que ha recibido y dec
 
 ### Flujo Alternativo
 
-#### 6a. La acción que se realiza es aceptar una petición de amistad.
+#### 6a. La acción que se realiza es aceptar una petición de amistad
 1. La petición de amistad pasa del estado "Pendiente" a "Aceptada" y se elimina de la lista de peticiones de amistad tanto del usuario emisor como del usuario receptor.
 2. El sistema registra la amistad entre ambos usuarios.
 3. El sistema notifica al usuario emisor que la petición de amistad realizada al usuario receptor se ha aceptado.
 
-##### 6b. La acción que se realiza es rechazar una petición de amistad.
+##### 6b. La acción que se realiza es rechazar una petición de amistad
 1. La petición de amistad pasa del estado "Pendiente" a "Rechazada" y se elimina de la lista de peticiones de amistad tanto del usuario emisor como del usuario receptor.
 2. El sistema notifica al usuario emisor que la petición de amistad realizada al usuario receptor se ha cancelado.
 
-#### 6c. La acción que se realizada es cancelar una petición de amistad.
+#### 6c. La acción que se realizada es cancelar una petición de amistad
 1. La petición de amistad se elimina de la lista de peticiones tanto del usuario emisor como del usuario receptor.
 
 ### Postcondiciones
@@ -261,7 +329,7 @@ El usuario puede ver las solicitudes de amistad pendientes que ha recibido y dec
 * El sistema debe actualizar la lista de amigos tanto del usuario emisor como del usuario receptor.
 ---
 
-## 9. Obtener Logro
+## 11. Obtener Logro
 
 ### Actor principal
 Sistema.
