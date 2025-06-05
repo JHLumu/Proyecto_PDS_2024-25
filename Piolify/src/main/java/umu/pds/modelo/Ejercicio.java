@@ -90,11 +90,6 @@ public abstract class Ejercicio {
 	public abstract boolean validarRespuesta(String respuestaUsuario);
 	
 	
-    public TipoEjercicio getTipo() {
-        if (this instanceof EjercicioOpcionMultiple) return TipoEjercicio.OPCION_MULTIPLE;
-        if (this instanceof EjercicioRellenarHuecos) return TipoEjercicio.COMPLETAR_HUECOS;
-        if (this instanceof EjercicioFlashcard) return TipoEjercicio.FLASHCARD;
-        return null;
-    }
+    public abstract TipoEjercicio getTipo();
     
 }

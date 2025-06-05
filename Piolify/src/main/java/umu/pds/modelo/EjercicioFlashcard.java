@@ -22,5 +22,10 @@ public class EjercicioFlashcard extends Ejercicio {
 		return false;
 		
 	}
+	
+	@Override
+	public TipoEjercicio getTipo() {
+		return TipoEjercicio.FLASHCARD;
+	}
 
 }

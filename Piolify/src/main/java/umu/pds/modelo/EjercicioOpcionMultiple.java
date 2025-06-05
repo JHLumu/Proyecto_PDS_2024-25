@@ -43,5 +43,11 @@ public class EjercicioOpcionMultiple extends Ejercicio {
     public boolean validarRespuesta(String respuestaUsuario) {
         return getRespuesta().equalsIgnoreCase(respuestaUsuario.trim());
     }
+    
+    @Override
+    public TipoEjercicio getTipo() {
+    	return TipoEjercicio.OPCION_MULTIPLE;
+
+    }
 
 }
