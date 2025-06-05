@@ -49,13 +49,11 @@ public class Principal extends JFrame {
 	// Constantes para identificar las tarjetas
 	public static final String PANEL_PRINCIPAL = "principal";
 	public static final String PANEL_ESTADISTICAS = "estadisticas";
-	public static final String PANEL_MIS_CURSOS = "miscursos";
-	public static final String PANEL_CREAR_CURSO = "crearcurso";
+	public static final String PANEL_CURSOS = "cursos";
 	public static final String PANEL_PERFIL = "perfil";
 	
 	// Botones para mantener referencia y poder actualizar su estado
-	private JButton btnMisCursos;
-	private JButton btnCrearCurso;
+	private JButton btnCursos;
 	private JButton btnEstadisticas;
 	private JButton btnPerfil;
 
@@ -110,7 +108,7 @@ public class Principal extends JFrame {
 		// Añadir panel de estadísticas
 		panelCentroCardLayout.add(new DashboardEstadisticas(usuarioActual), PANEL_ESTADISTICAS);
 		
-		panelCentroCardLayout.add(new Biblioteca(usuarioActual), PANEL_MIS_CURSOS);
+		panelCentroCardLayout.add(new Biblioteca(usuarioActual), PANEL_CURSOS);
 		
 		// perfilusuario
 		panelCentroCardLayout.add(new PerfilUsuario(usuarioActual), PANEL_PERFIL);
@@ -118,15 +116,7 @@ public class Principal extends JFrame {
 		
 		// Aquí añadirías los demás paneles conforme los necesites
 		// Por ahora, crearemos paneles temporales para las otras secciones
-		JPanel panelMisCursos = new JPanel();
-		panelMisCursos.setBackground(Color.WHITE);
-		panelMisCursos.add(new JLabel("Contenido de Mis Cursos (Por implementar)"));
-		panelCentroCardLayout.add(panelMisCursos, PANEL_MIS_CURSOS);
-		
-		JPanel panelCrearCurso = new JPanel();
-		panelCrearCurso.setBackground(Color.WHITE);
-		panelCrearCurso.add(new JLabel("Contenido de Crear Curso (Por implementar)"));
-		panelCentroCardLayout.add(panelCrearCurso, PANEL_CREAR_CURSO);
+
 		
 		// Mostrar el panel principal por defecto
 		cardLayout.show(panelCentroCardLayout, PANEL_PRINCIPAL);
@@ -160,28 +150,16 @@ public class Principal extends JFrame {
 		panelNorte.add(glue);
 		
 		// Botón Mis Cursos
-		btnMisCursos = new PioButton("Mis Cursos");
-		btnMisCursos.setBackground(PioColores.MARRON_BUTTON);
-		btnMisCursos.addActionListener(new ActionListener() {
+		btnCursos = new PioButton("Cursos");
+		btnCursos.setBackground(PioColores.MARRON_BUTTON);
+		btnCursos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelCentroCardLayout, PANEL_MIS_CURSOS);
-				actualizarBotonesActivos(btnMisCursos);
+				cardLayout.show(panelCentroCardLayout, PANEL_CURSOS);
+				actualizarBotonesActivos(btnCursos);
 			}
 		});
-		panelNorte.add(btnMisCursos);
-		
-		// Botón Crear Curso
-		btnCrearCurso = new PioButton("Crear Curso");
-		btnCrearCurso.setBackground(PioColores.MARRON_BUTTON);
-		btnCrearCurso.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelCentroCardLayout, PANEL_CREAR_CURSO);
-				actualizarBotonesActivos(btnCrearCurso);
-			}
-		});
-		panelNorte.add(btnCrearCurso);
+		panelNorte.add(btnCursos);
 		
 		// Botón Estadísticas
 		btnEstadisticas = new PioButton("Estadísticas");
@@ -230,8 +208,7 @@ public class Principal extends JFrame {
 	 */
 	private void actualizarBotonesActivos(JButton botonActivo) {
 		// Restablecer todos los botones
-		btnMisCursos.setBackground(PioColores.MARRON_BUTTON);
-		btnCrearCurso.setBackground(PioColores.MARRON_BUTTON);
+		btnCursos.setBackground(PioColores.MARRON_BUTTON);
 		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
 		btnPerfil.setBackground(PioColores.MARRON_BUTTON);
 		

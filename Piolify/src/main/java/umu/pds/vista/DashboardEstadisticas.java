@@ -17,6 +17,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.BoxLayout;
 
 import umu.pds.modelo.Usuario;
+import umu.pds.vista.elementos.PioColores;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Logro;
 import umu.pds.modelo.Curso;
@@ -24,9 +25,9 @@ import umu.pds.modelo.Curso;
 public class DashboardEstadisticas extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private Color primaryColor = new Color(240, 230, 140); // Color amarillo suave para cabecera
-    private Color panelColor = new Color(245, 245, 245);   // Color de fondo para los paneles
-    private Color textColor = new Color(70, 70, 70);       // Color para texto principal
+    private Color primaryColor = PioColores.AMARILLO_LABEL; // Color amarillo suave para cabecera
+    private Color panelColor = PioColores.GRIS_PANEL;   // Color de fondo para los paneles
+    private Color textColor = PioColores.GRIS_TEXT;       // Color para texto principal
     private Color accentColor = new Color(76, 175, 80);    // Color verde para barras de progreso
 
     /**
