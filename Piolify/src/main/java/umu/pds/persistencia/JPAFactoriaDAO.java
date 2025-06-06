@@ -1,11 +1,11 @@
 package umu.pds.persistencia;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class JPAUtil {
-    
+public class JPAFactoriaDAO extends FactoriaDAO {
+
+	 
     private static EntityManagerFactory emf;
     
 	static {
@@ -16,14 +16,17 @@ public class JPAUtil {
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
+
+	@Override
+	public UsuarioDAO getUsuarioDAO() {
+		return new AdaptadorUsuarioDAO(emf);
+	}
+
+	@Override
+	public CursoDAO getCursoDAO() {
+		return new AdaptadorCursoDAO(emf);
+	}
     
-    public static EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-    
-    public static void cerrarEntityManager() {
-        if (emf != null && emf.isOpen()) {
-            emf.close();
-        }
-    }
+  
+	
 }
