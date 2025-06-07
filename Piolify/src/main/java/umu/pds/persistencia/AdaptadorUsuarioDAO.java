@@ -3,12 +3,9 @@ package umu.pds.persistencia;
 import umu.pds.modelo.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 
-import java.net.MalformedURLException;
 import java.util.List;
-import java.util.Optional;
+
 
 public class AdaptadorUsuarioDAO implements UsuarioDAO{
    

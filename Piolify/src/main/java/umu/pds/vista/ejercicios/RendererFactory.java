@@ -1,8 +1,9 @@
 package umu.pds.vista.ejercicios;
 
 import umu.pds.modelo.TipoEjercicio;
+import umu.pds.utils.EjercicioRenderer;
 
-public abstract class RendererAbstractFactory {
+public abstract class RendererFactory {
     
     /**
      * Crea un renderer del tipo correspondiente
@@ -17,7 +18,7 @@ public abstract class RendererAbstractFactory {
     /**
      * Factory Method estático para obtener la factory correcta
      */
-    public static RendererAbstractFactory getFactory(TipoEjercicio tipo) {
+    public static RendererFactory getFactory(TipoEjercicio tipo) {
         switch (tipo) {
             case FLASHCARD:
                 return new FlashcardRendererFactory();

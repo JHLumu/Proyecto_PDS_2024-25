@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 import umu.pds.persistencia.FactoriaDAO;
 import umu.pds.persistencia.JPAFactoriaDAO;
 import umu.pds.persistencia.UsuarioDAO;

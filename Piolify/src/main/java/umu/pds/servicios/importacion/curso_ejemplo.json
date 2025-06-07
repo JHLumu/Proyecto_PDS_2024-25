@@ -1,0 +1,139 @@
+{
+  "titulo": "Fundamentos de Programación",
+  "descripcion": "Curso completo sobre los fundamentos de la programación orientada a objetos",
+  "dificultad": "Principiante",
+  "autor": "Dr. García López",
+  "bloques": [
+    {
+      "titulo": "Introducción a la Programación",
+      "descripcion": "Conceptos básicos y historia de la programación",
+      "orden": 1,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de las siguientes opciones describe mejor la programación orientada a objetos?",
+          "respuesta": "A",
+          "dificultad": 1,
+          "orden": 1,
+          "propiedadesEspecificas": {
+            "opciones": [
+              "Un paradigma basado en objetos que encapsulan datos y comportamiento",
+              "Una forma de escribir código más rápido",
+              "Un lenguaje de programación específico",
+              "Una técnica para hacer programas más largos"
+            ]
+          }
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "Los cuatro pilares de la programación orientada a objetos son: _____, _____, _____ y _____",
+          "respuesta": "encapsulación|herencia|polimorfismo|abstracción",
+          "dificultad": 2,
+          "orden": 2
+        },
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué es una clase en programación orientada a objetos?",
+          "respuesta": "Una clase es una plantilla o molde que define las propiedades y métodos que tendrán los objetos creados a partir de ella",
+          "dificultad": 1,
+          "orden": 3
+        }
+      ]
+    },
+    {
+      "titulo": "Variables y Tipos de Datos",
+      "descripcion": "Comprende los diferentes tipos de datos y su uso",
+      "orden": 2,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de los siguientes es un tipo de dato primitivo en Java?",
+          "respuesta": "B",
+          "dificultad": 1,
+          "orden": 1,
+          "propiedadesEspecificas": {
+            "opciones": [
+              "String",
+              "int",
+              "ArrayList",
+              "Object"
+            ]
+          }
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "Para declarar una variable entera en Java se usa la palabra clave _____ seguida del nombre de la variable",
+          "respuesta": "int",
+          "dificultad": 1,
+          "orden": 2
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál es la diferencia principal entre una variable local y una variable de instancia?",
+          "respuesta": "B",
+          "dificultad": 2,
+          "orden": 3,
+          "propiedadesEspecificas": {
+            "opciones": [
+              "No hay diferencia",
+              "Las variables locales se declaran dentro de métodos, las de instancia en la clase",
+              "Las variables locales son más rápidas",
+              "Las variables de instancia son privadas siempre"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "titulo": "Estructuras de Control",
+      "descripcion": "Aprende sobre condicionales y bucles",
+      "orden": 3,
+      "ejercicios": [
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Para qué se usa la estructura if-else?",
+          "respuesta": "Para ejecutar diferentes bloques de código según se cumpla o no una condición",
+          "dificultad": 1,
+          "orden": 1
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de los siguientes bucles se ejecuta al menos una vez?",
+          "respuesta": "do-while",
+          "dificultad": 2,
+          "orden": 2,
+          "propiedadesEspecificas": {
+            "opciones": [
+              "for",
+              "while",
+              "do-while",
+              "foreach"
+            ]
+          }
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "El bucle _____ es ideal cuando conoces el número exacto de iteraciones que necesitas",
+          "respuesta": "for",
+          "dificultad": 1,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Qué hace la instrucción 'break' dentro de un bucle?",
+          "respuesta": "Sale inmediatamente del bucle",
+          "dificultad": 2,
+          "orden": 4,
+          "propiedadesEspecificas": {
+            "opciones": [
+              "Pausa el bucle temporalmente",
+              "Sale inmediatamente del bucle",
+              "Reinicia el bucle desde el principio",
+              "No hace nada"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

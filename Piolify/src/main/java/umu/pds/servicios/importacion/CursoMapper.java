@@ -1,0 +1,133 @@
+package umu.pds.servicios.importacion;
+
+import umu.pds.modelo.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CursoMapper {
+    
+    public List<Curso> convertirDesdeDTO(List<CursoDTO> cursosDTO) throws ImportacionException {
+        List<Curso> cursos = new ArrayList<>();
+        
+        for (CursoDTO cursoDTO : cursosDTO) {
+            cursos.add(convertirDesdeDTO(cursoDTO));
+        }
+        
+        return cursos;
+    }
+    
+    public Curso convertirDesdeDTO(CursoDTO cursoDTO) throws ImportacionException {
+        if (cursoDTO == null) {
+            throw new ImportacionException("CursoDTO no puede ser null", "VALIDATION_ERROR");
+        }
+        
+        Curso curso = new Curso();
+        curso.setTitulo(cursoDTO.getTitulo());
+        curso.setDescripcion(cursoDTO.getDescripcion());
+        curso.setDificultad(cursoDTO.getDificultad());
+        
+        if (cursoDTO.getBloques() != null) {
+            List<Bloque> bloques = new ArrayList<>();
+            for (BloqueDTO bloqueDTO : cursoDTO.getBloques()) {
+                Bloque bloque = convertirBloqueDesdeDTO(bloqueDTO, curso);
+                bloques.add(bloque);
+            }
+            curso.setBloques(bloques);
+        }
+        
+        return curso;
+    }
+    
+    private Bloque convertirBloqueDesdeDTO(BloqueDTO bloqueDTO, Curso curso) throws ImportacionException {
+        if (bloqueDTO == null) {
+            throw new ImportacionException("BloqueDTO no puede ser null", "VALIDATION_ERROR");
+        }
+        
+        Bloque bloque = new Bloque();
+        bloque.setTitulo(bloqueDTO.getTitulo());
+        bloque.setDescripcion(bloqueDTO.getDescripcion());
+        // Establecer relación bidireccional
+        // bloque.setCurso(curso); // Descomenta si tienes setter en Bloque
+        
+        if (bloqueDTO.getEjercicios() != null) {
+            List<Ejercicio> ejercicios = new ArrayList<>();
+            for (EjercicioDTO ejercicioDTO : bloqueDTO.getEjercicios()) {
+                Ejercicio ejercicio = convertirEjercicioDesdeDTO(ejercicioDTO, bloque);
+                ejercicios.add(ejercicio);
+            }
+            bloque.setListaEjercicios(ejercicios);
+        }
+        
+        return bloque;
+    }
+    
+    private Ejercicio convertirEjercicioDesdeDTO(EjercicioDTO ejercicioDTO, Bloque bloque) throws ImportacionException {
+        if (ejercicioDTO == null) {
+            throw new ImportacionException("EjercicioDTO no puede ser null", "VALIDATION_ERROR");
+        }
+        
+        String tipo = ejercicioDTO.getTipo().toUpperCase();
+        Ejercicio ejercicio;
+        
+        switch (tipo) {
+            case "OPCION_MULTIPLE":
+                ejercicio = crearEjercicioOpcionMultiple(ejercicioDTO);
+                break;
+            case "COMPLETAR_HUECOS":
+                ejercicio = crearEjercicioRellenarHuecos(ejercicioDTO);
+                break;
+            case "FLASHCARD":
+                ejercicio = crearEjercicioFlashcard(ejercicioDTO);
+                break;
+            default:
+                throw new ImportacionException(
+                    "Tipo de ejercicio no reconocido: " + tipo, 
+                    "UNSUPPORTED_EXERCISE_TYPE"
+                );
+        }
+        
+        // Establecer propiedades comunes
+        ejercicio.setContenido(ejercicioDTO.getContenido());
+        ejercicio.setRespuesta(ejercicioDTO.getRespuesta());
+        ejercicio.setDificultad(ejercicioDTO.getDificultad());
+        
+        return ejercicio;
+    }
+    
+    private EjercicioOpcionMultiple crearEjercicioOpcionMultiple(EjercicioDTO dto) throws ImportacionException {
+        EjercicioOpcionMultiple ejercicio = new EjercicioOpcionMultiple();
+        
+        // Extraer opciones de las propiedades específicas
+        if (dto.getPropiedadesEspecificas() != null) {
+            Object opciones = dto.getPropiedadesEspecificas().get("opciones");
+            if (opciones instanceof List) {
+                @SuppressWarnings("unchecked")
+                List<String> listaOpciones = (List<String>) opciones;
+                ejercicio.setOpciones(listaOpciones);
+            } else {
+                throw new ImportacionException(
+                    "Las opciones del ejercicio de opción múltiple deben ser una lista", 
+                    "VALIDATION_ERROR"
+                );
+            }
+        }
+        
+        return ejercicio;
+    }
+    
+    private EjercicioRellenarHuecos crearEjercicioRellenarHuecos(EjercicioDTO dto) {
+        return new EjercicioRellenarHuecos();
+    }
+    
+    private EjercicioFlashcard crearEjercicioFlashcard(EjercicioDTO dto) {
+        return new EjercicioFlashcard();
+    }
+    
+    // Métodos para conversión inversa (de entidad a DTO) si fuera necesario
+    public CursoDTO convertirADTO(Curso curso) {
+        // Implementar si necesitas exportar también
+        // Por ahora no implementado para mantener el foco en importación
+        throw new UnsupportedOperationException("Conversión a DTO no implementada aún");
+    }
+}

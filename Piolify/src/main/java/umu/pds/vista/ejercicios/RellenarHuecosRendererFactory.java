@@ -1,8 +1,10 @@
 package umu.pds.vista.ejercicios;
 
 import umu.pds.modelo.TipoEjercicio;
+import umu.pds.utils.EjercicioRenderer;
+import umu.pds.utils.RellenarHuecosRenderer;
 
-public class RellenarHuecosRendererFactory extends RendererAbstractFactory {
+public class RellenarHuecosRendererFactory extends RendererFactory {
     
     @Override
     public EjercicioRenderer crearRenderer() {
