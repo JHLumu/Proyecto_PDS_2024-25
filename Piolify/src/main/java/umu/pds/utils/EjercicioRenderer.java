@@ -1,4 +1,4 @@
-package umu.pds.vista.ejercicios;
+package umu.pds.utils;
 
 import javax.swing.JPanel;
 

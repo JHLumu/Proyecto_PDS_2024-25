@@ -1,9 +1,5 @@
 package umu.pds.controlador;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import umu.pds.modelo.Curso;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.UsuarioService;
 import umu.pds.utils.RegistroUsuarioDTO;

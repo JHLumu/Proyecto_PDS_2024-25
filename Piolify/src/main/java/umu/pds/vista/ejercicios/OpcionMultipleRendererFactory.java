@@ -1,8 +1,10 @@
 package umu.pds.vista.ejercicios;
 
 import umu.pds.modelo.TipoEjercicio;
+import umu.pds.utils.EjercicioRenderer;
+import umu.pds.utils.OpcionMultipleRenderer;
 
-public class OpcionMultipleRendererFactory extends RendererAbstractFactory {
+public class OpcionMultipleRendererFactory extends RendererFactory {
     
     @Override
     public EjercicioRenderer crearRenderer() {

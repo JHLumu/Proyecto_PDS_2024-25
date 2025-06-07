@@ -14,14 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 import umu.pds.controlador.EjercicioFacade;
-import umu.pds.controlador.EjercicioFacade.EjercicioCompleto;
 import umu.pds.modelo.Ejercicio;
-import umu.pds.modelo.EjercicioOpcionMultiple;
-import umu.pds.modelo.TipoEjercicio;
-import umu.pds.vista.ejercicios.EjercicioRenderer;
+import umu.pds.utils.EjercicioRenderer;
 import umu.pds.vista.elementos.BaseRoundedFrame;
 import umu.pds.vista.elementos.PioColores;
 
@@ -46,23 +42,6 @@ public class PioEjercicios extends BaseRoundedFrame {
     public PioEjercicios() {
         super();
         initDesignModeComponents();
-    }
-    
-    // Constructor original para un solo ejercicio
-    public PioEjercicios(TipoEjercicio tipo, String contenido, String respuesta) {
-        super("Ejercicio - " + tipo.name());
-        
-        // Crear ejercicio usando Facade
-        EjercicioCompleto completo = EjercicioFacade.crearEjercicioCompleto(tipo, contenido, respuesta);
-        Ejercicio ejercicio = completo.getEjercicio();
-        
-        // Crear lista con un solo ejercicio
-        this.listaEjercicios = Arrays.asList(ejercicio);
-        this.indiceActual = 0;
-        
-        initRuntimeComponents();
-        prepararTodosLosEjercicios();
-        mostrarEjercicioActual();
     }
     
     // Constructor que recibe un ejercicio ya creado
@@ -281,62 +260,4 @@ public class PioEjercicios extends BaseRoundedFrame {
         }
     }
     
-    // Ejemplo de uso con LISTA DE EJERCICIOS usando CardLayout
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // Crear lista de ejercicios variados
-            List<Ejercicio> ejercicios = Arrays.asList(
-                // Flashcard
-                EjercicioFacade.crearEjercicio(TipoEjercicio.FLASHCARD, "¿Capital de Francia?", "París"),
-                
-                // Opción múltiple
-                crearEjercicioOpcionMultiple(),
-                
-                // Completar huecos
-                EjercicioFacade.crearEjercicio(TipoEjercicio.COMPLETAR_HUECOS, 
-                    "La {capital} de Francia es {París}.", "capital|París"),
-                
-                // Otro flashcard
-                EjercicioFacade.crearEjercicio(TipoEjercicio.FLASHCARD, "¿Cuántos días tiene una semana?", "7"),
-                
-                // Otro de opción múltiple
-                crearEjercicioOpcionMultiple2()
-            );
-            
-            // Crear UNA SOLA ventana con lista de ejercicios usando CardLayout
-            PioEjercicios ventanaLista = new PioEjercicios(ejercicios);
-            ventanaLista.setVisible(true);
-            
-            // Demostración de ventana con un solo ejercicio (comportamiento original)
-            PioEjercicios ventanaUnica = new PioEjercicios(
-                TipoEjercicio.FLASHCARD, "¿Capital de España?", "Madrid");
-            ventanaUnica.setLocation(750, 100);
-            ventanaUnica.setVisible(true);
-        });
-    }
-    
-    // Métodos auxiliares para crear ejercicios de opción múltiple
-    private static Ejercicio crearEjercicioOpcionMultiple() {
-        Ejercicio ejercicio = EjercicioFacade.crearEjercicio(
-            TipoEjercicio.OPCION_MULTIPLE, "¿Capital de España?", "A");
-        
-        if (ejercicio instanceof EjercicioOpcionMultiple) {
-            ((EjercicioOpcionMultiple) ejercicio)
-                .setOpciones(Arrays.asList("Madrid", "Barcelona", "Sevilla", "Valencia"));
-        }
-        
-        return ejercicio;
-    }
-    
-    private static Ejercicio crearEjercicioOpcionMultiple2() {
-        Ejercicio ejercicio = EjercicioFacade.crearEjercicio(
-            TipoEjercicio.OPCION_MULTIPLE, "¿Cuál es el planeta más grande del sistema solar?", "B");
-        
-        if (ejercicio instanceof EjercicioOpcionMultiple) {
-            ((EjercicioOpcionMultiple) ejercicio)
-                .setOpciones(Arrays.asList("Tierra", "Júpiter", "Saturno", "Neptuno"));
-        }
-        
-        return ejercicio;
-    }
 }
