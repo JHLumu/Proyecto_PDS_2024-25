@@ -1,6 +1,8 @@
 package umu.pds.modelo;
 
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
@@ -17,6 +19,14 @@ import jakarta.persistence.Table;
 @Table(name = "ejercicios")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_ejercicio", discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,include = JsonTypeInfo.As.PROPERTY,property="tipo",visible=true)
+
+@JsonSubTypes({
+	
+	@JsonSubTypes.Type(name="OPCION_MULTIPLE",value=EjercicioOpcionMultiple.class),
+	@JsonSubTypes.Type(name="COMPLETAR_HUECOS",value=EjercicioRellenarHuecos.class),
+	@JsonSubTypes.Type(name="FLASHCARD",value=EjercicioFlashcard.class),
+})
 public abstract class Ejercicio {
 	
 	
@@ -27,8 +37,8 @@ public abstract class Ejercicio {
 	private int dificultad;
 	private String contenido;
 	private String respuesta;
-	
 	private int orden; // Orden del ejercicio dentro del bloque
+	private TipoEjercicio tipo;
 	
     @ManyToOne
     @JoinColumn(name = "bloque_id", nullable = false)
@@ -78,11 +88,28 @@ public abstract class Ejercicio {
 		this.respuesta = respuesta;
 	}
 	
+	public int getOrden() {
+		return this.orden;
+	}
+	
+	public void setOrden(int orden) {
+		this.orden = orden;
+	}
+	
 	public abstract void renderEjercicio();
 	
 	public abstract boolean validarRespuesta(String respuestaUsuario);
 	
-	
-    public abstract TipoEjercicio getTipo();
+    public TipoEjercicio getTipo() {
+    	return this.tipo;
+    	}
+    
+    public void setTipo(TipoEjercicio tipo) {
+    	this.tipo = tipo;
+    }
+
+	public void setBloque(Bloque bloque) {
+		this.bloque = bloque;
+	}
     
 }

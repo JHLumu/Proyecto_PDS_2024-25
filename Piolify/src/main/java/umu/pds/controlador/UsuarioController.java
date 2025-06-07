@@ -72,6 +72,7 @@ public class UsuarioController {
 			usuario.setPassword(passwordNueva);
 		}
 	}
+
 	
 	public Usuario buscarUsuarioPorEmail(String email) {
 	    return usuarioService.buscarUsuarioPorEmail(email);

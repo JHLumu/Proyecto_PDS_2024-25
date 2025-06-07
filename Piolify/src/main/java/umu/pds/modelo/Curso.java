@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
@@ -23,16 +22,13 @@ public class Curso {
 	private String titulo;
 	private String descripcion;
 	private String dificultad;
-
+	private String autor; //Nombre del autor que ha creado el curso
+	
 	// Relaciones
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     @OrderBy("orden ASC")
     private List<Bloque> bloques = new ArrayList<>();
     
-    @ManyToOne
-    private Usuario autor;
-    
-
 	public Long getId() {
 		return id;
 	}
@@ -74,8 +70,13 @@ public class Curso {
 		this.bloques = bloques;
 	}
 
-
-    
+	public String getAutor() {
+		return this.autor;
+		}
 	
+	public void setAutor(String idAutor) {
+		this.autor = idAutor;
+	}
+    	
 	
 }

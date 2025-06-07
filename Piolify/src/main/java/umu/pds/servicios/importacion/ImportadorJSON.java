@@ -1,10 +1,10 @@
 package umu.pds.servicios.importacion;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import umu.pds.modelo.Curso;
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -16,7 +16,7 @@ public class ImportadorJSON implements ImportadorStrategy {
     private final CursoMapper cursoMapper;
     
     public ImportadorJSON(CursoMapper cursoMapper) {
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
         // Configurar para ser más tolerante con JSON
         this.objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS, true);
         this.objectMapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

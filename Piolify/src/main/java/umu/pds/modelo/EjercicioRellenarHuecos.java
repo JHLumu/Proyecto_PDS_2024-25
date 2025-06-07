@@ -14,10 +14,12 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	
 	public EjercicioRellenarHuecos() {
 		super();
+		this.setTipo(TipoEjercicio.COMPLETAR_HUECOS);
 	}
 
 	public EjercicioRellenarHuecos(String contenido, String respuesta) {
 		super(contenido, respuesta);
+		this.setTipo(TipoEjercicio.COMPLETAR_HUECOS);
 	}
 	
 	@Override
@@ -201,8 +203,4 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 		setRespuesta(respuestaCombinada);
 	}
 
-	@Override
-	public TipoEjercicio getTipo() {
-		return TipoEjercicio.COMPLETAR_HUECOS;
-	}
 }

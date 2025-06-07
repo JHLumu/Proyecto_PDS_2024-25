@@ -47,8 +47,7 @@ public class CursoMapper {
         Bloque bloque = new Bloque();
         bloque.setTitulo(bloqueDTO.getTitulo());
         bloque.setDescripcion(bloqueDTO.getDescripcion());
-        // Establecer relación bidireccional
-        // bloque.setCurso(curso); // Descomenta si tienes setter en Bloque
+        bloque.setCurso(curso); 
         
         if (bloqueDTO.getEjercicios() != null) {
             List<Ejercicio> ejercicios = new ArrayList<>();
@@ -56,7 +55,7 @@ public class CursoMapper {
                 Ejercicio ejercicio = convertirEjercicioDesdeDTO(ejercicioDTO, bloque);
                 ejercicios.add(ejercicio);
             }
-            bloque.setListaEjercicios(ejercicios);
+            bloque.setEjercicios(ejercicios);
         }
         
         return bloque;
@@ -91,17 +90,17 @@ public class CursoMapper {
         ejercicio.setContenido(ejercicioDTO.getContenido());
         ejercicio.setRespuesta(ejercicioDTO.getRespuesta());
         ejercicio.setDificultad(ejercicioDTO.getDificultad());
+        ejercicio.setBloque(bloque);
         
         return ejercicio;
     }
     
     private EjercicioOpcionMultiple crearEjercicioOpcionMultiple(EjercicioDTO dto) throws ImportacionException {
         EjercicioOpcionMultiple ejercicio = new EjercicioOpcionMultiple();
-        
         // Extraer opciones de las propiedades específicas
-        if (dto.getPropiedadesEspecificas() != null) {
-            Object opciones = dto.getPropiedadesEspecificas().get("opciones");
-            if (opciones instanceof List) {
+        
+            Object opciones = dto.getOpciones();
+            if (opciones != null && opciones instanceof List) {
                 @SuppressWarnings("unchecked")
                 List<String> listaOpciones = (List<String>) opciones;
                 ejercicio.setOpciones(listaOpciones);
@@ -111,7 +110,6 @@ public class CursoMapper {
                     "VALIDATION_ERROR"
                 );
             }
-        }
         
         return ejercicio;
     }

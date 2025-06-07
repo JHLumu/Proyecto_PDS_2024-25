@@ -11,6 +11,7 @@ public class Piolify {
     
 	private Usuario usuarioActual;
     private final UsuarioController usuarioController;
+    private final ImportacionController importacionController;
     private static Piolify unicaInstancia = null;
     
     // patrón observer
@@ -18,6 +19,7 @@ public class Piolify {
     
     public Piolify() {
         this.usuarioController = new UsuarioController(this);
+        this.importacionController = new ImportacionController();
     }
     
 	public static Piolify getUnicaInstancia() {
@@ -31,6 +33,10 @@ public class Piolify {
 		return usuarioController;
 	}
     
+	public ImportacionController getImportacionController() {
+		return this.importacionController;
+	}
+	
     public void añadirObservador(Runnable callback) {
     	notificarCambiosUsuario.add(callback);
     }

@@ -3,7 +3,6 @@ package umu.pds.persistencia;
 import umu.pds.modelo.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-
 import java.util.List;
 
 
