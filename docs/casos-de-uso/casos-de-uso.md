@@ -5,7 +5,7 @@
 - [2. Iniciar Sesión Usuario](#2-iniciar-sesión-usuario)
 - [3. Modificar Información Personal](#3-modificar-información-personal)
 - [4. Cambiar contraseña](#4-cambiar-contraseña)
-- [5. Seleccionar un curso](#5-realizar-un-curso)
+- [5. Realizar un curso](#5-realizar-un-curso)
 - [6 Consultar Estadísticas y Progresos de Cursos](#6-consultar-estadísticas-y-logros)
 - [7. Instalar un curso](#8-importar-curso)
 - [8. Enviar Petición de Amistad](#9-enviar-peticion-de-amistad)
@@ -215,7 +215,6 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 ### Precondiciones
 
 * El estudiante debe estar registrado en el sistema y haber iniciado sesión.
-* El archivo JSON/YAML del curso debe mantener la estructura esperada por el sistema.
 
 ### Flujo Básico
 
@@ -257,7 +256,6 @@ El usuario puede enviar una petición de amistad a otro usuario, y este puede ac
 3. El usuario introduce el nombre del usuario al que desea envíar la petición y lo escoge.
 4. El sistema muestra la opción de añadir amigo al usuario, y el usuario la selecciona.
 5. El sistema notifica al emisor que la petición de amistad se ha enviado correctamente, y al receptor que ha recibido una nueva petición de amistad.
----
 
 ### Flujo Alternativo
 
@@ -279,7 +277,7 @@ Usuario.
 El usuario puede ver las solicitudes de amistad pendientes que ha recibido y decidir si las acepta o las rechaza.
 
 ### Precondiciones
-* El usuarrio debe estar registrado en el sistema y haber iniciado sesión.
+* El usuario debe estar registrado en el sistema y haber iniciado sesión.
 
 ### Flujo Básico
 1. El usuario accede a la opción de ver peticiones de amistad, dentro de la sección social definida dentro del sistema.
@@ -287,7 +285,7 @@ El usuario puede ver las solicitudes de amistad pendientes que ha recibido y dec
 3. El usuario selecciona la petición de amistad que desea gestionar, pudiendo realizar las siguientes acciones:
    * Si la petición de amistad ha sido enviada por el usuario, puede cancelar la petición de amistad.
    * Si la petición de amistad ha sido recibida, puede aceptar o cancelar la petición de amistad.
-4. El usuario realiza la accion que desea sobre la petición de amistad escogida.
+4. El usuario realiza la acción que desea sobre la petición de amistad escogida.
 5. El sistema solicita al usuario una confirmación sobre la realización de la acción.
 6. El usuario confirma la acción al sistema, notificando el sistema que la acción se ha realizado correctamente.
 
@@ -298,9 +296,9 @@ El usuario puede ver las solicitudes de amistad pendientes que ha recibido y dec
 2. El sistema registra la amistad entre ambos usuarios.
 3. El sistema notifica al usuario emisor que la petición de amistad realizada al usuario receptor se ha aceptado.
 
-##### 6b. La acción que se realiza es rechazar una petición de amistad
+#### 6b. La acción que se realiza es rechazar una petición de amistad
 1. La petición de amistad pasa del estado "Pendiente" a "Rechazada" y se elimina de la lista de peticiones de amistad tanto del usuario emisor como del usuario receptor.
-2. El sistema notifica al usuario emisor que la petición de amistad realizada al usuario receptor se ha cancelado.
+2. El sistema notifica al usuario emisor que la petición de amistad realizada al usuario receptor se ha rechazado.
 
 #### 6c. La acción que se realizada es cancelar una petición de amistad
 1. La petición de amistad se elimina de la lista de peticiones tanto del usuario emisor como del usuario receptor.
