@@ -11,6 +11,7 @@ import umu.pds.modelo.Curso;
 import umu.pds.modelo.Usuario;
 import umu.pds.controlador.Piolify;
 import umu.pds.servicios.CursoSerializer;
+import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
 public class Biblioteca extends JPanel {
@@ -66,7 +67,7 @@ public class Biblioteca extends JPanel {
         panelImportarCursos = createPanelImportarCursos("Importar Cursos");
         panelCentral.add(panelImportarCursos, gbc_panelImportarCursos);
 
-        JButton btnImportar = new JButton("Importar curso");
+        JButton btnImportar = new PioButton("Importar curso");
         btnImportar.setBackground(PioColores.MARRON_BUTTON);
         btnImportar.addActionListener(e -> importarCurso());
         panelImportarCursos.add(btnImportar, BorderLayout.SOUTH);

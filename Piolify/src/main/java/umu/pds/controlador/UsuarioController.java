@@ -1,9 +1,5 @@
 package umu.pds.controlador;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import umu.pds.modelo.Curso;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.UsuarioService;
 import umu.pds.utils.RegistroUsuarioDTO;
@@ -77,5 +73,31 @@ public class UsuarioController {
 		}
 	}
 	
+	public Usuario buscarUsuarioPorEmail(String email) {
+	    return usuarioService.buscarUsuarioPorEmail(email);
+	}
+	
+	public boolean enviarSolicitudAmistad(String emailDestinatario) {
+	    Usuario usuarioActual = controlador.getUsuarioActual();
+	    Usuario destinatario = usuarioService.buscarUsuarioPorEmail(emailDestinatario);
+	    
+	    if (destinatario == null) {
+	        throw new RuntimeException("Usuario no encontrado");
+	    }
+	    
+	    boolean exito = usuarioService.enviarSolicitudAmistad(usuarioActual, destinatario);
+	    
+	    if (!exito) {
+	        throw new RuntimeException("No se pudo enviar la solicitud. Puede que ya exista una relación.");
+	    }
+	    
+	    return true;
+	}
+
+	public boolean procesarSolicitudAmistad(Long id, boolean aceptar) {
+		Usuario usuarioActual = controlador.getUsuarioActual();
+        return usuarioService.procesarSolicitudAmistad(id, usuarioActual, aceptar);
+    }
+
 	
 }

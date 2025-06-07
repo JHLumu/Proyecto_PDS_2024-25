@@ -179,6 +179,8 @@ public class PerfilUsuario extends JPanel {
 		panel_2.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
 		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setForeground(Color.GRAY);
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField.setBackground(PioColores.GRIS_FIELDS);
 		textField.setBorder(null);
@@ -200,6 +202,8 @@ public class PerfilUsuario extends JPanel {
 		panel_2.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
 		textField_1 = new JTextField();
+		textField_1.setForeground(Color.GRAY);
+		textField_1.setEditable(false);
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField_1.setBackground(PioColores.GRIS_FIELDS);
 		textField_1.setBorder(null);

@@ -1,8 +1,10 @@
 package umu.pds.modelo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -30,11 +32,12 @@ public class Usuario {
 	private String imagenPerfil;
 	
 	// Relaciones
-    @OneToMany(mappedBy = "usuario1", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Amistad> amistadesSolicitadas = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "usuario2", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Amistad> amistadesRecibidas = new ArrayList<>();
+	@OneToMany(mappedBy = "usuario1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Amistad> amistadesEnviadas = new HashSet<>();
+
+	@OneToMany(mappedBy = "usuario2", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Amistad> amistadesRecibidas = new HashSet<>();
+
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Logro> logros = new ArrayList<>();
@@ -119,22 +122,6 @@ public class Usuario {
 		this.imagenPerfil = imagenPerfil;
 	}
 
-	public List<Amistad> getAmistadesSolicitadas() {
-		return amistadesSolicitadas;
-	}
-
-	public void setAmistadesSolicitadas(List<Amistad> amistadesSolicitadas) {
-		this.amistadesSolicitadas = amistadesSolicitadas;
-	}
-
-	public List<Amistad> getAmistadesRecibidas() {
-		return amistadesRecibidas;
-	}
-
-	public void setAmistadesRecibidas(List<Amistad> amistadesRecibidas) {
-		this.amistadesRecibidas = amistadesRecibidas;
-	}
-
 	public List<Logro> getLogros() {
 		return logros;
 	}
@@ -159,14 +146,62 @@ public class Usuario {
 		this.biblioteca = biblioteca;
 	}
     
-	@Override
-	public String toString() {
-		return "Usuario [nombre=" + nombre + ", apellidos=" + apellidos + ", genero=" + genero + ", email=" + email
-				+ ", password=" + password + ", imagenPerfil=" + imagenPerfil + "]";
+	public List<Curso> getCursosCreados() {
+		return cursosCreados;
+	}
+	
+	public void setCursosCreados(List<Curso> cursosCreados) {
+		this.cursosCreados = cursosCreados;
 	}
 
+	public Set<Amistad> getAmistadesEnviadas() {
+		return amistadesEnviadas;
+	}
+	
+	public void setAmistadesEnviadas(Set<Amistad> amistadesEnviadas) {
+		this.amistadesEnviadas = amistadesEnviadas;
+	}
+	
+	public Set<Amistad> getAmistadesRecibidas() {
+		return amistadesRecibidas;
+	}
+	
+	public void setAmistadesRecibidas(Set<Amistad> amistadesRecibidas) {
+		this.amistadesRecibidas = amistadesRecibidas;
+	}
+	
+	public List<Usuario> getAmigos() {
+	    List<Usuario> amigos = new ArrayList<>();
+	    
+	    // Amigos de solicitudes enviadas que fueron aceptadas
+	    for (Amistad amistad : amistadesEnviadas) {
+	        if (amistad.getEstado() == EstadoAmistad.ACEPTADA) {
+	            amigos.add(amistad.getUsuario2());
+	        }
+	    }
+	    
+	    // Amigos de solicitudes recibidas que fueron aceptadas
+	    for (Amistad amistad : amistadesRecibidas) {
+	        if (amistad.getEstado() == EstadoAmistad.ACEPTADA) {
+	            amigos.add(amistad.getUsuario1());
+	        }
+	    }
+	    
+	    return amigos;
+	}
+
+	public List<Amistad> getSolicitudesPendientes() {
+	    return amistadesRecibidas.stream()
+	        .filter(a -> a.getEstado() == EstadoAmistad.PENDIENTE)
+	        .collect(Collectors.toList());
+	}
+
+	public List<Amistad> getSolicitudesEnviadas() {
+	    return amistadesEnviadas.stream()
+	        .filter(a -> a.getEstado() == EstadoAmistad.PENDIENTE)
+	        .collect(Collectors.toList());
+	}
 
 	
-	
-	
+
 }

@@ -3,7 +3,6 @@ package umu.pds.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
-import umu.pds.modelo.Curso;
 import umu.pds.modelo.Usuario;
 import umu.pds.vista.Login;
 import umu.pds.vista.Principal;
@@ -64,5 +63,7 @@ public class Piolify {
 		Principal ventanaPrincipal = new Principal();
         ventanaPrincipal.setVisible(true);
 	}
+	
+	
 	
 }

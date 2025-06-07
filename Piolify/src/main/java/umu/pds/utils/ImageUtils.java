@@ -13,72 +13,133 @@ import javax.swing.ImageIcon;
 
 public class ImageUtils {
 
+	
+	public static BufferedImage escalarImagenCalidad(Image imagen, int ancho, int alto) {
+	    if (imagen == null) return null;
+	    BufferedImage bufferedImagen;
+	    if (imagen instanceof BufferedImage) {
+	        bufferedImagen = (BufferedImage) imagen;
+	    } else {
+	        bufferedImagen = new BufferedImage(imagen.getWidth(null), imagen.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	        Graphics2D g = bufferedImagen.createGraphics();
+	        g.drawImage(imagen, 0, 0, null);
+	        g.dispose();
+	    }
+	    
+	    if (bufferedImagen.getWidth() == ancho && bufferedImagen.getHeight() == alto) {
+	        return bufferedImagen;
+	    }
+	    
+	    BufferedImage resultado = bufferedImagen;
+	    int anchoActual = bufferedImagen.getWidth();
+	    int altoActual = bufferedImagen.getHeight();
+	    
+	    while (anchoActual != ancho || altoActual != alto) {
+	        int nuevoAncho, nuevoAlto;
+	        
+	        if (anchoActual > ancho) {
+	            nuevoAncho = Math.max(ancho, anchoActual / 2);
+	        } else if (anchoActual < ancho) {
+	            nuevoAncho = Math.min(ancho, anchoActual * 2);
+	        } else {
+	            nuevoAncho = ancho;
+	        }
+	        
+	        if (altoActual > alto) {
+	            nuevoAlto = Math.max(alto, altoActual / 2);
+	        } else if (altoActual < alto) {
+	            nuevoAlto = Math.min(alto, altoActual * 2);
+	        } else {
+	            nuevoAlto = alto;
+	        }
+	        
+	        BufferedImage temp = new BufferedImage(nuevoAncho, nuevoAlto, BufferedImage.TYPE_INT_ARGB);
+	        Graphics2D g2d = temp.createGraphics();
+	        
+	        // renderizado en alta calidad
+	        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+	        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+	        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+	        
+	        g2d.drawImage(resultado, 0, 0, nuevoAncho, nuevoAlto, null);
+	        g2d.dispose();
+	        
+	        resultado = temp;
+	        anchoActual = nuevoAncho;
+	        altoActual = nuevoAlto;
+	    }
+	    
+	    return resultado;
+	}
+	
+	public static ImageIcon createCircularIcon(Image img, int diameter) {
+	    if (img == null) {
+	        return createCircularIcon(getImagenPorDefecto(), diameter);
+	    }
 
-    public static ImageIcon createCircularIcon(Image img, int diameter) {
-        if (img == null) return null;
+	    try {
+	        BufferedImage bufferedImage;
+	        if (img instanceof BufferedImage) {
+	            bufferedImage = (BufferedImage) img;
+	        } else {
+	            bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	            Graphics2D g = bufferedImage.createGraphics();
+	            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+	            g.drawImage(img, 0, 0, null);
+	            g.dispose();
+	        }
 
-        // Convertir a BufferedImage si no lo es
-        BufferedImage original;
-        if (img instanceof BufferedImage) {
-            original = (BufferedImage) img;
-        } else {
-            original = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2 = original.createGraphics();
-            g2.drawImage(img, 0, 0, null);
-            g2.dispose();
-        }
+	        int originalWidth = bufferedImage.getWidth();
+	        int originalHeight = bufferedImage.getHeight();
+	        int size = Math.min(originalWidth, originalHeight);
+	        
+	        int x = (originalWidth - size) / 2;
+	        int y = (originalHeight - size) / 2;
+	        
+	        BufferedImage imagenCuadrada = bufferedImage.getSubimage(x, y, size, size);
+	        BufferedImage imagenEscalada = escalarImagenCalidad(imagenCuadrada, diameter, diameter);
+	        BufferedImage imagenCircular = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+	        Graphics2D g2d = imagenCircular.createGraphics();
+	        
+	        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);    
+	        g2d.setClip(new Ellipse2D.Float(0, 0, diameter, diameter));
+	        g2d.drawImage(imagenEscalada, 0, 0, null);
+	        g2d.dispose();
 
-        // Crear imagen circular
-        BufferedImage circleBuffer = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = circleBuffer.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setClip(new Ellipse2D.Float(0, 0, diameter, diameter));
-        g2.drawImage(original, 0, 0, diameter, diameter, null);
-        g2.dispose();
-
-        return new ImageIcon(circleBuffer);
-    }
+	        return new ImageIcon(imagenCircular);
+	        
+	    } catch (Exception e) {
+	        System.err.println("Error creando icono circular: " + e.getMessage());
+	        e.printStackTrace();
+	        // En caso de error, intentar con imagen por defecto
+	        if (img != getImagenPorDefecto()) {
+	            return createCircularIcon(getImagenPorDefecto(), diameter);
+	        }
+	        return null;
+	    }
+	}
     
     public static ImageIcon escalarImagen(String imagePath, int width) {
         try {
-            ImageIcon originalIcon;
-            
-            // Determina si es un recurso o una ruta de archivo
-            if (imagePath.startsWith("/")) {
-                // Es un recurso del classpath
-                URL imageUrl = ImageUtils.class.getResource(imagePath);
-                if (imageUrl == null) {
-                    System.err.println("No se pudo encontrar el recurso: " + imagePath);
-                    return null;
-                }
-                originalIcon = new ImageIcon(imageUrl);
-            } else {
-                // Es una ruta de archivo
-                File file = new File(imagePath);
-                if (!file.exists()) {
-                    System.err.println("No se pudo encontrar el archivo: " + imagePath);
-                    return null;
-                }
-                originalIcon = new ImageIcon(imagePath);
+            Image imagen = cargarImagen(imagePath);
+            if (imagen == null) {
+                return null;
             }
             
-            // Obtener dimensiones originales
-            int originalWidth = originalIcon.getIconWidth();
-            int originalHeight = originalIcon.getIconHeight();
+            // Calcular alto manteniendo proporción
+            int originalWidth = imagen.getWidth(null);
+            int originalHeight = imagen.getHeight(null);
             
-            // Si la imagen es inválida o ya tiene el tamaño deseado
-            if (originalWidth <= 0 || originalHeight <= 0 || originalWidth == width) {
-                return originalIcon;
+            if (originalWidth <= 0 || originalHeight <= 0) {
+                return null;
             }
             
-            // Calcular el nuevo alto manteniendo la proporción
             int height = (originalHeight * width) / originalWidth;
+            BufferedImage imagenEscalada = escalarImagenCalidad(imagen, width, height);
             
-            // Escalar la imagen
-            Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(imagenEscalada);
             
-            // Crear un nuevo ImageIcon con la imagen escalada
-            return new ImageIcon(scaledImage);
         } catch (Exception e) {
             System.err.println("Error al escalar la imagen: " + e.getMessage());
             e.printStackTrace();

@@ -27,6 +27,11 @@ public class JPAFactoriaDAO extends FactoriaDAO {
 		return new AdaptadorCursoDAO(emf);
 	}
     
+	@Override
+	public AmistadDAO getAmistadDAO() {
+		return new AdaptadorAmistadDAO(emf);
+	}
+	
   
 	
 }

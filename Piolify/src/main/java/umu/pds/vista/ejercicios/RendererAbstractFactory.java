@@ -1,7 +1,6 @@
 package umu.pds.vista.ejercicios;
 
 import umu.pds.modelo.TipoEjercicio;
-import umu.pds.vista.ejercicios.EjercicioRenderer;
 
 public abstract class RendererAbstractFactory {
     

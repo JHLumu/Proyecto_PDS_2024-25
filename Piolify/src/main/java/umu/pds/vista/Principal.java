@@ -17,7 +17,6 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JButton;
-import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.GridBagConstraints;
@@ -56,7 +55,7 @@ public class Principal extends JFrame {
 	private JButton btnCursos;
 	private JButton btnEstadisticas;
 	private JButton btnPerfil;
-
+	private JButton btnAmistades;
 	
 	/**
 	 * Launch the application.
@@ -173,6 +172,30 @@ public class Principal extends JFrame {
 		});
 		panelNorte.add(btnEstadisticas);
 		
+		// boton amigos
+		btnAmistades = new PioButton("Amigos");
+		btnAmistades.setBackground(PioColores.MARRON_BUTTON);
+		panelNorte.add(btnAmistades);
+		btnAmistades.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        boolean panelExists = false;
+		        for (Component comp : panelCentroCardLayout.getComponents()) {
+		            if (comp instanceof Amigos) {
+		                panelExists = true;
+		                break;
+		            }
+		        }
+		        
+		        if (!panelExists) {
+		            panelCentroCardLayout.add(new Amigos(), "PANEL_AMIGOS");
+		        }
+		        
+		        cardLayout.show(panelCentroCardLayout, "PANEL_AMIGOS");
+		        actualizarBotonesActivos(btnAmistades);
+		    }
+		});
+
 		Component glue_1 = Box.createGlue();
 		panelNorte.add(glue_1);
 		
@@ -211,6 +234,7 @@ public class Principal extends JFrame {
 		btnCursos.setBackground(PioColores.MARRON_BUTTON);
 		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
 		btnPerfil.setBackground(PioColores.MARRON_BUTTON);
+		btnAmistades.setBackground(PioColores.MARRON_BUTTON);
 		
 		// Destacar botón activo (se puede definir un color MARRON_BUTTON_ACTIVO en PioColores)
 		// Por ahora usaremos un color más oscuro

@@ -25,10 +25,6 @@ import umu.pds.modelo.Curso;
 public class DashboardEstadisticas extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private Color primaryColor = PioColores.AMARILLO_LABEL; // Color amarillo suave para cabecera
-    private Color panelColor = PioColores.GRIS_PANEL;   // Color de fondo para los paneles
-    private Color textColor = PioColores.GRIS_TEXT;       // Color para texto principal
-    private Color accentColor = new Color(76, 175, 80);    // Color verde para barras de progreso
 
     /**
      * Constructor del panel de estadísticas
@@ -105,7 +101,7 @@ public class DashboardEstadisticas extends JPanel {
      */
     private JPanel createPanelResumen(String titulo) {
         JPanel panel = new JPanel();
-        panel.setBackground(panelColor);
+        panel.setBackground(PioColores.GRIS_PANEL);
         panel.setBorder(BorderFactory.createCompoundBorder(
             new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
             new EmptyBorder(15, 15, 15, 15)
@@ -116,7 +112,7 @@ public class DashboardEstadisticas extends JPanel {
         // Título del panel
         JLabel lblTitulo = new JLabel(titulo);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        lblTitulo.setForeground(textColor);
+        lblTitulo.setForeground(PioColores.GRIS_TEXT);
         panel.add(lblTitulo, BorderLayout.NORTH);
         
         return panel;
@@ -127,7 +123,7 @@ public class DashboardEstadisticas extends JPanel {
      */
     private JPanel createPanelActividad(String titulo) {
         JPanel panel = new JPanel();
-        panel.setBackground(panelColor);
+        panel.setBackground(PioColores.GRIS_PANEL);
         panel.setBorder(BorderFactory.createCompoundBorder(
             new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
             new EmptyBorder(15, 15, 15, 15)
@@ -138,7 +134,7 @@ public class DashboardEstadisticas extends JPanel {
         // Título del panel
         JLabel lblTitulo = new JLabel(titulo);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        lblTitulo.setForeground(textColor);
+        lblTitulo.setForeground(PioColores.GRIS_TEXT);
         panel.add(lblTitulo, BorderLayout.NORTH);
         
         return panel;
@@ -149,7 +145,7 @@ public class DashboardEstadisticas extends JPanel {
      */
     private JPanel createPanelLogros(String titulo) {
         JPanel panel = new JPanel();
-        panel.setBackground(panelColor);
+        panel.setBackground(PioColores.GRIS_PANEL);
         panel.setBorder(BorderFactory.createCompoundBorder(
             new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
             new EmptyBorder(15, 15, 15, 15)
@@ -160,7 +156,7 @@ public class DashboardEstadisticas extends JPanel {
         // Título del panel
         JLabel lblTitulo = new JLabel(titulo);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        lblTitulo.setForeground(textColor);
+        lblTitulo.setForeground(PioColores.GRIS_TEXT);
         panel.add(lblTitulo, BorderLayout.NORTH);
         
         return panel;
@@ -171,7 +167,7 @@ public class DashboardEstadisticas extends JPanel {
      */
     private JPanel createPanelProgreso(String titulo) {
         JPanel panel = new JPanel();
-        panel.setBackground(panelColor);
+        panel.setBackground(PioColores.GRIS_PANEL);
         panel.setBorder(BorderFactory.createCompoundBorder(
             new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
             new EmptyBorder(15, 15, 15, 15)
@@ -182,7 +178,7 @@ public class DashboardEstadisticas extends JPanel {
         // Título del panel
         JLabel lblTitulo = new JLabel(titulo);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        lblTitulo.setForeground(textColor);
+        lblTitulo.setForeground(PioColores.GRIS_TEXT);
         panel.add(lblTitulo, BorderLayout.NORTH);
         
         return panel;
