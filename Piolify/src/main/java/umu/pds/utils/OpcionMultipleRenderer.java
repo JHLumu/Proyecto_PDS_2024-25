@@ -17,15 +17,16 @@ import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import umu.pds.modelo.EjercicioOpcionMultiple;
-import umu.pds.vista.elementos.PioColores;
+
 
 public class OpcionMultipleRenderer implements EjercicioRenderer {
     private JLabel preguntaLabel;
     private JPanel opcionesPanel;
     private ButtonGroup opcionesGroup;
-    private JButton validarButton;
+    private JButton solucionButton;
     private JLabel resultadoLabel;
     private EjercicioOpcionMultiple ejercicio;
+    
     @Override
     public void renderizar(JPanel containerPanel, Object ejercicioObj) {
         this.ejercicio = (EjercicioOpcionMultiple) ejercicioObj;
@@ -65,12 +66,12 @@ public class OpcionMultipleRenderer implements EjercicioRenderer {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setOpaque(false);
         
-        validarButton = new JButton("Validar");
-        validarButton.setFont(new Font("Arial", Font.BOLD, 14));
-        validarButton.setBackground(Color.GREEN);
-        validarButton.setForeground(Color.WHITE);
-        validarButton.setFocusPainted(false);
-        buttonPanel.add(validarButton);
+        solucionButton = new JButton("Solución");
+        solucionButton.setFont(new Font("Arial", Font.BOLD, 14));
+        solucionButton.setBackground(Color.BLUE);
+        solucionButton.setForeground(Color.WHITE);
+        solucionButton.setFocusPainted(false);
+        buttonPanel.add(solucionButton);
         
         resultadoLabel = new JLabel("", SwingConstants.CENTER);
         resultadoLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -84,9 +85,8 @@ public class OpcionMultipleRenderer implements EjercicioRenderer {
     
     @Override
     public void configurarEventos() {
-        validarButton.addActionListener(e -> {
-            boolean esCorrecta = validarRespuesta();
-            // El resultado ya se muestra en validarRespuesta()
+        solucionButton.addActionListener(e -> {
+            mostrarSolucion();
         });
     }
     
@@ -101,20 +101,18 @@ public class OpcionMultipleRenderer implements EjercicioRenderer {
         String respuestaUsuario = seleccionado.getActionCommand();
         boolean esCorrecta = ejercicio.validarRespuesta(respuestaUsuario);
         
-        if (esCorrecta) {
-            mostrarResultado(true, "¡Correcto!");
-        } else {
-            mostrarResultado(false, "Incorrecto. La respuesta correcta es: " + 
-                           ejercicio.getRespuesta());
-        }
-        
-        validarButton.setEnabled(false);
         return esCorrecta;
+    }
+    
+    private void mostrarSolucion() {
+        String respuestaCorrecta = ejercicio.getRespuesta();
+        mostrarResultado(true, "La respuesta correcta es: " + respuestaCorrecta);
+        solucionButton.setEnabled(false);
     }
     
     @Override
     public void mostrarResultado(boolean esCorrecta, String mensaje) {
         resultadoLabel.setText(mensaje);
-        resultadoLabel.setForeground(esCorrecta ? Color.GREEN : PioColores.ROJO);
+        resultadoLabel.setForeground(Color.BLUE);
     }
 }

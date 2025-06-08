@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +26,7 @@ public class Bloque {
 	private String descripcion;
 	
 	
-    @OneToMany(mappedBy = "bloque", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bloque", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("orden ASC")
 	private List<Ejercicio> ejercicios;
 	

@@ -24,7 +24,7 @@ import umu.pds.vista.elementos.PioColores;
 public class RellenarHuecosRenderer implements EjercicioRenderer {
     private JPanel contenidoPanel;
     private List<JTextField> camposHuecos;
-    private JButton validarButton;
+    private JButton solucionButton;
     private JLabel resultadoLabel;
     private EjercicioRellenarHuecos ejercicio;
     private JPanel containerPanel;
@@ -64,12 +64,12 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setOpaque(false);
         
-        validarButton = new JButton("Validar");
-        validarButton.setFont(new Font("Arial", Font.BOLD, 14));
-        validarButton.setBackground(Color.GREEN);
-        validarButton.setForeground(Color.WHITE);
-        validarButton.setFocusPainted(false);
-        buttonPanel.add(validarButton);
+        solucionButton = new JButton("Solución");
+        solucionButton.setFont(new Font("Arial", Font.BOLD, 14));
+        solucionButton.setBackground(Color.BLUE);
+        solucionButton.setForeground(Color.WHITE);
+        solucionButton.setFocusPainted(false);
+        buttonPanel.add(solucionButton);
         
         resultadoLabel = new JLabel("", SwingConstants.CENTER);
         resultadoLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -132,9 +132,8 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
     
     @Override
     public void configurarEventos() {
-        validarButton.addActionListener(e -> {
-            boolean esCorrecta = validarRespuesta();
-            // El resultado ya se muestra en validarRespuesta()
+        solucionButton.addActionListener(e -> {
+            mostrarSolucion();
         });
     }
     
@@ -189,13 +188,37 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
                            camposCorrectos, camposHuecos.size()));
         }
         
-        validarButton.setEnabled(false);
         return todasCorrectas;
+    }
+    
+    private void mostrarSolucion() {
+        if (camposHuecos.isEmpty()) {
+            mostrarResultado(true, "No hay huecos para mostrar");
+            return;
+        }
+        
+        String[] respuestasCorrectas = ejercicio.getRespuesta().split("\\|");
+        
+        // Rellenar los campos con las respuestas correctas
+        for (int i = 0; i < camposHuecos.size(); i++) {
+            JTextField campo = camposHuecos.get(i);
+            if (i < respuestasCorrectas.length) {
+                campo.setText(respuestasCorrectas[i].trim());
+            }
+            campo.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.BLUE, 2),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)
+            ));
+            campo.setEditable(false);
+        }
+        
+        mostrarResultado(true, "Solución mostrada");
+        solucionButton.setEnabled(false);
     }
     
     @Override
     public void mostrarResultado(boolean esCorrecta, String mensaje) {
         resultadoLabel.setText(mensaje);
-        resultadoLabel.setForeground(esCorrecta ? Color.GREEN : PioColores.ROJO);
+        resultadoLabel.setForeground(Color.BLUE);
     }
 }

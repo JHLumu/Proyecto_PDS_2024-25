@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("OPCION_MULTIPLE")
 public class EjercicioOpcionMultiple extends Ejercicio {
 	
     @Column(name = "opciones", columnDefinition = "TEXT")
