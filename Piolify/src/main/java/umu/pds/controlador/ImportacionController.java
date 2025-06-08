@@ -1,6 +1,8 @@
 package umu.pds.controlador;
 
 import umu.pds.modelo.Curso;
+import umu.pds.modelo.Usuario;
+import umu.pds.servicios.CursoService;
 import umu.pds.servicios.ServicioImportacion;
 import umu.pds.servicios.ServicioImportacion.ResultadoImportacion;
 import umu.pds.servicios.importacion.ImportacionException;
@@ -15,15 +17,24 @@ public class ImportacionController {
     private static final Logger logger = Logger.getLogger(ImportacionController.class.getName());
     
     private final ServicioImportacion servicioImportacion;
+    private final CursoService cursoService;
     
     public ImportacionController() {
         this.servicioImportacion = new ServicioImportacion();
+        this.cursoService = new CursoService();
     }
     
+    // constructor para testing
+	public ImportacionController(ServicioImportacion servicioImportacion, CursoService cursoService) {
+		this.servicioImportacion = servicioImportacion;
+		this.cursoService = cursoService;
+	}
+	
+	
     /**
      * Importa cursos desde un archivo y los agrega al sistema
      */
-    public boolean importarCursosDesdeArchivo(String rutaArchivo) {
+    public boolean importarCursosDesdeArchivo(String rutaArchivo, Usuario usuario) {
         try {
             logger.info("Iniciando importación desde archivo: " + rutaArchivo);
             
@@ -36,8 +47,7 @@ public class ImportacionController {
                            " cursos importados usando formato " + resultado.getFormatoUtilizado());
                 
                 // Procesar cursos importados
-                procesarCursosImportados(resultado.getCursos());
-                
+                procesarCursosImportados(resultado.getCursos(), usuario);
                 return true;
             } else {
                 logger.warning("La importación no produjo cursos válidos");
@@ -57,7 +67,7 @@ public class ImportacionController {
     /**
      * Importa cursos desde un InputStream
      */
-    public boolean importarCursosDesdeStream(InputStream inputStream, String extension) {
+    public boolean importarCursosDesdeStream(InputStream inputStream, String extension, Usuario usuario) {
         try {
             logger.info("Iniciando importación desde stream con extensión: " + extension);
             
@@ -67,7 +77,7 @@ public class ImportacionController {
                 logger.info("Importación exitosa: " + resultado.getCantidadImportada() + 
                            " cursos importados usando formato " + resultado.getFormatoUtilizado());
                 
-                procesarCursosImportados(resultado.getCursos());
+                procesarCursosImportados(resultado.getCursos(), usuario);
                 return true;
             } else {
                 logger.warning("La importación no produjo cursos válidos");
@@ -101,7 +111,7 @@ public class ImportacionController {
     /**
      * Procesa los cursos importados (aquí puedes agregar lógica de negocio)
      */
-    private void procesarCursosImportados(List<Curso> cursos) {
+    private void procesarCursosImportados(List<Curso> cursos, Usuario usuario) {
         // Establecer el usuario autor como el usuario actual
         // Usuario usuarioActual = aplicacionPrincipal.getUsuarioActual();
         
@@ -113,10 +123,9 @@ public class ImportacionController {
             
             // Validaciones adicionales
             validarCursoImportado(curso);
-            
-            // Aquí podrías guardar en base de datos
-            // cursoRepository.save(curso);
-            
+            cursoService.guardarCurso(curso);
+            usuario.getBiblioteca().add(curso);
+            Piolify.getUnicaInstancia().getUsuarioController().modificarUsuario(usuario);
             logger.info("Curso procesado: " + curso.getTitulo());
         }
         
@@ -138,7 +147,7 @@ public class ImportacionController {
         
         // Validar bloques y ejercicios
         curso.getBloques().forEach(bloque -> {
-            if (bloque.getListaEjercicios() == null || bloque.getListaEjercicios().isEmpty()) {
+            if (bloque.getEjercicios() == null || bloque.getEjercicios().isEmpty()) {
                 throw new IllegalArgumentException("El bloque '" + bloque.getTitulo() + "' debe tener ejercicios");
             }
         });

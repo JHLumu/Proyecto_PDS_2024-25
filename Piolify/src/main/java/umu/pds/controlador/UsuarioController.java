@@ -17,6 +17,14 @@ public class UsuarioController {
 		this.usuarioValidador = new UsuarioValidador();
 	}
 	
+	// constructor para test mocks
+	public UsuarioController(Piolify piolify, UsuarioService usuarioService, UsuarioValidador usuarioValidador) {
+		this.controlador = piolify;
+		this.usuarioService = usuarioService;
+		this.usuarioValidador = usuarioValidador;
+	}
+	
+	
 	public boolean iniciarSesion(String email, String password) {
 		usuarioValidador.validarLogin(email, password);
 		Usuario usuario = usuarioService.iniciarSesion(email, password);
@@ -72,6 +80,7 @@ public class UsuarioController {
 			usuario.setPassword(passwordNueva);
 		}
 	}
+
 	
 	public Usuario buscarUsuarioPorEmail(String email) {
 	    return usuarioService.buscarUsuarioPorEmail(email);

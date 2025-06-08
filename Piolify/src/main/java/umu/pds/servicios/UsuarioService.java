@@ -20,17 +20,23 @@ public class UsuarioService {
 	private final CatalogoUsuarios catalogoUsuarios;
 	private final UsuarioDAO repoUsuarios;
 	private final AmistadDAO repoAmistades;
-	
-	public UsuarioService () {
+
+	public UsuarioService() {
 		this.catalogoUsuarios = CatalogoUsuarios.getInstancia();
 		this.repoUsuarios = JPAFactoriaDAO.getInstancia().getUsuarioDAO();
 		this.repoAmistades = JPAFactoriaDAO.getInstancia().getAmistadDAO();
 	}
 	
+	//constructor para testing mocks
+	public UsuarioService(CatalogoUsuarios catalogoUsuarios, UsuarioDAO usuarioDAO, AmistadDAO amistadDAO) {
+		this.catalogoUsuarios = catalogoUsuarios;
+		this.repoUsuarios = usuarioDAO;
+		this.repoAmistades = amistadDAO;
+	}
+	
 	public boolean registrarUsuario(RegistroUsuarioDTO dto) {
         if (catalogoUsuarios.existeEmail(dto.getEmail())) {
         	return false;
-            
         } 
         Usuario usuario = new Usuario(dto.getNombre(), dto.getApellidos(), dto.getGenero(), dto.getEmail(), dto.getPassword(), dto.getRutaImagenPerfil());
         repoUsuarios.registrarUsuario(usuario);
@@ -38,7 +44,6 @@ public class UsuarioService {
         return true;
     }
     
-
     public Usuario iniciarSesion(String email, String password) {
         Optional<Usuario> usuarioOpt = catalogoUsuarios.buscarPorEmail(email);
         if (usuarioOpt.isPresent() && usuarioOpt.get().getPassword().equals(password)) {
@@ -52,7 +57,6 @@ public class UsuarioService {
         	return false;
         }
         
-        // guardar en base de datos
         repoUsuarios.modificarUsuario(usuario);
         catalogoUsuarios.actualizarUsuario(usuario);
         return true;   
@@ -71,7 +75,6 @@ public class UsuarioService {
 		usuario.getLogros().add(logro);
 		repoUsuarios.modificarUsuario(usuario);
 		catalogoUsuarios.actualizarUsuario(usuario);
-		
 	}
 
 	public Estadisticas obtenerEstadisticas(Usuario usuario) {
@@ -79,7 +82,6 @@ public class UsuarioService {
 			throw new IllegalArgumentException("Usuario no puede ser nulo");
 		}
 		return usuario.getEstadisticas();
-		
 	}
 	
 	public Usuario buscarUsuarioPorEmail(String email) {
