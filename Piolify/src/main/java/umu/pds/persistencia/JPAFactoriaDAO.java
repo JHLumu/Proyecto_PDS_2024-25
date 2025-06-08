@@ -16,6 +16,7 @@ public class JPAFactoriaDAO extends FactoriaDAO {
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
+	
 
 	@Override
 	public UsuarioDAO getUsuarioDAO() {
@@ -30,6 +31,11 @@ public class JPAFactoriaDAO extends FactoriaDAO {
 	@Override
 	public AmistadDAO getAmistadDAO() {
 		return new AdaptadorAmistadDAO(emf);
+	}
+
+	@Override
+	public SesionAprendizajeDAO getSesionAprendizajeDAO() {
+		return new AdaptadorSesionAprendizajeDAO(emf);
 	}
 	
   

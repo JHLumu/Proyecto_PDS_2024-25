@@ -164,10 +164,27 @@ public class Principal extends JFrame {
 		btnEstadisticas = new PioButton("Estadísticas");
 		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
 		btnEstadisticas.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(panelCentroCardLayout, PANEL_ESTADISTICAS);
-				actualizarBotonesActivos(btnEstadisticas);
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        refrescarPanelEstadisticas();
+		        cardLayout.show(panelCentroCardLayout, PANEL_ESTADISTICAS);
+		        actualizarBotonesActivos(btnEstadisticas);
+		    }
+
+			private void refrescarPanelEstadisticas() {
+				// TODO Auto-generated method stub
+			    // Remover el panel actual de estadísticas
+			    Component[] components = panelCentroCardLayout.getComponents();
+			    for (Component component : components) {
+			        if (component instanceof DashboardEstadisticas) {
+			            panelCentroCardLayout.remove(component);
+			            break;
+			        }
+			    }
+			    
+			    // Crear y agregar un nuevo panel de estadísticas actualizado
+			    DashboardEstadisticas nuevoPanel = new DashboardEstadisticas(usuarioActual);
+			    panelCentroCardLayout.add(nuevoPanel, PANEL_ESTADISTICAS);
 			}
 		});
 		panelNorte.add(btnEstadisticas);
@@ -233,7 +250,9 @@ public class Principal extends JFrame {
 		// Restablecer todos los botones
 		btnCursos.setBackground(PioColores.MARRON_BUTTON);
 		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
+		
 		btnPerfil.setBackground(PioColores.MARRON_BUTTON);
+		
 		btnAmistades.setBackground(PioColores.MARRON_BUTTON);
 		
 		// Destacar botón activo (se puede definir un color MARRON_BUTTON_ACTIVO en PioColores)

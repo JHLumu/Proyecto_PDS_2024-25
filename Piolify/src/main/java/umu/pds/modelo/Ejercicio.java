@@ -96,6 +96,14 @@ public abstract class Ejercicio {
 		this.orden = orden;
 	}
 	
+	public Bloque getBloque() {
+		return this.bloque;
+	}
+	
+	public void setBloque(Bloque bloque) {
+		this.bloque = bloque;
+	}
+	
 	public abstract void renderEjercicio();
 	
 	public abstract boolean validarRespuesta(String respuestaUsuario);
@@ -108,8 +116,5 @@ public abstract class Ejercicio {
     	this.tipo = tipo;
     }
 
-	public void setBloque(Bloque bloque) {
-		this.bloque = bloque;
-	}
-    
+
 }

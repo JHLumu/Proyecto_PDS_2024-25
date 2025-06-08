@@ -17,7 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import umu.pds.controlador.EjercicioFacade;
+import umu.pds.controlador.Piolify;
+import umu.pds.modelo.Curso;
 import umu.pds.modelo.Ejercicio;
+import umu.pds.modelo.SesionAprendizaje;
+import umu.pds.modelo.Usuario;
+import umu.pds.servicios.ServicioEstadisticas;
 import umu.pds.utils.EjercicioRenderer;
 import umu.pds.vista.elementos.BaseRoundedFrame;
 import umu.pds.vista.elementos.PioColores;
@@ -40,6 +45,13 @@ public class PioEjercicios extends BaseRoundedFrame {
     private JButton btnSiguiente;
     private JLabel lblProgreso;
     
+    // Nuevos campos para estadísticas
+    private ServicioEstadisticas servicioEstadisticas;
+    private SesionAprendizaje sesionActual;
+    private Usuario usuarioActual;
+    private int aciertos = 0;
+    private int fallos = 0;
+    
     // Constructor para WindowBuilder
     public PioEjercicios() {
         super();
@@ -56,10 +68,11 @@ public class PioEjercicios extends BaseRoundedFrame {
         
         initRuntimeComponents();
         prepararTodosLosEjercicios();
+        iniciarSesionAprendizaje();
         mostrarEjercicioActual();
     }
     
-    // NUEVO: Constructor que recibe una lista de ejercicios
+    // Constructor que recibe una lista de ejercicios
     public PioEjercicios(List<Ejercicio> ejercicios) {
         super("Serie de Ejercicios");
         
@@ -72,9 +85,8 @@ public class PioEjercicios extends BaseRoundedFrame {
         
         initRuntimeComponents();
         prepararTodosLosEjercicios();
+        iniciarSesionAprendizaje();
         mostrarEjercicioActual();
-        
-       
     }
     
     private void initDesignModeComponents() {
@@ -84,10 +96,14 @@ public class PioEjercicios extends BaseRoundedFrame {
     }
     
     private void initRuntimeComponents() {
-    	setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/mascota.png")));
-    	setFocusable(false);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/mascota.png")));
+        setFocusable(false);
         setBackgroundColor(PioColores.AMARILLO_LABEL);
         setCloseButtonColor(PioColores.ROJO);
+        
+        // Inicializar servicios de estadísticas
+        this.servicioEstadisticas = new ServicioEstadisticas();
+        this.usuarioActual = Piolify.getUnicaInstancia().getUsuarioActual();
         
         // Crear CardLayout y panel principal
         cardLayout = new CardLayout();
@@ -124,6 +140,94 @@ public class PioEjercicios extends BaseRoundedFrame {
         actualizarEstadoBotones();
     }
     
+    /**
+     * Inicia una nueva sesión de aprendizaje
+     */
+    private void iniciarSesionAprendizaje() {
+        if (listaEjercicios != null && !listaEjercicios.isEmpty()) {
+            Ejercicio primerEjercicio = listaEjercicios.get(0);
+            Curso curso = primerEjercicio.getBloque().getCurso();
+            
+            sesionActual = servicioEstadisticas.iniciarSesion(
+                usuarioActual, 
+                curso, 
+                primerEjercicio
+            );
+            
+            System.out.println("Sesión iniciada para el curso: " + curso.getTitulo());
+        }
+    }
+    
+    /**
+     * Actualiza la sesión con el ejercicio actual
+     */
+    private void actualizarSesionEjercicio() {
+        if (sesionActual != null && ejercicioActual != null) {
+            sesionActual.setEjercicio(ejercicioActual);
+            // No necesitamos guardar aquí, se guarda al finalizar
+        }
+    }
+    
+    /**
+     * Registra un acierto en la sesión
+     */
+    private void registrarAcierto() {
+        aciertos++;
+        if (sesionActual != null) {
+            servicioEstadisticas.registrarAcierto(sesionActual);
+        }
+    }
+    
+    /**
+     * Registra un fallo en la sesión
+     */
+    private void registrarFallo() {
+        fallos++;
+        if (sesionActual != null) {
+            servicioEstadisticas.registrarFallo(sesionActual);
+        }
+    }
+    
+    /**
+     * Finaliza la sesión de aprendizaje
+     */
+    private void finalizarSesion() {
+        if (sesionActual != null) {
+            servicioEstadisticas.finalizarSesion(sesionActual);
+            
+            // Mostrar resumen de la sesión
+            mostrarResumenSesion();
+            
+            System.out.println("Sesión finalizada. Aciertos: " + aciertos + ", Fallos: " + fallos);
+        }
+    }
+    
+    /**
+     * Muestra un resumen de la sesión completada
+     */
+    private void mostrarResumenSesion() {
+        if (sesionActual == null) return;
+        
+        StringBuilder resumen = new StringBuilder();
+        resumen.append("¡Sesión completada!\n\n");
+        resumen.append("Estadísticas de la sesión:\n");
+        resumen.append("• Ejercicios completados: ").append(sesionActual.getEjerciciosCompletados()).append("\n");
+        resumen.append("• Aciertos: ").append(sesionActual.getAciertos()).append("\n");
+        resumen.append("• Fallos: ").append(sesionActual.getFallos()).append("\n");
+        resumen.append("• Precisión: ").append(String.format("%.1f%%", sesionActual.getPorcentajeAciertos())).append("\n");
+        
+        if (sesionActual.getTiempoTotal() > 0) {
+            int minutos = sesionActual.getTiempoTotal() / 60;
+            int segundos = sesionActual.getTiempoTotal() % 60;
+            resumen.append("• Tiempo total: ").append(minutos).append("m ").append(segundos).append("s\n");
+        }
+        
+        JOptionPane.showMessageDialog(this, 
+            resumen.toString(), 
+            "Resumen de Sesión", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    
     private void prepararTodosLosEjercicios() {
         // Crear todos los paneles de ejercicios y agregarlos al CardLayout
         renderers = Arrays.asList(new EjercicioRenderer[listaEjercicios.size()]);
@@ -149,13 +253,13 @@ public class PioEjercicios extends BaseRoundedFrame {
     }
     
     private void configurarEventos() {
-    	btnAnterior.addActionListener(new ActionListener() {
+        btnAnterior.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 anteriorEjercicio();
             }
         });
-    	
+        
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,6 +278,9 @@ public class PioEjercicios extends BaseRoundedFrame {
     private void mostrarEjercicioActual() {
         // Actualizar ejercicio actual
         ejercicioActual = listaEjercicios.get(indiceActual);
+        
+        // Actualizar sesión con ejercicio actual
+        actualizarSesionEjercicio();
         
         // Mostrar la tarjeta correspondiente
         String nombreCard = "ejercicio_" + indiceActual;
@@ -202,6 +309,13 @@ public class PioEjercicios extends BaseRoundedFrame {
         if (rendererActual != null) {
             boolean esCorrecta = rendererActual.validarRespuesta();
             
+            // Registrar estadísticas
+            if (esCorrecta) {
+                registrarAcierto();
+            } else {
+                registrarFallo();
+            }
+            
             // Mostrar resultado
             String mensaje = esCorrecta ? "¡Correcto!" : "Incorrecto. Inténtalo de nuevo.";
             String titulo = esCorrecta ? "Bien hecho" : "Resultado";
@@ -216,7 +330,8 @@ public class PioEjercicios extends BaseRoundedFrame {
                 if (hayMasEjercicios()) {
                     btnSiguiente.setEnabled(true);
                 } else {
-                    // Es el último ejercicio
+                    // Es el último ejercicio - finalizar sesión
+                    finalizarSesion();
                     JOptionPane.showMessageDialog(this, 
                         "¡Felicidades! Has completado todos los ejercicios.", 
                         "Serie completada", 
@@ -232,10 +347,13 @@ public class PioEjercicios extends BaseRoundedFrame {
         // El botón anterior se habilita si no estamos en el primer ejercicio
         btnAnterior.setEnabled(indiceActual > 0);
         
-        // El botón siguiente se habilita si no estamos en el último ejercicio
-        btnSiguiente.setEnabled(indiceActual < listaEjercicios.size() - 1);
+        // El botón siguiente se deshabilita hasta validar correctamente
+        // (se habilita en validarRespuestaActual cuando es correcto)
+        if (indiceActual >= listaEjercicios.size() - 1) {
+            btnSiguiente.setEnabled(false);
+        }
         
-        // El botón solución siempre está habilitado
+        // El botón validar siempre está habilitado
         btnValidar.setEnabled(true);
     }
     
@@ -261,8 +379,19 @@ public class PioEjercicios extends BaseRoundedFrame {
     }
     
     private void actualizarProgreso() {
-        lblProgreso.setText(String.format("Ejercicio %d de %d", 
-            indiceActual + 1, listaEjercicios.size()));
+        String estadisticas = String.format("Ejercicio %d de %d | Aciertos: %d | Fallos: %d", 
+            indiceActual + 1, listaEjercicios.size(), aciertos, fallos);
+        lblProgreso.setText(estadisticas);
+    }
+    
+    // Sobrescribir dispose para asegurar que se cierre la sesión
+    @Override
+    public void dispose() {
+        if (sesionActual != null && !sesionActual.isCompletada()) {
+            // Si se cierra sin completar, aún guardar la sesión parcial
+            servicioEstadisticas.finalizarSesion(sesionActual);
+        }
+        super.dispose();
     }
     
     // Método público para validación (mantenido por compatibilidad)
@@ -295,4 +424,14 @@ public class PioEjercicios extends BaseRoundedFrame {
         }
     }
     
+    // Método público para obtener estadísticas de la sesión actual
+    public SesionAprendizaje getSesionActual() {
+        return sesionActual;
+    }
+    
+    // Método para obtener estadísticas en tiempo real
+    public String getEstadisticasActuales() {
+        return String.format("Aciertos: %d | Fallos: %d | Ejercicio: %d/%d", 
+            aciertos, fallos, indiceActual + 1, listaEjercicios.size());
+    }
 }
