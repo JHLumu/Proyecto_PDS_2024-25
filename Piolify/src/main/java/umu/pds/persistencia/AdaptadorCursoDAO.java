@@ -3,8 +3,6 @@ package umu.pds.persistencia;
 import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Curso;
 
 public class AdaptadorCursoDAO implements CursoDAO{

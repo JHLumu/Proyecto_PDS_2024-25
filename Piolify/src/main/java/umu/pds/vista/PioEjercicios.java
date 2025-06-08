@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -72,6 +73,8 @@ public class PioEjercicios extends BaseRoundedFrame {
         initRuntimeComponents();
         prepararTodosLosEjercicios();
         mostrarEjercicioActual();
+        
+       
     }
     
     private void initDesignModeComponents() {
@@ -81,8 +84,8 @@ public class PioEjercicios extends BaseRoundedFrame {
     }
     
     private void initRuntimeComponents() {
-        setSize(700, 500);
-        setLocationRelativeTo(null);
+    	setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/mascota.png")));
+    	setFocusable(false);
         setBackgroundColor(PioColores.AMARILLO_LABEL);
         setCloseButtonColor(PioColores.ROJO);
         
@@ -188,6 +191,9 @@ public class PioEjercicios extends BaseRoundedFrame {
         // Refrescar la vista
         panelEjercicios.revalidate();
         panelEjercicios.repaint();
+        
+        pack();
+        setLocationRelativeTo(null);
     }
     
     private void validarRespuestaActual() {

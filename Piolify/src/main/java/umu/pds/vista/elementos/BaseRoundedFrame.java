@@ -34,9 +34,19 @@ public class BaseRoundedFrame extends JFrame {
         initComponents();
         if (!designMode) {
             applyRuntimeFeatures();
-            setMinimumSize(new Dimension(300, 200)); // Tamaño mínimo adecuado
-            setSize(500, 350); // Tamaño inicial por defecto
         }
+        
+        // Cada vez que el frame cambie de tamaño, recalculamos la shape:
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                setShape(new RoundRectangle2D.Double(
+                    0, 0,
+                    getWidth(), getHeight(),
+                    CORNER_RADIUS, CORNER_RADIUS
+                ));
+            }
+        });
     }
 
     private void initComponents() {
@@ -83,7 +93,6 @@ public class BaseRoundedFrame extends JFrame {
         mainPanel.add(titleBar, BorderLayout.NORTH);
         mainPanel.add(contentPanel, BorderLayout.CENTER);
         
-        setMinimumSize(new Dimension(200, 150));
         setupDragListeners();
     }
 
