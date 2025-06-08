@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -14,7 +16,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -37,15 +38,7 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         
         camposHuecos = new ArrayList<>();
         
-        // Panel principal con scroll
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
-        scrollPane.setBorder(null);
-        
-        JPanel containerPanelInterno = new JPanel(new BorderLayout());
-        containerPanelInterno.setOpaque(false);
-        
+        // Panel principal
         contenidoPanel = new JPanel();
         contenidoPanel.setLayout(new BoxLayout(contenidoPanel, BoxLayout.Y_AXIS));
         contenidoPanel.setOpaque(false);
@@ -53,10 +46,19 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         
         crearContenidoConHuecos();
         
-        containerPanelInterno.add(contenidoPanel, BorderLayout.NORTH);
-        scrollPane.setViewportView(containerPanelInterno);
-        containerPanel.add(scrollPane, BorderLayout.CENTER);
-
+        JPanel panelCentral = new JPanel(new GridBagLayout());
+        panelCentral.setOpaque(false);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panelCentral.add(contenidoPanel, gbc);
+        
+        containerPanel.add(panelCentral, BorderLayout.CENTER);
+        
         // Panel inferior
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setOpaque(false);
@@ -87,7 +89,7 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         Pattern pattern = Pattern.compile("(\\{[^}]*\\}|\\[[^\\]]*\\]|_{3,})");
         Matcher matcher = pattern.matcher(contenido);
         
-        JPanel lineaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel lineaPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         lineaPanel.setOpaque(false);
         
         int ultimaPosicion = 0;
