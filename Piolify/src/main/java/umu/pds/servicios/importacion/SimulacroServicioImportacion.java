@@ -371,8 +371,8 @@ public class SimulacroServicioImportacion {
         }
         
         if (bloqueSeleccionado == null || 
-            bloqueSeleccionado.getListaEjercicios() == null || 
-            bloqueSeleccionado.getListaEjercicios().isEmpty()) {
+            bloqueSeleccionado.getEjercicios() == null || 
+            bloqueSeleccionado.getEjercicios().isEmpty()) {
             JOptionPane.showMessageDialog(ventanaPrincipal, 
                 "El bloque seleccionado no tiene ejercicios.", 
                 "Sin ejercicios", 
@@ -382,7 +382,7 @@ public class SimulacroServicioImportacion {
         
         // Abrir PioEjercicios con la lista de ejercicios
         try {
-            List<Ejercicio> ejercicios = bloqueSeleccionado.getListaEjercicios();
+            List<Ejercicio> ejercicios = bloqueSeleccionado.getEjercicios();
             appendResultado("Abriendo ventana de ejercicios...\n");
             appendResultado("  - Curso: " + cursoSeleccionado.getTitulo() + "\n");
             appendResultado("  - Bloque: " + bloqueSeleccionado.getTitulo() + "\n");
@@ -419,11 +419,11 @@ public class SimulacroServicioImportacion {
                     var bloque = curso.getBloques().get(j);
                     appendResultado("      * Bloque " + (j + 1) + ": " + bloque.getTitulo() + "\n");
                     
-                    if (bloque.getListaEjercicios() != null) {
-                        appendResultado("        - Ejercicios: " + bloque.getListaEjercicios().size() + "\n");
+                    if (bloque.getEjercicios() != null) {
+                        appendResultado("        - Ejercicios: " + bloque.getEjercicios().size() + "\n");
                         
-                        for (int k = 0; k < bloque.getListaEjercicios().size(); k++) {
-                            var ejercicio = bloque.getListaEjercicios().get(k);
+                        for (int k = 0; k < bloque.getEjercicios().size(); k++) {
+                            var ejercicio = bloque.getEjercicios().get(k);
                             appendResultado("          + Ejercicio " + (k + 1) + ": " + 
                                          ejercicio.getClass().getSimpleName() + 
                                          " (" + ejercicio.getContenido() + ")\n");

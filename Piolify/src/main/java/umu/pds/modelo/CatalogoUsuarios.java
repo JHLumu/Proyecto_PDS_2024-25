@@ -2,11 +2,11 @@ package umu.pds.modelo;
 
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import umu.pds.persistencia.FactoriaDAO;
 import umu.pds.persistencia.JPAFactoriaDAO;
 import umu.pds.persistencia.UsuarioDAO;
@@ -17,16 +17,13 @@ public class CatalogoUsuarios {
 		private static CatalogoUsuarios instancia = new CatalogoUsuarios();
 		//Mapa que asocia correos electrónicos con usuarios
 		private final Map<String,Usuario> usuarios;
-		//Factoria DAO para crear el usuarioDAO
-		private final FactoriaDAO factoria;
 		//Usuario DAO para la persistencia de usuarios
 		private final UsuarioDAO usuarioDAO;
 		
 
 		private CatalogoUsuarios() {
 			this.usuarios = new HashMap<String,Usuario>();
-			factoria = FactoriaDAO.getInstancia(JPAFactoriaDAO.class.getName());
-			usuarioDAO = factoria.getUsuarioDAO();
+			usuarioDAO  = FactoriaDAO.getInstancia(JPAFactoriaDAO.class.getName()).getUsuarioDAO();
 			cargarCatalogo();		
 		}
 		
@@ -53,7 +50,6 @@ public class CatalogoUsuarios {
 	  
 	    }
 	    
-		
 		private void cargarCatalogo() {
 			try {
 				List<Usuario> listaUsuarios = usuarioDAO.recuperarTodosUsuarios();

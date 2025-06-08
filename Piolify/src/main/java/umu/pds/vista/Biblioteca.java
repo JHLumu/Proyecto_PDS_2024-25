@@ -12,6 +12,7 @@ import umu.pds.modelo.Usuario;
 import umu.pds.controlador.Piolify;
 import umu.pds.servicios.CursoSerializer;
 import umu.pds.vista.elementos.PioButton;
+
 import umu.pds.vista.elementos.PioColores;
 
 public class Biblioteca extends JPanel {
@@ -20,6 +21,7 @@ public class Biblioteca extends JPanel {
     private JPanel panelCentral;
     private JPanel panelListaCursos;
     private JPanel panelImportarCursos;
+    private JTextArea descripcionAreaListaCursos;
     private Color panelColor = PioColores.GRIS_PANEL;
     
 	private static final long serialVersionUID = 1L;
@@ -96,21 +98,34 @@ public class Biblioteca extends JPanel {
         panelListaCursos.add(lblTitulo, BorderLayout.NORTH);
 
         // Descripción
-        JTextArea descripcionArea = new JTextArea(
+        descripcionAreaListaCursos = new JTextArea(
             "Aquí aparecerán todos los cursos disponibles para que explores, aprendas y sigas creciendo. "
           + "Actualmente no hay cursos cargados, pero muy pronto tendrás acceso a contenidos variados "
           + "y personalizados. ¡Mantente atento, lo bueno está por llegar!"
         );
-        descripcionArea.setLineWrap(true);
-        descripcionArea.setWrapStyleWord(true);
-        descripcionArea.setEditable(false);
-        descripcionArea.setOpaque(false);
-        descripcionArea.setFont(new Font("Arial", Font.PLAIN, 14));
-        descripcionArea.setForeground(PioColores.NEGRO);
-        descripcionArea.setBorder(null);
+        descripcionAreaListaCursos.setLineWrap(true);
+        descripcionAreaListaCursos.setWrapStyleWord(true);
+        descripcionAreaListaCursos.setEditable(false);
+        descripcionAreaListaCursos.setOpaque(false);
+        descripcionAreaListaCursos.setFont(new Font("Arial", Font.PLAIN, 14));
+        descripcionAreaListaCursos.setForeground(PioColores.NEGRO);
+        descripcionAreaListaCursos.setBorder(null);
 
-        panelListaCursos.add(descripcionArea, BorderLayout.CENTER);
-
+        List<Curso> cursos = usuario.getBiblioteca();
+        if (cursos.isEmpty()) {
+        	panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
+        } else {
+            for (Curso curso : cursos) {
+                JButton btnCurso = new JButton(curso.getTitulo());
+                btnCurso.setAlignmentX(Component.LEFT_ALIGNMENT);
+                // Acción al pulsar el botón: abrir el curso (por implementar)
+                btnCurso.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(this, "Abrir curso: " + curso.getTitulo());
+                });
+                panelListaCursos.add(btnCurso);
+            }
+        }
+        
         return panelListaCursos;
     }
     
@@ -133,7 +148,6 @@ public class Biblioteca extends JPanel {
         lblTitulo.setForeground(PioColores.GRIS_TEXT);
         panelImportarCursos.add(lblTitulo, BorderLayout.NORTH);
            
-
         JTextArea descripcionArea = new JTextArea( "Selecciona un archivo en formato .json para importar tus cursos a la plataforma.\n" +
                 "Asegúrate de que el archivo siga la estructura correcta para que la importación se realice sin problemas.");
         
@@ -153,7 +167,7 @@ public class Biblioteca extends JPanel {
     	panelListaCursos.removeAll();
         List<Curso> cursos = usuario.getBiblioteca();
         if (cursos.isEmpty()) {
-        	panelListaCursos.add(new JLabel("No tienes cursos en tu biblioteca."));
+        	panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
         } else {
             for (Curso curso : cursos) {
                 JButton btnCurso = new JButton(curso.getTitulo());
@@ -175,11 +189,20 @@ public class Biblioteca extends JPanel {
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChooser.getSelectedFile();
             try {
-                Curso nuevoCurso = CursoSerializer.importarCurso(archivo.getAbsolutePath());
-                usuario.getBiblioteca().add(nuevoCurso);
-                controlador.getUsuarioController().modificarUsuario(usuario); // Guarda el usuario actualizado
-                refrescarCursos();
-                JOptionPane.showMessageDialog(this, "Curso importado correctamente.");
+            	/*
+            	CursoMapper servicioImportacion = new ServicioImportacion();
+            	ResultadoImportacion resultadoImportacion = servicioImportacion.importarDesdeArchivo(archivo.getAbsolutePath());
+            	if (!resultadoImportacion.fueExitoso()) JOptionPane.showMessageDialog(this, "Error al importar el curso: No cumple el formato esperado");
+            	Curso nuevoCurso = CursoSerializer.importarCurso(archivo.getAbsolutePath());
+            	*/
+            	boolean resultadoImportacion = controlador.getImportacionController().importarCursosDesdeArchivo(archivo.getAbsolutePath(), usuario);
+                
+            	if (!resultadoImportacion) JOptionPane.showMessageDialog(this, "Error al importar el curso: No cumple con el formato esperado");
+            	else {
+            		refrescarCursos();
+                    JOptionPane.showMessageDialog(this, "Curso importado correctamente.");
+            	}
+                
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error al importar el curso: " + ex.getMessage());
             }

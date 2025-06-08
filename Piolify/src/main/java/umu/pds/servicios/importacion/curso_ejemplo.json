@@ -15,14 +15,12 @@
           "respuesta": "A",
           "dificultad": 1,
           "orden": 1,
-          "propiedadesEspecificas": {
-            "opciones": [
+          "opciones": [
               "Un paradigma basado en objetos que encapsulan datos y comportamiento",
               "Una forma de escribir código más rápido",
               "Un lenguaje de programación específico",
               "Una técnica para hacer programas más largos"
             ]
-          }
         },
         {
           "tipo": "COMPLETAR_HUECOS",
@@ -51,14 +49,12 @@
           "respuesta": "B",
           "dificultad": 1,
           "orden": 1,
-          "propiedadesEspecificas": {
-            "opciones": [
-              "String",
-              "int",
-              "ArrayList",
-              "Object"
-            ]
-          }
+	      "opciones": [
+	          "String",
+	          "int",
+	          "ArrayList",
+	          "Object"
+	        ]
         },
         {
           "tipo": "COMPLETAR_HUECOS",
@@ -73,14 +69,12 @@
           "respuesta": "B",
           "dificultad": 2,
           "orden": 3,
-          "propiedadesEspecificas": {
-            "opciones": [
+          "opciones": [
               "No hay diferencia",
               "Las variables locales se declaran dentro de métodos, las de instancia en la clase",
               "Las variables locales son más rápidas",
               "Las variables de instancia son privadas siempre"
             ]
-          }
         }
       ]
     },
@@ -101,15 +95,12 @@
           "contenido": "¿Cuál de los siguientes bucles se ejecuta al menos una vez?",
           "respuesta": "do-while",
           "dificultad": 2,
-          "orden": 2,
-          "propiedadesEspecificas": {
-            "opciones": [
+          "opciones": [
               "for",
               "while",
               "do-while",
               "foreach"
             ]
-          }
         },
         {
           "tipo": "COMPLETAR_HUECOS",
@@ -124,15 +115,13 @@
           "respuesta": "Sale inmediatamente del bucle",
           "dificultad": 2,
           "orden": 4,
-          "propiedadesEspecificas": {
-            "opciones": [
+          "opciones": [
               "Pausa el bucle temporalmente",
               "Sale inmediatamente del bucle",
               "Reinicia el bucle desde el principio",
               "No hace nada"
             ]
           }
-        }
       ]
     }
   ]

@@ -8,11 +8,12 @@ import jakarta.persistence.Column;
 public class EjercicioOpcionMultiple extends Ejercicio {
 	
     @Column(name = "opciones", columnDefinition = "TEXT")
-    private String opcionesJson; // Almacenar como JSON o separado por comas
+    private String opciones; // Almacenar como JSON o separado por comas
     
     
 	public EjercicioOpcionMultiple() {
 		super();
+		this.setTipo(TipoEjercicio.OPCION_MULTIPLE);
 	}
 	
 	public EjercicioOpcionMultiple(String contenido, String respuesta) {
@@ -20,14 +21,14 @@ public class EjercicioOpcionMultiple extends Ejercicio {
 	}
 	
     public List<String> getOpciones() {
-        if (opcionesJson == null || opcionesJson.isEmpty()) {
+        if (opciones == null || opciones.isEmpty()) {
             return Arrays.asList();
         }
-        return Arrays.asList(opcionesJson.split("\\|"));
+        return Arrays.asList(opciones.split("\\|"));
     }
     
     public void setOpciones(List<String> opciones) {
-        this.opcionesJson = String.join("|", opciones);
+        this.opciones = String.join("|", opciones);
     }
 
     @Override
@@ -44,10 +45,5 @@ public class EjercicioOpcionMultiple extends Ejercicio {
         return getRespuesta().equalsIgnoreCase(respuestaUsuario.trim());
     }
     
-    @Override
-    public TipoEjercicio getTipo() {
-    	return TipoEjercicio.OPCION_MULTIPLE;
-
-    }
 
 }

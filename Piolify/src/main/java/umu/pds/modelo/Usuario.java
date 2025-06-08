@@ -45,8 +45,7 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Estadisticas estadisticas;
 	
-    @OneToMany(mappedBy = "autor", fetch = FetchType.EAGER)
-    private List<Curso> cursosCreados = new ArrayList<>();
+    private List<String> cursosCreados = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Curso> biblioteca = new ArrayList<>(); // Cursos que el usuario tiene en su biblioteca
@@ -146,11 +145,11 @@ public class Usuario {
 		this.biblioteca = biblioteca;
 	}
     
-	public List<Curso> getCursosCreados() {
+	public List<String> getCursosCreados() {
 		return cursosCreados;
 	}
 	
-	public void setCursosCreados(List<Curso> cursosCreados) {
+	public void setCursosCreados(List<String> cursosCreados) {
 		this.cursosCreados = cursosCreados;
 	}
 

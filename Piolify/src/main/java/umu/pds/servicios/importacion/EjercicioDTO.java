@@ -1,6 +1,6 @@
 package umu.pds.servicios.importacion;
 
-import java.util.Map;
+import java.util.List;
 
 public class EjercicioDTO {
     private String tipo; // "OPCION_MULTIPLE", "COMPLETAR_HUECOS", "FLASHCARD"
@@ -8,7 +8,7 @@ public class EjercicioDTO {
     private String respuesta;
     private int dificultad;
     private int orden;
-    private Map<String, Object> propiedadesEspecificas; // Para opciones múltiples, etc.
+    private List<String> opciones; // Para opciones múltiples
     
     // Constructors
     public EjercicioDTO() {}
@@ -37,8 +37,8 @@ public class EjercicioDTO {
     public int getOrden() { return orden; }
     public void setOrden(int orden) { this.orden = orden; }
     
-    public Map<String, Object> getPropiedadesEspecificas() { return propiedadesEspecificas; }
-    public void setPropiedadesEspecificas(Map<String, Object> propiedadesEspecificas) { 
-        this.propiedadesEspecificas = propiedadesEspecificas; 
+    public List<String> getOpciones() { return opciones; }
+    public void setPropiedadesEspecificas(List<String> propiedadesEspecificas) { 
+        this.opciones = propiedadesEspecificas; 
     }
 }

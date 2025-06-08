@@ -21,14 +21,13 @@ public class Bloque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
 	private String titulo;
 	private String descripcion;
 	
 	
     @OneToMany(mappedBy = "bloque", cascade = CascadeType.ALL)
     @OrderBy("orden ASC")
-	private List<Ejercicio> listaEjercicios;
+	private List<Ejercicio> ejercicios;
 	
 
     @ManyToOne
@@ -54,12 +53,29 @@ public class Bloque {
 		this.descripcion = descripcion;
 	}
 	
-	public List<Ejercicio> getListaEjercicios() {
-		return Collections.unmodifiableList(listaEjercicios);
+	public List<Ejercicio> getEjercicios() {
+		return Collections.unmodifiableList(ejercicios);
 	}
 	
-	public void setListaEjercicios(List<Ejercicio> listaEjercicios) {
-		this.listaEjercicios = listaEjercicios;
+	public void setEjercicios(List<Ejercicio> listaEjercicios) {
+		this.ejercicios = listaEjercicios;
 	}
+	
+	public int getOrden() {
+		return this.orden;
+	}
+	
+	public void setOrden(int orden) {
+		this.orden = orden;
+	}
+
+	public Curso getCurso() 
+	{return this.curso;
+	}
+	
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+	
 	
 }
