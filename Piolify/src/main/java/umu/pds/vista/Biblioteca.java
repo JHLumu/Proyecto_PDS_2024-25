@@ -8,11 +8,12 @@ import java.awt.*;
 import java.io.File;
 import java.util.List;
 import umu.pds.modelo.Curso;
+import umu.pds.modelo.Bloque;
+import umu.pds.modelo.Ejercicio;
 import umu.pds.modelo.Usuario;
 import umu.pds.controlador.Piolify;
 import umu.pds.servicios.CursoSerializer;
 import umu.pds.vista.elementos.PioButton;
-
 import umu.pds.vista.elementos.PioColores;
 
 public class Biblioteca extends JPanel {
@@ -74,7 +75,7 @@ public class Biblioteca extends JPanel {
         btnImportar.addActionListener(e -> importarCurso());
         panelImportarCursos.add(btnImportar, BorderLayout.SOUTH);
         
-        //refrescarCursos();
+        refrescarCursos();
     }
     
     /**
@@ -97,7 +98,7 @@ public class Biblioteca extends JPanel {
         lblTitulo.setForeground(PioColores.GRIS_TEXT);
         panelListaCursos.add(lblTitulo, BorderLayout.NORTH);
 
-        // Descripción
+        // Descripción por defecto
         descripcionAreaListaCursos = new JTextArea(
             "Aquí aparecerán todos los cursos disponibles para que explores, aprendas y sigas creciendo. "
           + "Actualmente no hay cursos cargados, pero muy pronto tendrás acceso a contenidos variados "
@@ -111,21 +112,6 @@ public class Biblioteca extends JPanel {
         descripcionAreaListaCursos.setForeground(PioColores.NEGRO);
         descripcionAreaListaCursos.setBorder(null);
 
-        List<Curso> cursos = usuario.getBiblioteca();
-        if (cursos.isEmpty()) {
-        	panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
-        } else {
-            for (Curso curso : cursos) {
-                JButton btnCurso = new JButton(curso.getTitulo());
-                btnCurso.setAlignmentX(Component.LEFT_ALIGNMENT);
-                // Acción al pulsar el botón: abrir el curso (por implementar)
-                btnCurso.addActionListener(e -> {
-                    JOptionPane.showMessageDialog(this, "Abrir curso: " + curso.getTitulo());
-                });
-                panelListaCursos.add(btnCurso);
-            }
-        }
-        
         return panelListaCursos;
     }
     
@@ -164,48 +150,149 @@ public class Biblioteca extends JPanel {
     }
 
     private void refrescarCursos() {
-    	panelListaCursos.removeAll();
-        List<Curso> cursos = usuario.getBiblioteca();
-        if (cursos.isEmpty()) {
-        	panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
-        } else {
-            for (Curso curso : cursos) {
-                JButton btnCurso = new JButton(curso.getTitulo());
-                btnCurso.setAlignmentX(Component.LEFT_ALIGNMENT);
-                // Acción al pulsar el botón: abrir el curso (por implementar)
-                btnCurso.addActionListener(e -> {
-                    JOptionPane.showMessageDialog(this, "Abrir curso: " + curso.getTitulo());
-                });
-                panelListaCursos.add(btnCurso);
+        // Remover todo del panel excepto el título
+        Component titulo = null;
+        for (Component comp : panelListaCursos.getComponents()) {
+            if (comp instanceof JLabel) {
+                titulo = comp;
+                break;
             }
         }
+        
+        panelListaCursos.removeAll();
+        
+        // Re-añadir el título
+        if (titulo != null) {
+            panelListaCursos.add(titulo, BorderLayout.NORTH);
+        }
+        
+        List<Curso> cursos = usuario.getBiblioteca();
+        if (cursos.isEmpty()) {
+            panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
+        } else {
+            // Crear panel para los botones de cursos
+            JPanel panelBotonesCursos = new JPanel();
+            panelBotonesCursos.setLayout(new BoxLayout(panelBotonesCursos, BoxLayout.Y_AXIS));
+            panelBotonesCursos.setOpaque(false);
+            
+            for (Curso curso : cursos) {
+                PioButton btnCurso = new PioButton(curso.getTitulo());
+                btnCurso.setBackground(PioColores.MARRON_BUTTON);
+                btnCurso.setAlignmentX(Component.LEFT_ALIGNMENT);
+                btnCurso.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCurso.getPreferredSize().height));
+                
+                // Acción al pulsar el botón: mostrar selector de bloques
+                btnCurso.addActionListener(e -> mostrarSelectorBloques(curso));
+                
+                panelBotonesCursos.add(btnCurso);
+                panelBotonesCursos.add(Box.createRigidArea(new Dimension(0, 5))); // Espacio entre botones
+            }
+            
+            panelListaCursos.add(panelBotonesCursos, BorderLayout.CENTER);
+        }
+        
         panelListaCursos.revalidate();
         panelListaCursos.repaint();
+    }
+    
+    /**
+     * Muestra el selector de bloques para un curso, similar al simulacro
+     */
+    private void mostrarSelectorBloques(Curso curso) {
+        List<Bloque> bloques = curso.getBloques();
+        
+        if (bloques == null || bloques.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "El curso \"" + curso.getTitulo() + "\" no tiene bloques de ejercicios.", 
+                "Sin ejercicios", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Bloque bloqueSeleccionado;
+        if (bloques.size() == 1) {
+            bloqueSeleccionado = bloques.get(0);
+        } else {
+            // Crear lista de opciones
+            String[] opcionesBloques = bloques.stream()
+                .map(bloque -> bloque.getTitulo())
+                .toArray(String[]::new);
+            
+            String seleccionBloque = (String) JOptionPane.showInputDialog(
+                this,
+                "Selecciona el bloque de ejercicios para el curso \"" + curso.getTitulo() + "\":",
+                "Seleccionar Bloque",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesBloques,
+                opcionesBloques[0]
+            );
+            
+            if (seleccionBloque == null) return; // Usuario canceló
+            
+            bloqueSeleccionado = bloques.stream()
+                .filter(bloque -> bloque.getTitulo().equals(seleccionBloque))
+                .findFirst()
+                .orElse(null);
+        }
+        
+        if (bloqueSeleccionado == null || 
+            bloqueSeleccionado.getEjercicios() == null || 
+            bloqueSeleccionado.getEjercicios().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "El bloque seleccionado no tiene ejercicios.", 
+                "Sin ejercicios", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Abrir PioEjercicios con la lista de ejercicios
+        try {
+            List<Ejercicio> ejercicios = bloqueSeleccionado.getEjercicios();
+            
+            SwingUtilities.invokeLater(() -> {
+                PioEjercicios ventanaEjercicios = new PioEjercicios(ejercicios);
+                ventanaEjercicios.setVisible(true);
+            });
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al abrir los ejercicios: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void importarCurso() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+            "Archivos JSON (*.json)", "json"));
+        
         int resultado = fileChooser.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChooser.getSelectedFile();
             try {
-            	/*
-            	CursoMapper servicioImportacion = new ServicioImportacion();
-            	ResultadoImportacion resultadoImportacion = servicioImportacion.importarDesdeArchivo(archivo.getAbsolutePath());
-            	if (!resultadoImportacion.fueExitoso()) JOptionPane.showMessageDialog(this, "Error al importar el curso: No cumple el formato esperado");
-            	Curso nuevoCurso = CursoSerializer.importarCurso(archivo.getAbsolutePath());
-            	*/
             	boolean resultadoImportacion = controlador.getImportacionController().importarCursosDesdeArchivo(archivo.getAbsolutePath(), usuario);
                 
-            	if (!resultadoImportacion) JOptionPane.showMessageDialog(this, "Error al importar el curso: No cumple con el formato esperado");
-            	else {
+            	if (!resultadoImportacion) {
+            	    JOptionPane.showMessageDialog(this, 
+            	        "Error al importar el curso: No cumple con el formato esperado", 
+            	        "Error de Importación", 
+            	        JOptionPane.ERROR_MESSAGE);
+            	} else {
             		refrescarCursos();
-                    JOptionPane.showMessageDialog(this, "Curso importado correctamente.");
+                    JOptionPane.showMessageDialog(this, 
+                        "Curso importado correctamente.\nYa puedes hacer clic sobre él para practicar los ejercicios.", 
+                        "Importación Exitosa", 
+                        JOptionPane.INFORMATION_MESSAGE);
             	}
                 
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al importar el curso: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, 
+                    "Error al importar el curso: " + ex.getMessage(),
+                    "Error de Importación", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-} 
+}

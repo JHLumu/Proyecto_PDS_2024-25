@@ -3,6 +3,8 @@ package umu.pds.persistencia;
 import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Curso;
 
 public class AdaptadorCursoDAO implements CursoDAO{
@@ -29,27 +31,26 @@ public class AdaptadorCursoDAO implements CursoDAO{
 		}
 		
 		@Override
-		public Curso recuperarCurso(int id) {
-			 EntityManager em = emf.createEntityManager();
-		        try {
-		            Curso curso = em.find(Curso.class, id);
-		            return curso;
-		        } finally {
-		            em.close();
-		        }
-			
-		} 
-		
-		@Override
 		public List<Curso> recuperarTodosCursos() {
-			
-			EntityManager em = emf.createEntityManager();
-			try {
-				List<Curso> lista = em.createQuery("SELECT c FROM Curso c", Curso.class).getResultList();
-				return lista;
-			}finally {
-				em.close();
-			}
+		    EntityManager em = emf.createEntityManager();
+		    try {
+		        return em.createQuery("SELECT DISTINCT c FROM Curso c", Curso.class)
+		                 .getResultList();
+		    } finally {
+		        em.close();
+		    }
+		}
+
+		@Override
+		public Curso recuperarCurso(int id) {
+		    EntityManager em = emf.createEntityManager();
+		    try {
+		        return em.find(Curso.class, id);
+		    } catch (Exception e) {
+		        return null;
+		    } finally {
+		        em.close();
+		    }
 		}
 
 	    

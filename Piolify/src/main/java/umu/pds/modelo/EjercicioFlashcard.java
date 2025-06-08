@@ -1,5 +1,10 @@
 package umu.pds.modelo;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("FLASHCARD")
 public class EjercicioFlashcard extends Ejercicio {
 	
 	public EjercicioFlashcard() {

@@ -34,6 +34,7 @@ public class PioEjercicios extends BaseRoundedFrame {
     private CardLayout cardLayout;
     private JPanel panelEjercicios; // Panel con CardLayout
     private JPanel panelBotones;
+    private JButton btnAnterior;
     private JButton btnValidar;
     private JButton btnSiguiente;
     private JLabel lblProgreso;
@@ -95,9 +96,9 @@ public class PioEjercicios extends BaseRoundedFrame {
         panelBotones.setOpaque(false);
         
         // Crear botones
+        btnAnterior = new JButton("◀ Anterior");
         btnValidar = new JButton("Validar");
-        btnSiguiente = new JButton("Siguiente");
-        btnSiguiente.setEnabled(false); // Inicialmente deshabilitado
+        btnSiguiente = new JButton("Siguiente ▶");
         
         // Crear label de progreso
         lblProgreso = new JLabel();
@@ -107,6 +108,7 @@ public class PioEjercicios extends BaseRoundedFrame {
         configurarEventos();
         
         // Agregar componentes
+        panelBotones.add(btnAnterior);
         panelBotones.add(lblProgreso);
         panelBotones.add(btnValidar);
         panelBotones.add(btnSiguiente);
@@ -116,6 +118,7 @@ public class PioEjercicios extends BaseRoundedFrame {
         
         // Actualizar progreso
         actualizarProgreso();
+        actualizarEstadoBotones();
     }
     
     private void prepararTodosLosEjercicios() {
@@ -143,6 +146,13 @@ public class PioEjercicios extends BaseRoundedFrame {
     }
     
     private void configurarEventos() {
+    	btnAnterior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anteriorEjercicio();
+            }
+        });
+    	
         btnValidar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,6 +182,7 @@ public class PioEjercicios extends BaseRoundedFrame {
         
         // Actualizar progreso y título
         actualizarProgreso();
+        actualizarEstadoBotones();
         setTitle("Ejercicio " + (indiceActual + 1) + " - " + ejercicioActual.getTipo().name());
         
         // Refrescar la vista
@@ -208,6 +219,24 @@ public class PioEjercicios extends BaseRoundedFrame {
                     btnSiguiente.setEnabled(true);
                 }
             }
+        }
+    }
+    
+    private void actualizarEstadoBotones() {
+        // El botón anterior se habilita si no estamos en el primer ejercicio
+        btnAnterior.setEnabled(indiceActual > 0);
+        
+        // El botón siguiente se habilita si no estamos en el último ejercicio
+        btnSiguiente.setEnabled(indiceActual < listaEjercicios.size() - 1);
+        
+        // El botón solución siempre está habilitado
+        btnValidar.setEnabled(true);
+    }
+    
+    private void anteriorEjercicio() {
+        if (indiceActual > 0) {
+            indiceActual--;
+            mostrarEjercicioActual();
         }
     }
     
