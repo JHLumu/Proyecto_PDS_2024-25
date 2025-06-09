@@ -93,7 +93,7 @@
         {
           "tipo": "OPCION_MULTIPLE",
           "contenido": "¿Cuál de los siguientes bucles se ejecuta al menos una vez?",
-          "respuesta": "do-while",
+          "respuesta": "C",
           "dificultad": 2,
           "opciones": [
               "for",
@@ -112,7 +112,7 @@
         {
           "tipo": "OPCION_MULTIPLE",
           "contenido": "¿Qué hace la instrucción 'break' dentro de un bucle?",
-          "respuesta": "Sale inmediatamente del bucle",
+          "respuesta": "B",
           "dificultad": 2,
           "orden": 4,
           "opciones": [

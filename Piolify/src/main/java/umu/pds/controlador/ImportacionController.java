@@ -1,6 +1,9 @@
 package umu.pds.controlador;
 
 import umu.pds.modelo.Curso;
+import umu.pds.modelo.Estrategia;
+import umu.pds.modelo.EstrategiaFactory;
+import umu.pds.modelo.TipoEstrategia;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.CursoService;
 import umu.pds.servicios.ServicioImportacion;
@@ -9,6 +12,7 @@ import umu.pds.servicios.importacion.ImportacionException;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -182,5 +186,13 @@ public class ImportacionController {
             mensaje += "\nDetalles: " + e.getDetalles();
         }
         System.err.println(mensaje);
+    }
+    
+    public List<TipoEstrategia> getTiposEstrategiasDefinidas() {
+    	return EstrategiaFactory.getEstrategiasDefinidas();
+    }
+
+    public Estrategia getEstrategia(String estrategia) {
+    	return EstrategiaFactory.crearEstrategia(estrategia);
     }
 }

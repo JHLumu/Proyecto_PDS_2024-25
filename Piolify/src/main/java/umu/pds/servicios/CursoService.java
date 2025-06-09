@@ -2,6 +2,7 @@ package umu.pds.servicios;
 
 import umu.pds.modelo.CatalogoCursos;
 import umu.pds.modelo.Curso;
+import umu.pds.modelo.EstrategiaFactory;
 import umu.pds.persistencia.CursoDAO;
 import umu.pds.persistencia.JPAFactoriaDAO;
 
@@ -24,6 +25,5 @@ public class CursoService {
 		return catalogoCurso.obtenerCursoPorID(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 	}
-	
-	
+
 }

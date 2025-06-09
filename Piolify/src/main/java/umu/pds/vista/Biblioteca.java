@@ -7,10 +7,18 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Ejercicio;
+import umu.pds.modelo.Estrategia;
+import umu.pds.modelo.EstrategiaFactory;
+import umu.pds.modelo.TipoEstrategia;
 import umu.pds.modelo.Usuario;
+import umu.pds.controlador.ImportacionController;
 import umu.pds.controlador.Piolify;
 import umu.pds.servicios.CursoSerializer;
 import umu.pds.vista.elementos.PioButton;
@@ -19,6 +27,7 @@ import umu.pds.vista.elementos.PioColores;
 public class Biblioteca extends JPanel {
     private Usuario usuario;
     private Piolify controlador = Piolify.getUnicaInstancia();
+    private ImportacionController importacionController = this.controlador.getImportacionController(); 
     private JPanel panelCentral;
     private JPanel panelListaCursos;
     private JPanel panelImportarCursos;
@@ -182,7 +191,10 @@ public class Biblioteca extends JPanel {
                 btnCurso.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCurso.getPreferredSize().height));
                 
                 // Acción al pulsar el botón: mostrar selector de bloques
-                btnCurso.addActionListener(e -> mostrarSelectorBloques(curso));
+                btnCurso.addActionListener(e -> {
+                	Estrategia estrategia = mostrarSelectorEstrategia();
+                	if (estrategia != null) mostrarSelectorBloques(curso, estrategia);
+                	});
                 
                 panelBotonesCursos.add(btnCurso);
                 panelBotonesCursos.add(Box.createRigidArea(new Dimension(0, 5))); // Espacio entre botones
@@ -195,12 +207,30 @@ public class Biblioteca extends JPanel {
         panelListaCursos.repaint();
     }
     
+    private Estrategia mostrarSelectorEstrategia() {
+    	String[] opciones = this.importacionController.getTiposEstrategiasDefinidas().stream().map(t -> t.toString()).toArray(String[]::new);
+    	String seleccion = (String) JOptionPane.showInputDialog(
+    			this,
+    			"Selecciona la estrategia de aprendizaje para la sesión",
+    			"Seleccionar Estrategia",
+    			JOptionPane.INFORMATION_MESSAGE,
+    			null,
+    			opciones,
+    			opciones[0]
+    			);
+    	
+    	if (seleccion == null) return null;
+    	else return this.importacionController.getEstrategia(seleccion);
+    }
+    
     /**
      * Muestra el selector de bloques para un curso, similar al simulacro
      */
-    private void mostrarSelectorBloques(Curso curso) {
+    private void mostrarSelectorBloques(Curso curso, Estrategia estrategia) {
         List<Bloque> bloques = curso.getBloques();
+        Bloque bloqueSeleccionado;
         
+        //El curso no tiene bloques
         if (bloques == null || bloques.isEmpty()) {
             JOptionPane.showMessageDialog(this, 
                 "El curso \"" + curso.getTitulo() + "\" no tiene bloques de ejercicios.", 
@@ -209,14 +239,16 @@ public class Biblioteca extends JPanel {
             return;
         }
         
-        Bloque bloqueSeleccionado;
+        //El curso solo tiene un bloque: Se abre directamente
         if (bloques.size() == 1) {
             bloqueSeleccionado = bloques.get(0);
-        } else {
+        } 
+        
+        //El curso tiene varios bloques: Se muestra una ventana para elegir el bloque
+        else {
+        	
             // Crear lista de opciones
-            String[] opcionesBloques = bloques.stream()
-                .map(bloque -> bloque.getTitulo())
-                .toArray(String[]::new);
+            String[] opcionesBloques = bloques.stream().map(bloque -> bloque.getTitulo()).toArray(String[]::new);
             
             String seleccionBloque = (String) JOptionPane.showInputDialog(
                 this,
@@ -236,6 +268,8 @@ public class Biblioteca extends JPanel {
                 .orElse(null);
         }
         
+        //Validación del bloque
+        //TODO: Es correcto que esto esté en una clase de la capa vista?
         if (bloqueSeleccionado == null || 
             bloqueSeleccionado.getEjercicios() == null || 
             bloqueSeleccionado.getEjercicios().isEmpty()) {
@@ -248,8 +282,8 @@ public class Biblioteca extends JPanel {
         
         // Abrir PioEjercicios con la lista de ejercicios
         try {
-            List<Ejercicio> ejercicios = bloqueSeleccionado.getEjercicios();
-            
+        	
+            List<Ejercicio> ejercicios = estrategia.ordenarEjercicios(bloqueSeleccionado.getEjercicios());
             SwingUtilities.invokeLater(() -> {
                 PioEjercicios ventanaEjercicios = new PioEjercicios(ejercicios);
                 ventanaEjercicios.setVisible(true);

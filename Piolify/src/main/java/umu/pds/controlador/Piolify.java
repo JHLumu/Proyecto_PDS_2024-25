@@ -7,6 +7,7 @@ import umu.pds.modelo.Usuario;
 import umu.pds.vista.Login;
 import umu.pds.vista.Principal;
 
+
 public class Piolify {
     
 	private Usuario usuarioActual;
@@ -14,13 +15,13 @@ public class Piolify {
     private final ImportacionController importacionController;
     private static Piolify unicaInstancia = null;
     
-    // patrón observer
     private List<Runnable> notificarCambiosUsuario = new ArrayList<>();
     
 	
     public Piolify() {
         this.usuarioController = new UsuarioController(this);
         this.importacionController = new ImportacionController();
+        
     }
     
 	/**
@@ -60,6 +61,7 @@ public class Piolify {
 		return this.importacionController;
 	}
 	
+
 	/**
 	 * Método para añadir un observador que se notificará de cambios en el usuario actual.
 	 * @param callback Runnable que se ejecutará al notificar cambios
