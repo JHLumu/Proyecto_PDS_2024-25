@@ -2,6 +2,8 @@ package umu.pds.persistencia;
 
 import java.net.MalformedURLException;
 import java.util.List;
+
+import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Usuario;;
 
 public interface UsuarioDAO {
@@ -10,5 +12,6 @@ public interface UsuarioDAO {
 	public void modificarUsuario(Usuario usuario);
 	public Usuario recuperarUsuario(Long id) throws MalformedURLException;
 	public List<Usuario> recuperarTodosUsuarios() throws MalformedURLException;
+	public Estadisticas recuperarEstadisticas(Long id);
 	
 }

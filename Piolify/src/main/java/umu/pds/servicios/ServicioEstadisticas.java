@@ -1,5 +1,6 @@
 package umu.pds.servicios;
 
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -68,13 +69,26 @@ public class ServicioEstadisticas {
     public void actualizarEstadisticasUsuario(Usuario usuario) {
         List<SesionAprendizaje> todasLasSesiones = sesionDAO.buscarSesionesPorUsuario(usuario);
         
-        Estadisticas stats = usuario.getEstadisticas();
-        if (stats == null) {
-            stats = new Estadisticas();
-            stats.setUsuario(usuario);
-            usuario.setEstadisticas(stats);
-        }
+        // Asegurarnos de que el usuario y sus estadísticas estén correctamente enlazados
+        Usuario usuarioActualizado = null;
+		try {
+			usuarioActualizado = usuarioDAO.recuperarUsuario(usuario.getId());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        Estadisticas stats = usuarioActualizado.getEstadisticas();
         
+        // Si no tiene estadísticas, crear nuevas
+        if (stats == null) {
+            stats = usuarioDAO.recuperarEstadisticas(usuario.getId());
+            if (stats == null) {
+                stats = new Estadisticas();
+                stats.setUsuario(usuarioActualizado);
+                usuarioActualizado.setEstadisticas(stats);
+            }
+        }
+            
         // Calcular estadísticas generales
         int tiempoTotal = todasLasSesiones.stream()
             .filter(SesionAprendizaje::isCompletada)
@@ -114,7 +128,7 @@ public class ServicioEstadisticas {
         stats.setPrecision(precision);
         
         // Guardar usuario actualizado
-        usuarioDAO.modificarUsuario(usuario);
+        usuarioDAO.modificarUsuario(usuarioActualizado);
     }
     
     /**

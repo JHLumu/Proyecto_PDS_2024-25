@@ -1,5 +1,6 @@
 package umu.pds.persistencia;
 
+import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -72,6 +73,22 @@ public class AdaptadorUsuarioDAO implements UsuarioDAO{
 				List<Usuario> lista = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
 				return lista;
 			}finally {
+				em.close();
+			}
+		}
+		
+		/**
+		 * Recupera las estadísticas de un usuario por su ID
+		 * @param id El ID del usuario
+		 * @return Las estadísticas del usuario, o null si no se encuentran
+		 */
+		@Override
+		public Estadisticas recuperarEstadisticas(Long id) {
+			EntityManager em = emf.createEntityManager();
+			try {
+				Estadisticas estadisticas = em.find(Estadisticas.class, id);
+				return estadisticas;
+			} finally {
 				em.close();
 			}
 		}

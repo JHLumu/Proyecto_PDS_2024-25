@@ -42,8 +42,8 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Logro> logros = new ArrayList<>();
    
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Estadisticas estadisticas;
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	private Estadisticas estadisticas;
 	
     private List<String> cursosCreados = new ArrayList<>();
 
