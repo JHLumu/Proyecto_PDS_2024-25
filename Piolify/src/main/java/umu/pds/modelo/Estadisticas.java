@@ -18,7 +18,7 @@ public class Estadisticas {
 	private int rachaDias;
 	private int mejorRacha;
 	private int totalEjerciciosCompletados;
-	private double precision; // podría ser calculable (?)
+	private double precision;
 	
 	@OneToOne
 	private Usuario usuario;

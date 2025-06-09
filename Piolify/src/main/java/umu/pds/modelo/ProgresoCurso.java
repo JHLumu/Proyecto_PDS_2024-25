@@ -34,6 +34,9 @@ public class ProgresoCurso {
     private Date fechaInicio;
     private Date fechaUltimoAcceso;
 
+    /**
+     * Constructor por defecto para crear un progreso de curso
+     */
 	public ProgresoCurso() {
 	}
 	

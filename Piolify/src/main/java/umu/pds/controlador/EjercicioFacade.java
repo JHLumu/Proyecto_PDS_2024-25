@@ -13,20 +13,27 @@ public class EjercicioFacade {
 
     
     /**
-     * Crea un renderer usando la factory apropiada (VISTA)
+     * Crea un ejercicio del tipo especificado y su renderer asociado.
+     * 
+     * @param tipo Tipo de ejercicio a crear
+     * @return Un objeto EjercicioCompleto que contiene el ejercicio y su renderer
      */
     public static EjercicioRenderer crearRenderer(TipoEjercicio tipo) {
         RendererFactory factory = RendererFactory.getFactory(tipo);
         return factory.crearRenderer();
     }
 
-    /**
-     * Clase interna para encapsular ejercicio + renderer
-     */
+    /** clase interna que encapsula un ejercicio y su renderer */
     public static class EjercicioCompleto {
         private final Ejercicio ejercicio;
         private final EjercicioRenderer renderer;
         
+        /**
+         * Constructor que crea un ejercicio y su renderer asociado.
+         * 
+         * @param ejercicio El ejercicio a crear
+         * @param renderer El renderer asociado al ejercicio
+         */
         public EjercicioCompleto(Ejercicio ejercicio, EjercicioRenderer renderer) {
             this.ejercicio = ejercicio;
             this.renderer = renderer;

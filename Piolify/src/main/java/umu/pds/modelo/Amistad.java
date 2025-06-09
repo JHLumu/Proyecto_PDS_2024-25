@@ -68,7 +68,12 @@ public class Amistad {
 	public Amistad() {
 		// Constructor por defecto necesario para JPA
 	}
-	
+
+	/**
+	 * Constructor para crear una amistad entre dos usuarios.
+	 * @param solicitante Usuario que solicita la amistad
+	 * @param receptor Usuario que recibe la solicitud de amistad
+	 */
     public Amistad(Usuario solicitante, Usuario receptor) {
         this.usuario1 = solicitante;
         this.usuario2 = receptor;
@@ -93,6 +98,11 @@ public class Amistad {
 				&& Objects.equals(usuario1, other.usuario1) && Objects.equals(usuario2, other.usuario2);
 	}
 	
+	/**
+	 * Devuelve el otro usuario de la relacion de amistad, dado uno de ellos.
+	 * @param usuario Usuario conocido
+	 * @return El otro usuario de la amistad, o null si no es parte de esta amistad
+	 */
 	public Usuario getOtroUsuario(Usuario usuario) {
 		if (usuario1.equals(usuario)) {
 			return usuario2;
@@ -102,10 +112,20 @@ public class Amistad {
 		return null;
 	}
 	
+	/**
+	 * Comprueba si el usuario es el solicitante de la amistad.
+	 * @param usuario Usuario a comprobar
+	 * @return true si el usuario es el solicitante, false en caso contrario
+	 */
 	public boolean esSolicitante(Usuario usuario) {
 		return usuario1.equals(usuario);
 	}
 	
+	/**
+	 * Comprueba si el usuario es el receptor de la amistad.
+	 * @param usuario Usuario a comprobar
+	 * @return true si el usuario es el receptor, false en caso contrario
+	 */
 	public boolean esReceptor(Usuario usuario) {
 		return usuario2.equals(usuario);
 	}

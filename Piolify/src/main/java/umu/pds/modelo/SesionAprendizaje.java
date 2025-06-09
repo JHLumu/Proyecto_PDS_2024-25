@@ -47,6 +47,12 @@ public class SesionAprendizaje {
 		this.completada = false;
 	}
 	
+	/**
+	 * Constructor para crear una sesión de aprendizaje asociada a un usuario, curso y ejercicio.
+	 * @param usuario Usuario que realiza la sesión
+	 * @param curso Curso al que pertenece la sesión
+	 * @param ejercicio Ejercicio específico realizado en la sesión
+	 */
 	public SesionAprendizaje(Usuario usuario, Curso curso, Ejercicio ejercicio) {
 		this();
 		this.usuario = usuario;
@@ -151,29 +157,47 @@ public class SesionAprendizaje {
 		this.completada = completada;
 	}
 	
-
+	/**
+	 * Inicia una nueva sesión de aprendizaje.
+	 * Se establece la fecha de inicio y se reinician los contadores.
+	 */
 	public void finalizarSesion() {
 		this.fechaFin = new Date();
 		this.completada = true;
 		calcularTiempoTotal();
 	}
 
+	/**
+	 * Calcula el tiempo total de la sesión en segundos.
+	 * Se llama al finalizar la sesión.
+	 */
 	private void calcularTiempoTotal() {
 		if (fechaInicio != null && fechaFin != null) {
 			this.tiempoTotal = (int) ((fechaFin.getTime() - fechaInicio.getTime()) / 1000);
 		}
 	}
 	
-
+	/**
+	 * Registra un acierto en la sesión.
+	 * Incrementa el contador de aciertos y ejercicios completados.
+	 */
 	public void registrarAcierto() {
 		this.aciertos++;
 		this.ejerciciosCompletados++;
 	}
 
+	/**
+	 * Registra un fallo en la sesión.
+	 * Incrementa el contador de fallos.
+	 */
 	public void registrarFallo() {
 		this.fallos++;
 	}
 	
+	/**
+	 * Calcula el porcentaje de aciertos en la sesión.
+	 * @return Porcentaje de aciertos (0.0 si no hay intentos).
+	 */
 	public double getPorcentajeAciertos() {
 		int totalIntentos = aciertos + fallos;
 		if (totalIntentos == 0) return 0.0;

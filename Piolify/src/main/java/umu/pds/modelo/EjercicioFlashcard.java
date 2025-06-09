@@ -12,6 +12,11 @@ public class EjercicioFlashcard extends Ejercicio {
 		this.setTipo(TipoEjercicio.FLASHCARD);
 	}
 	
+	/**
+	 * Constructor para crear un ejercicio flashcard con un contenido y respuesta específicos
+	 * @param contenido Contenido de la flashcard
+	 * @param respuesta Respuesta esperada
+	 */
 	public EjercicioFlashcard(String contenido, String respuesta) {
 		super(contenido, respuesta);
 		this.setTipo(TipoEjercicio.FLASHCARD);
@@ -22,7 +27,10 @@ public class EjercicioFlashcard extends Ejercicio {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	/**
+	 * Muestra el contenido de la flashcard y espera la respuesta del usuario.
+	 */
 	@Override
 	public boolean validarRespuesta(String respuestaUsuario) {
 		// TODO Auto-generated method stub

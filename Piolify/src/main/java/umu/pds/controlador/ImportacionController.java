@@ -24,7 +24,11 @@ public class ImportacionController {
         this.cursoService = new CursoService();
     }
     
-    // constructor para testing
+    /**
+     * Constructor para inyección de dependencias.
+     * @param servicioImportacion Servicio de importación
+     * @param cursoService Servicio de gestión de cursos
+     */
 	public ImportacionController(ServicioImportacion servicioImportacion, CursoService cursoService) {
 		this.servicioImportacion = servicioImportacion;
 		this.cursoService = cursoService;
@@ -33,6 +37,9 @@ public class ImportacionController {
 	
     /**
      * Importa cursos desde un archivo y los agrega al sistema
+     * @param rutaArchivo Ruta del archivo a importar
+     * @param usuario Usuario que realiza la importación
+     * @return true si la importación fue exitosa, false en caso contrario
      */
     public boolean importarCursosDesdeArchivo(String rutaArchivo, Usuario usuario) {
         try {
@@ -65,7 +72,11 @@ public class ImportacionController {
     }
     
     /**
-     * Importa cursos desde un InputStream
+     * Importa cursos desde un InputStream y los agrega al sistema
+     * @param inputStream InputStream del archivo a importar
+     * @param extension Extensión del archivo (como en nuestro caso, "json")
+     * @param usuario Usuario que realiza la importación
+     * @return true si la importación fue exitosa, false en caso contrario
      */
     public boolean importarCursosDesdeStream(InputStream inputStream, String extension, Usuario usuario) {
         try {
@@ -95,21 +106,26 @@ public class ImportacionController {
     }
     
     /**
-     * Obtiene los formatos de archivo soportados
+     * Obtiene los formatos de archivo soportados para importación
+     * @return Array de extensiones soportadas
      */
     public String[] getFormatosSoportados() {
         return servicioImportacion.getFormatosSoportados();
     }
     
     /**
-     * Verifica si un formato está soportado
+     * Verifica si un formato de archivo es soportado
+     * @param extension Extensión del archivo a verificar
+     * @return true si el formato es soportado, false en caso contrario
      */
     public boolean soportaFormato(String extension) {
         return servicioImportacion.soportaFormato(extension);
     }
     
     /**
-     * Procesa los cursos importados (aquí puedes agregar lógica de negocio)
+     * Procesa los cursos importados, asignando el usuario autor y validando los datos
+     * @param cursos Lista de cursos importados
+     * @param usuario Usuario que realiza la importación
      */
     private void procesarCursosImportados(List<Curso> cursos, Usuario usuario) {
         // Establecer el usuario autor como el usuario actual
@@ -134,7 +150,9 @@ public class ImportacionController {
     }
     
     /**
-     * Validación adicional de cursos importados
+     * Valida que el curso importado tenga los campos necesarios
+     * @param curso Curso a validar
+     * @throws IllegalArgumentException si el curso no es válido
      */
     private void validarCursoImportado(Curso curso) {
         if (curso.getTitulo() == null || curso.getTitulo().trim().isEmpty()) {
@@ -154,7 +172,8 @@ public class ImportacionController {
     }
     
     /**
-     * Maneja y muestra errores de importación
+     * Muestra un mensaje de error detallado en caso de una excepción de importación
+     * @param e Excepción de importación
      */
     private void mostrarErrorImportacion(ImportacionException e) {
         String mensaje = "Error de importación: " + e.getMessage();
@@ -162,8 +181,6 @@ public class ImportacionController {
         if (e.getDetalles() != null) {
             mensaje += "\nDetalles: " + e.getDetalles();
         }
-        
-        // Aquí podrías mostrar un diálogo de error en la vista
         System.err.println(mensaje);
     }
 }

@@ -49,6 +49,11 @@ public abstract class Ejercicio {
 		this.dificultad = 5;
 	}
 	
+	/**
+	 * Constructor para crear un ejercicio con un contenido y respuesta específicos
+	 * @param contenido Contenido del ejercicio
+	 * @param respuesta Respuesta esperada
+	 */
 	public Ejercicio(String contenido, String respuesta) {
 		this.fechaCreacion = LocalDateTime.now();
 		this.dificultad = 5;
@@ -104,8 +109,18 @@ public abstract class Ejercicio {
 		this.bloque = bloque;
 	}
 	
+	/**
+	 * Método abstracto para renderizar el ejercicio.
+	 * Cada tipo de ejercicio implementará su propia lógica de renderizado.
+	 */
 	public abstract void renderEjercicio();
 	
+	/**
+	 * Método abstracto para validar la respuesta del usuario.
+	 * Cada tipo de ejercicio implementará su propia lógica de validación.
+	 * @param respuestaUsuario Respuesta proporcionada por el usuario
+	 * @return true si la respuesta es correcta, false en caso contrario
+	 */
 	public abstract boolean validarRespuesta(String respuestaUsuario);
 	
     public TipoEjercicio getTipo() {

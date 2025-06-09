@@ -50,11 +50,23 @@ public class Usuario {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Curso> biblioteca = new ArrayList<>(); // Cursos que el usuario tiene en su biblioteca
 
-    
+    /**
+     * Constructor por defecto para crear un usuario
+     */
     public Usuario() {
-        
+
     }
-    
+
+	/**
+	 * Constructor para crear un usuario con todos los campos necesarios.
+	 * 
+	 * @param nombre        Nombre del usuario
+	 * @param apellidos     Apellidos del usuario
+	 * @param genero        Género del usuario
+	 * @param email         Email del usuario
+	 * @param password      Contraseña del usuario
+	 * @param imagenPerfil  URL de la imagen de perfil del usuario
+	 */
 	public Usuario(String nombre, String apellidos, String genero, String email, String password, String imagenPerfil) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -169,6 +181,15 @@ public class Usuario {
 		this.amistadesRecibidas = amistadesRecibidas;
 	}
 	
+	/**
+	 * Devuelve una lista de amigos para este usuario.
+	 * <p>
+	 * Este método recopila todos los usuarios que tienen una amistad aceptada (EstadoAmistad.ACEPTADA)
+	 * con este usuario, ya sea a través de solicitudes enviadas o recibidas.
+	 * </p>
+	 *
+	 * @return una lista de objetos {@link Usuario} que representan los amigos del usuario.
+	 */
 	public List<Usuario> getAmigos() {
 	    List<Usuario> amigos = new ArrayList<>();
 	    
@@ -189,12 +210,30 @@ public class Usuario {
 	    return amigos;
 	}
 
+	/**
+	 * Devuelve una lista de solicitudes de amistad pendientes recibidas por este usuario.
+	 * <p>
+	 * Este método filtra las amistades recibidas para devolver solo aquellas que están en estado
+	 * PENDIENTE.
+	 * </p>
+	 *
+	 * @return una lista de objetos {@link Amistad} que representan las solicitudes pendientes.
+	 */
 	public List<Amistad> getSolicitudesPendientes() {
 	    return amistadesRecibidas.stream()
 	        .filter(a -> a.getEstado() == EstadoAmistad.PENDIENTE)
 	        .collect(Collectors.toList());
 	}
 
+	/**
+	 * Devuelve una lista de solicitudes de amistad enviadas por este usuario que están pendientes.
+	 * <p>
+	 * Este método filtra las amistades enviadas para devolver solo aquellas que están en estado
+	 * PENDIENTE.
+	 * </p>
+	 *
+	 * @return una lista de objetos {@link Amistad} que representan las solicitudes enviadas pendientes.
+	 */
 	public List<Amistad> getSolicitudesEnviadas() {
 	    return amistadesEnviadas.stream()
 	        .filter(a -> a.getEstado() == EstadoAmistad.PENDIENTE)

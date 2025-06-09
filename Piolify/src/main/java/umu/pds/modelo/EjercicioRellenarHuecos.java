@@ -12,16 +12,29 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("COMPLETAR_HUECOS")
 public class EjercicioRellenarHuecos extends Ejercicio {
 	
+	/**
+	 * Constructor por defecto para crear un ejercicio de rellenar huecos
+	 */
 	public EjercicioRellenarHuecos() {
 		super();
 		this.setTipo(TipoEjercicio.COMPLETAR_HUECOS);
 	}
 
+	/**
+	 * Constructor para crear un ejercicio de rellenar huecos con un contenido y respuesta específicos
+	 * @param contenido Contenido del ejercicio con huecos
+	 * @param respuesta Respuesta esperada, separada por "|"
+	 */
 	public EjercicioRellenarHuecos(String contenido, String respuesta) {
 		super(contenido, respuesta);
 		this.setTipo(TipoEjercicio.COMPLETAR_HUECOS);
 	}
 	
+	/**
+	 * Constructor para crear un ejercicio de rellenar huecos con un contenido y respuesta específicos
+	 * @param contenido Contenido del ejercicio con huecos
+	 * @param respuesta Respuesta esperada, separada por "|"
+	 */
 	@Override
 	public void renderEjercicio() {
 		System.out.println("Completa el siguiente texto:");
@@ -38,6 +51,11 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 		System.out.println("Escribe las respuestas separadas por comas:");
 	}
 
+	/**
+	 * Valida la respuesta del usuario comparándola con la respuesta esperada
+	 * @param respuestaUsuario Respuesta proporcionada por el usuario
+	 * @return true si la respuesta es correcta, false en caso contrario
+	 */
 	@Override
 	public boolean validarRespuesta(String respuestaUsuario) {
 		if (respuestaUsuario == null || respuestaUsuario.trim().isEmpty()) {
@@ -98,6 +116,8 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	
 	/**
 	 * Normaliza una respuesta eliminando espacios extra y convirtiendo a minúsculas
+	 * @param respuesta Respuesta a normalizar
+	 * @return Respuesta normalizada
 	 */
 	private String normalizarRespuesta(String respuesta) {
 		if (respuesta == null) return "";
@@ -108,8 +128,8 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Extrae los huecos del contenido del ejercicio
-	 * @return Lista de huecos encontrados en el texto
+	 * Extrae los huecos del ejercicio en formato {hueco}, [hueco] o _____
+	 * @return Lista de huecos encontrados
 	 */
 	public List<String> extraerHuecos() {
 		String contenido = getContenido();
