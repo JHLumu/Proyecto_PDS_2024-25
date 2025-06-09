@@ -159,13 +159,16 @@ public class Principal extends JFrame {
 		});
 		panelNorte.add(btnCursos);
 		
-		// Botón Estadísticas
+		// Botón Estadísticas - MODIFICADO para usar refrescarEstadisticas()
 		btnEstadisticas = new PioButton("Estadísticas");
 		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
 		btnEstadisticas.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        refrescarPanelEstadisticas();
+		        // Refrescar las estadísticas del panel existente
+		        if (panelEstadisticas != null) {
+		            panelEstadisticas.refrescarEstadisticas();
+		        }
 		        cardLayout.show(panelCentroCardLayout, PANEL_ESTADISTICAS);
 		        actualizarBotonesActivos(btnEstadisticas);
 		    }
@@ -233,18 +236,6 @@ public class Principal extends JFrame {
 	}
 	
 	/**
-	 * Refresca el panel de estadísticas con datos actualizados
-	 */
-	private void refrescarPanelEstadisticas() {
-		// Remover el panel actual de estadísticas
-		panelCentroCardLayout.remove(panelEstadisticas);
-		
-		// Crear y agregar un nuevo panel de estadísticas actualizado
-		panelEstadisticas = new DashboardEstadisticas(usuarioActual);
-		panelCentroCardLayout.add(panelEstadisticas, PANEL_ESTADISTICAS);
-	}
-	
-	/**
 	 * Actualiza la imagen de perfil en la barra de navegación
 	 */
 	private void actualizarImagenPerfil() {
@@ -297,6 +288,9 @@ public class Principal extends JFrame {
 				actualizarBotonesActivos(btnCursos);
 				break;
 			case PANEL_ESTADISTICAS:
+				if (panelEstadisticas != null) {
+					panelEstadisticas.refrescarEstadisticas();
+				}
 				actualizarBotonesActivos(btnEstadisticas);
 				break;
 			case PANEL_PERFIL:

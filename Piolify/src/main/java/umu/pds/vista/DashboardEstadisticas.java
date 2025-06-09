@@ -30,6 +30,7 @@ import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 import umu.pds.servicios.ServicioEstadisticas;
 import umu.pds.servicios.ServicioEstadisticas.EstadisticasCurso;
+import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Estadisticas;
@@ -40,6 +41,11 @@ public class DashboardEstadisticas extends JPanel {
     private static final long serialVersionUID = 1L;
     private Usuario usuario;
     private ServicioEstadisticas servicioEstadisticas;
+    
+    // Referencias a los componentes que necesitamos actualizar
+    private JPanel panelResumenData;
+    private JPanel panelLogrosContainer;
+    private JPanel panelProgresoCursos;
     
     /**
      * Constructor del panel de estadísticas
@@ -53,6 +59,7 @@ public class DashboardEstadisticas extends JPanel {
         setLayout(new BorderLayout(0, 0));
         
         initComponents();
+        cargarDatos();
     }
     
     private void initComponents() {
@@ -84,15 +91,17 @@ public class DashboardEstadisticas extends JPanel {
         lblTituloResumen.setForeground(PioColores.GRIS_TEXT);
         panelResumen.add(lblTituloResumen, BorderLayout.NORTH);
         
+        // Panel de datos del resumen (se actualizará dinámicamente)
+        panelResumenData = new JPanel();
+        panelResumenData.setOpaque(false);
+        panelResumen.add(panelResumenData, BorderLayout.CENTER);
+        
         GridBagConstraints gbc_panelResumen = new GridBagConstraints();
         gbc_panelResumen.insets = new Insets(0, 0, 5, 5);
         gbc_panelResumen.fill = GridBagConstraints.BOTH;
         gbc_panelResumen.gridx = 1;
         gbc_panelResumen.gridy = 1;
         panelCentral.add(panelResumen, gbc_panelResumen);
-        
-        // Añadir datos de resumen
-        addResumenData(panelResumen);
         
         // Panel de logros (arriba a la derecha)
         JPanel panelLogros = new JPanel();
@@ -109,15 +118,17 @@ public class DashboardEstadisticas extends JPanel {
         lblTituloLogros.setForeground(PioColores.GRIS_TEXT);
         panelLogros.add(lblTituloLogros, BorderLayout.NORTH);
         
+        // Contenedor de logros (se actualizará dinámicamente)
+        panelLogrosContainer = new JPanel();
+        panelLogrosContainer.setOpaque(false);
+        panelLogros.add(panelLogrosContainer, BorderLayout.CENTER);
+        
         GridBagConstraints gbc_panelLogros = new GridBagConstraints();
         gbc_panelLogros.insets = new Insets(0, 0, 5, 5);
         gbc_panelLogros.fill = GridBagConstraints.BOTH;
         gbc_panelLogros.gridx = 3;
         gbc_panelLogros.gridy = 1;
         panelCentral.add(panelLogros, gbc_panelLogros);
-        
-        // Añadir logros
-        addLogros(panelLogros);
         
         // Panel de progreso en cursos (abajo, spanning dos columnas)
         JPanel panelProgreso = new JPanel();
@@ -134,6 +145,11 @@ public class DashboardEstadisticas extends JPanel {
         lblTituloProgreso.setForeground(PioColores.GRIS_TEXT);
         panelProgreso.add(lblTituloProgreso, BorderLayout.NORTH);
         
+        // Contenedor de progreso de cursos (se actualizará dinámicamente)
+        panelProgresoCursos = new JPanel();
+        panelProgresoCursos.setOpaque(false);
+        panelProgreso.add(panelProgresoCursos, BorderLayout.CENTER);
+        
         GridBagConstraints gbc_panelProgreso = new GridBagConstraints();
         gbc_panelProgreso.insets = new Insets(0, 0, 5, 5);
         gbc_panelProgreso.fill = GridBagConstraints.BOTH;
@@ -141,23 +157,55 @@ public class DashboardEstadisticas extends JPanel {
         gbc_panelProgreso.gridy = 3;
         gbc_panelProgreso.gridwidth = 3; // Spanning dos columnas
         panelCentral.add(panelProgreso, gbc_panelProgreso);
-        
-        // Añadir progreso de cursos
-        addProgresoCursos(panelProgreso);
     }
     
     /**
-     * Añade los datos del resumen de actividad
+     * Carga todos los datos actualizados
      */
-    private void addResumenData(JPanel panelPadre) {
-        JPanel dataPanel = new JPanel();
-        dataPanel.setOpaque(false);
-        dataPanel.setLayout(new GridBagLayout());
+    private void cargarDatos() {
+        // Obtener usuario actualizado desde el controlador
+        try {
+            this.usuario = Piolify.getUnicaInstancia().getUsuarioActual();
+            
+            // Actualizar estadísticas desde la base de datos
+            servicioEstadisticas.actualizarEstadisticasUsuario(usuario);
+            
+            // Recargar usuario actualizado después de actualizar estadísticas
+            this.usuario = Piolify.getUnicaInstancia().getUsuarioActual();
+            
+            // Cargar datos en los paneles
+            cargarResumenData();
+            cargarLogros();
+            cargarProgresoCursos();
+            
+        } catch (Exception e) {
+            System.err.println("Error al cargar datos de estadísticas: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Carga los datos del resumen de actividad
+     */
+    private void cargarResumenData() {
+        panelResumenData.removeAll();
+        panelResumenData.setLayout(new GridBagLayout());
         
         Estadisticas stats = usuario.getEstadisticas();
         String rachaActual = stats != null ? stats.getRachaDias() + " días" : "0 días";
         String mejorRacha = stats != null ? stats.getMejorRacha() + " días" : "0 días";
-        String tiempoTotal = stats != null ? stats.getTiempoTotal() + " min" : "0 min";
+        
+        // El tiempo total ya está en segundos en la base de datos
+        String tiempoTotal;
+        if (stats != null) {
+            int tiempoTotalSegundos = stats.getTiempoTotal(); // Ya está en segundos
+            int minutos = tiempoTotalSegundos / 60;
+            int segundos = tiempoTotalSegundos % 60;
+            tiempoTotal = minutos + "m " + segundos + "s";
+        } else {
+            tiempoTotal = "0m 0s";
+        }
+        
         String ejerciciosCompletados = stats != null ? String.valueOf(stats.getTotalEjerciciosCompletados()) : "0";
         String precision = stats != null ? String.format("%.1f%%", stats.getPrecision()) : "0%";
         
@@ -180,7 +228,7 @@ public class DashboardEstadisticas extends JPanel {
             lblEtiqueta.setFont(new Font("Arial", Font.PLAIN, 14));
             gbc.gridx = 0;
             gbc.gridy = i;
-            dataPanel.add(lblEtiqueta, gbc);
+            panelResumenData.add(lblEtiqueta, gbc);
             
             // Valor
             JLabel lblValor = new JLabel(datos[i][1]);
@@ -188,50 +236,54 @@ public class DashboardEstadisticas extends JPanel {
             lblValor.setForeground(PioColores.MARRON_BUTTON.darker());
             gbc.gridx = 1;
             gbc.insets = new Insets(8, 15, 8, 5);
-            dataPanel.add(lblValor, gbc);
+            panelResumenData.add(lblValor, gbc);
             gbc.insets = new Insets(8, 5, 8, 5); // Reset insets
         }
         
-        panelPadre.add(dataPanel, BorderLayout.CENTER);
+        panelResumenData.revalidate();
+        panelResumenData.repaint();
     }
     
     /**
-     * Añade los logros obtenidos
+     * Carga los logros obtenidos
      */
-    private void addLogros(JPanel panelPadre) {
-        JPanel logrosPanel = new JPanel();
-        logrosPanel.setOpaque(false);
-        logrosPanel.setLayout(new BoxLayout(logrosPanel, BoxLayout.Y_AXIS));
+    private void cargarLogros() {
+        panelLogrosContainer.removeAll();
+        panelLogrosContainer.setLayout(new BoxLayout(panelLogrosContainer, BoxLayout.Y_AXIS));
         
         List<Logro> logros = usuario.getLogros();
         if (logros == null || logros.isEmpty()) {
             JLabel lbl = new JLabel("Aún no tienes logros.");
             lbl.setFont(new Font("Arial", Font.ITALIC, 14));
             lbl.setForeground(PioColores.GRIS_TEXT);
-            logrosPanel.add(lbl);
+            panelLogrosContainer.add(lbl);
         } else {
             for (Logro logro : logros.subList(0, Math.min(logros.size(), 5))) { // Mostrar máximo 5
                 JLabel lbl = new JLabel("🏆 " + logro.getNombre());
                 lbl.setFont(new Font("Arial", Font.PLAIN, 14));
                 lbl.setToolTipText(logro.getDescripcion());
-                logrosPanel.add(lbl);
+                panelLogrosContainer.add(lbl);
             }
             
             if (logros.size() > 5) {
                 JLabel lblMas = new JLabel("+" + (logros.size() - 5) + " logros más...");
                 lblMas.setFont(new Font("Arial", Font.ITALIC, 12));
                 lblMas.setForeground(PioColores.GRIS_TEXT);
-                logrosPanel.add(lblMas);
+                panelLogrosContainer.add(lblMas);
             }
         }
         
-        panelPadre.add(logrosPanel, BorderLayout.CENTER);
+        panelLogrosContainer.revalidate();
+        panelLogrosContainer.repaint();
     }
     
     /**
-     * Añade el progreso de los cursos
+     * Carga el progreso de los cursos
      */
-    private void addProgresoCursos(JPanel panelPadre) {
+    private void cargarProgresoCursos() {
+        panelProgresoCursos.removeAll();
+        panelProgresoCursos.setLayout(new BorderLayout());
+        
         JPanel cursosContainer = new JPanel();
         cursosContainer.setOpaque(false);
         cursosContainer.setLayout(new BoxLayout(cursosContainer, BoxLayout.Y_AXIS));
@@ -263,7 +315,9 @@ public class DashboardEstadisticas extends JPanel {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         
-        panelPadre.add(scrollPane, BorderLayout.CENTER);
+        panelProgresoCursos.add(scrollPane, BorderLayout.CENTER);
+        panelProgresoCursos.revalidate();
+        panelProgresoCursos.repaint();
     }
     
     /**
@@ -328,14 +382,19 @@ public class DashboardEstadisticas extends JPanel {
         lblProgresoValor.setForeground(PioColores.VERDE_BUTTON.darker());
         infoPanel.add(lblProgresoValor, gbc);
         
-        // Tiempo dedicado
+        // Tiempo dedicado (necesitamos recalcular con segundos)
         gbc.gridx = 0; gbc.gridy = 2;
         JLabel lblTiempo = new JLabel("Tiempo:");
         lblTiempo.setFont(new Font("Arial", Font.PLAIN, 12));
         infoPanel.add(lblTiempo, gbc);
         
         gbc.gridx = 1;
-        JLabel lblTiempoValor = new JLabel(estadistica.getTiempoTotalMinutos() + " min");
+        // Necesitamos obtener el tiempo total en segundos para mostrar m y s
+        int tiempoTotalSegundos = estadistica.getTiempoTotalSegundos();
+        int minutos = tiempoTotalSegundos / 60;
+        int segundos = tiempoTotalSegundos % 60;
+        String tiempoTexto = minutos + "m " + segundos + "s";
+        JLabel lblTiempoValor = new JLabel(tiempoTexto);
         lblTiempoValor.setFont(new Font("Arial", Font.BOLD, 12));
         infoPanel.add(lblTiempoValor, gbc);
         
@@ -389,11 +448,16 @@ public class DashboardEstadisticas extends JPanel {
         
         gbc.gridwidth = 1;
         
-        // Estadísticas detalladas
+        // Estadísticas detalladas con tiempo en segundos
+        int tiempoTotalSegundos = estadistica.getTiempoTotalSegundos();
+        int minutos = tiempoTotalSegundos / 60;
+        int segundos = tiempoTotalSegundos % 60;
+        String tiempoTexto = minutos + " minutos " + segundos + " segundos";
+        
         String[][] datos = {
             {"Progreso:", String.format("%.1f%% completado", estadistica.getPorcentajeCompletado())},
             {"Ejercicios realizados:", String.valueOf(estadistica.getEjerciciosCompletados())},
-            {"Tiempo dedicado:", estadistica.getTiempoTotalMinutos() + " minutos"},
+            {"Tiempo dedicado:", tiempoTexto},
             {"Precisión:", String.format("%.1f%%", estadistica.getPrecision())},
             {"Dificultad:", estadistica.getCurso().getDificultad()},
             {"Autor:", estadistica.getCurso().getAutor() != null ? estadistica.getCurso().getAutor() : "Desconocido"}
@@ -497,18 +561,10 @@ public class DashboardEstadisticas extends JPanel {
     }
 
     /**
-     * Método para refrescar las estadísticas
+     * Método público para refrescar las estadísticas
      */
     public void refrescarEstadisticas() {
-        // Actualizar estadísticas del usuario
-        if (servicioEstadisticas != null) {
-            servicioEstadisticas.actualizarEstadisticasUsuario(usuario);
-        }
-        
-        // Recargar componentes
-        removeAll();
-        initComponents();
-        revalidate();
-        repaint();
+        // Recargar todos los datos
+        cargarDatos();
     }
 }
