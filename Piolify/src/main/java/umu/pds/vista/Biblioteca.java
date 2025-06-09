@@ -7,20 +7,15 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Ejercicio;
 import umu.pds.modelo.Estrategia;
-import umu.pds.modelo.EstrategiaFactory;
-import umu.pds.modelo.TipoEstrategia;
 import umu.pds.modelo.Usuario;
 import umu.pds.controlador.ImportacionController;
 import umu.pds.controlador.Piolify;
-import umu.pds.servicios.CursoSerializer;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
@@ -35,7 +30,7 @@ public class Biblioteca extends JPanel {
     private Color panelColor = PioColores.GRIS_PANEL;
     
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * Create the panel.
 	 */

@@ -17,10 +17,7 @@ import java.awt.Component;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,10 +43,16 @@ public class Principal extends JFrame {
 	private CardLayout cardLayout;
 	
 	// Constantes para identificar las tarjetas
-	public static final String PANEL_PRINCIPAL = "principal";
 	public static final String PANEL_ESTADISTICAS = "estadisticas";
 	public static final String PANEL_CURSOS = "cursos";
 	public static final String PANEL_PERFIL = "perfil";
+	public static final String PANEL_AMIGOS = "amigos";
+	
+	// Variables de instancia para los paneles
+	private DashboardEstadisticas panelEstadisticas;
+	private Biblioteca panelBiblioteca;
+	private PerfilUsuario panelPerfil;
+	private Amigos panelAmigos;
 	
 	// Botones para mantener referencia y poder actualizar su estado
 	private JButton btnCursos;
@@ -101,24 +104,20 @@ public class Principal extends JFrame {
 		panelCentroCardLayout = new JPanel(cardLayout);
 		contentPane.add(panelCentroCardLayout, BorderLayout.CENTER);
 		
-		// Añadir panel principal
-		panelCentroCardLayout.add(crearPanelPrincipal(), PANEL_PRINCIPAL);
+		// Crear los paneles como variables de instancia
+		panelEstadisticas = new DashboardEstadisticas(usuarioActual);
+		panelBiblioteca = new Biblioteca(usuarioActual);
+		panelPerfil = new PerfilUsuario(usuarioActual);
 		
-		// Añadir panel de estadísticas
-		panelCentroCardLayout.add(new DashboardEstadisticas(usuarioActual), PANEL_ESTADISTICAS);
+		// Añadir los paneles al CardLayout
+		panelCentroCardLayout.add(panelEstadisticas, PANEL_ESTADISTICAS);
+		panelCentroCardLayout.add(panelBiblioteca, PANEL_CURSOS);
+		panelCentroCardLayout.add(panelPerfil, PANEL_PERFIL);
 		
-		panelCentroCardLayout.add(new Biblioteca(usuarioActual), PANEL_CURSOS);
-		
-		// perfilusuario
-		panelCentroCardLayout.add(new PerfilUsuario(usuarioActual), PANEL_PERFIL);
-		
-		
-		// Aquí añadirías los demás paneles conforme los necesites
-		// Por ahora, crearemos paneles temporales para las otras secciones
-
-		
-		// Mostrar el panel principal por defecto
-		cardLayout.show(panelCentroCardLayout, PANEL_PRINCIPAL);
+		// Mostrar el panel de cursos por defecto (en lugar del panel principal)
+		cardLayout.show(panelCentroCardLayout, PANEL_CURSOS);
+		// Actualizar el estado visual del botón de cursos como activo
+		actualizarBotonesActivos(btnCursos);
 	}
 	
 	/**
@@ -149,7 +148,7 @@ public class Principal extends JFrame {
 		panelNorte.add(glue);
 		
 		// Botón Mis Cursos
-		btnCursos = new PioButton("Cursos");
+		btnCursos = new PioButton("Mis Cursos");
 		btnCursos.setBackground(PioColores.MARRON_BUTTON);
 		btnCursos.addActionListener(new ActionListener() {
 			@Override
@@ -170,45 +169,22 @@ public class Principal extends JFrame {
 		        cardLayout.show(panelCentroCardLayout, PANEL_ESTADISTICAS);
 		        actualizarBotonesActivos(btnEstadisticas);
 		    }
-
-			private void refrescarPanelEstadisticas() {
-				// TODO Auto-generated method stub
-			    // Remover el panel actual de estadísticas
-			    Component[] components = panelCentroCardLayout.getComponents();
-			    for (Component component : components) {
-			        if (component instanceof DashboardEstadisticas) {
-			            panelCentroCardLayout.remove(component);
-			            break;
-			        }
-			    }
-			    
-			    // Crear y agregar un nuevo panel de estadísticas actualizado
-			    DashboardEstadisticas nuevoPanel = new DashboardEstadisticas(usuarioActual);
-			    panelCentroCardLayout.add(nuevoPanel, PANEL_ESTADISTICAS);
-			}
 		});
 		panelNorte.add(btnEstadisticas);
 		
-		// boton amigos
+		// Botón amigos
 		btnAmistades = new PioButton("Amigos");
 		btnAmistades.setBackground(PioColores.MARRON_BUTTON);
 		panelNorte.add(btnAmistades);
 		btnAmistades.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        boolean panelExists = false;
-		        for (Component comp : panelCentroCardLayout.getComponents()) {
-		            if (comp instanceof Amigos) {
-		                panelExists = true;
-		                break;
-		            }
+		        if (panelAmigos == null) {
+		            panelAmigos = new Amigos();
+		            panelCentroCardLayout.add(panelAmigos, PANEL_AMIGOS);
 		        }
 		        
-		        if (!panelExists) {
-		            panelCentroCardLayout.add(new Amigos(), "PANEL_AMIGOS");
-		        }
-		        
-		        cardLayout.show(panelCentroCardLayout, "PANEL_AMIGOS");
+		        cardLayout.show(panelCentroCardLayout, PANEL_AMIGOS);
 		        actualizarBotonesActivos(btnAmistades);
 		    }
 		});
@@ -233,7 +209,6 @@ public class Principal extends JFrame {
 		
 		lblFotoPerfil = new JLabel("");
 		actualizarImagenPerfil(); // Actualiza la imagen de perfil al iniciar
-		//lblFotoPerfil.setIcon(Utils.escalarImagen(usuarioActual.getImagenPerfil(), 50));
 		panelNorte.add(lblFotoPerfil);
 		
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
@@ -250,77 +225,28 @@ public class Principal extends JFrame {
 		// Restablecer todos los botones
 		btnCursos.setBackground(PioColores.MARRON_BUTTON);
 		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
-		
 		btnPerfil.setBackground(PioColores.MARRON_BUTTON);
-		
 		btnAmistades.setBackground(PioColores.MARRON_BUTTON);
 		
-		// Destacar botón activo (se puede definir un color MARRON_BUTTON_ACTIVO en PioColores)
-		// Por ahora usaremos un color más oscuro
+		// Destacar botón activo
 		botonActivo.setBackground(PioColores.MARRON_BUTTON.darker());
 	}
 	
 	/**
-	 * Crea el panel principal (home)
+	 * Refresca el panel de estadísticas con datos actualizados
 	 */
-	private JPanel crearPanelPrincipal() {
-		JPanel panelCentro = new JPanel();
-		panelCentro.setBackground(PioColores.BLANCO);
-		GridBagLayout gbl_panelCentro = new GridBagLayout();
-		gbl_panelCentro.columnWidths = new int[]{30, 0, 30, 0};
-		gbl_panelCentro.rowHeights = new int[]{30, 0, 30, 0};
-		gbl_panelCentro.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelCentro.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		panelCentro.setLayout(gbl_panelCentro);
+	private void refrescarPanelEstadisticas() {
+		// Remover el panel actual de estadísticas
+		panelCentroCardLayout.remove(panelEstadisticas);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(null);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.insets = new Insets(0, 0, 5, 5);
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 1;
-		panelCentro.add(panel, gbc_panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{20, 0, 0};
-		gbl_panel.rowHeights = new int[]{20, 0, 20, 0, 40, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
-		
-		JLabel lblNewLabel_2 = new JLabel("Bienvenido a Piolify");
-		lblNewLabel_2.setForeground(PioColores.GRIS_TEXT);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.fill = GridBagConstraints.VERTICAL;
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_2.gridx = 1;
-		gbc_lblNewLabel_2.gridy = 1;
-		panel.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
-		JLabel lblNewLabel_4 = new JLabel("Continúa aprendiendo o explora nuevos cursos");
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.fill = GridBagConstraints.VERTICAL;
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_4.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_4.gridx = 1;
-		gbc_lblNewLabel_4.gridy = 3;
-		panel.add(lblNewLabel_4, gbc_lblNewLabel_4);
-		
-		JLabel lblNewLabel_5 = new JLabel("Cursos en progreso");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
-		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_5.fill = GridBagConstraints.VERTICAL;
-		gbc_lblNewLabel_5.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_5.gridx = 1;
-		gbc_lblNewLabel_5.gridy = 5;
-		panel.add(lblNewLabel_5, gbc_lblNewLabel_5);
-		
-		return panelCentro;
+		// Crear y agregar un nuevo panel de estadísticas actualizado
+		panelEstadisticas = new DashboardEstadisticas(usuarioActual);
+		panelCentroCardLayout.add(panelEstadisticas, PANEL_ESTADISTICAS);
 	}
 	
+	/**
+	 * Actualiza la imagen de perfil en la barra de navegación
+	 */
 	private void actualizarImagenPerfil() {
 	    Usuario usuario = Piolify.getUnicaInstancia().getUsuarioActual();
 	    String ruta = usuario.getImagenPerfil();
@@ -331,11 +257,60 @@ public class Principal extends JFrame {
 	    }
 	}
 	
+	/**
+	 * Método público para acceder al panel de biblioteca desde otras clases
+	 */
+	public Biblioteca getPanelBiblioteca() {
+		return panelBiblioteca;
+	}
+	
+	/**
+	 * Método público para acceder al panel de estadísticas desde otras clases
+	 */
+	public DashboardEstadisticas getPanelEstadisticas() {
+		return panelEstadisticas;
+	}
+	
+	/**
+	 * Método público para acceder al panel de perfil desde otras clases
+	 */
+	public PerfilUsuario getPanelPerfil() {
+		return panelPerfil;
+	}
+	
+	/**
+	 * Método público para acceder al panel de amigos desde otras clases
+	 */
+	public Amigos getPanelAmigos() {
+		return panelAmigos;
+	}
+	
+	/**
+	 * Método para cambiar programáticamente a un panel específico
+	 */
+	public void mostrarPanel(String nombrePanel) {
+		cardLayout.show(panelCentroCardLayout, nombrePanel);
+		
+		// Actualizar el botón activo según el panel mostrado
+		switch (nombrePanel) {
+			case PANEL_CURSOS:
+				actualizarBotonesActivos(btnCursos);
+				break;
+			case PANEL_ESTADISTICAS:
+				actualizarBotonesActivos(btnEstadisticas);
+				break;
+			case PANEL_PERFIL:
+				actualizarBotonesActivos(btnPerfil);
+				break;
+			case PANEL_AMIGOS:
+				actualizarBotonesActivos(btnAmistades);
+				break;
+		}
+	}
+	
     @Override
     public void dispose() {
         Piolify.getUnicaInstancia().borrarObservador(this::actualizarImagenPerfil);
         super.dispose();
     }
-    
-
 }

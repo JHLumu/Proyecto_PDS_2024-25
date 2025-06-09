@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ import umu.pds.modelo.SesionAprendizaje;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.ServicioEstadisticas;
 import umu.pds.utils.EjercicioRenderer;
+import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.BaseRoundedFrame;
 import umu.pds.vista.elementos.PioColores;
 
@@ -316,12 +318,26 @@ public class PioEjercicios extends BaseRoundedFrame {
                 registrarFallo();
             }
             
-            // Mostrar resultado
+            // Crear mensaje con imagen
             String mensaje = esCorrecta ? "¡Correcto!" : "Incorrecto. Inténtalo de nuevo.";
             String titulo = esCorrecta ? "Bien hecho" : "Resultado";
             int tipoMensaje = esCorrecta ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.WARNING_MESSAGE;
             
-            JOptionPane.showMessageDialog(this, mensaje, titulo, tipoMensaje);
+            // Crear icono para el JOptionPane
+            ImageIcon icono = null;
+            String imagePath = esCorrecta ? "/acierto.png" : "/fallo.png";
+            try {
+                icono = ImageUtils.escalarImagen(imagePath, 48); // Imagen más grande para el diálogo
+            } catch (Exception e) {
+                System.err.println("No se pudo cargar la imagen: " + imagePath);
+            }
+            
+            // Mostrar diálogo con imagen personalizada
+            if (icono != null) {
+                JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.PLAIN_MESSAGE, icono);
+            } else {
+                JOptionPane.showMessageDialog(this, mensaje, titulo, tipoMensaje);
+            }
             
             // Si es correcto, habilitar botón siguiente
             if (esCorrecta) {

@@ -27,7 +27,8 @@ public class FlashcardRenderer implements EjercicioRenderer {
     private StyledDocument doc; 
     private SimpleAttributeSet center;
     
-    @Override
+    @SuppressWarnings("serial")
+	@Override
     public void renderizar(JPanel containerPanel, Object ejercicioObj) {
         this.ejercicio = (EjercicioFlashcard) ejercicioObj;
         containerPanel.setLayout(new BorderLayout());

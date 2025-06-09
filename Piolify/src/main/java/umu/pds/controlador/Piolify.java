@@ -3,6 +3,8 @@ package umu.pds.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import umu.pds.modelo.Usuario;
 import umu.pds.vista.Login;
 import umu.pds.vista.Principal;
@@ -105,13 +107,16 @@ public class Piolify {
 		return usuarioActual;
 	}
 
+
 	/**
 	 * Método para manejar el registro exitoso de un usuario.
-	 * Abre la ventana de inicio de sesión.
+	 * Abre la ventana de inicio de sesión de manera fluida.
 	 */
 	public void registroExitoso() {
-        Login login = new Login();
-        login.getFrame().setVisible(true);
+	    SwingUtilities.invokeLater(() -> {
+	        Login login = new Login();
+	        login.getFrame().setVisible(true);
+	    });
 	}
 	
 	/**

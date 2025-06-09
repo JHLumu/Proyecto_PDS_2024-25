@@ -26,6 +26,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 import umu.pds.modelo.Usuario;
+import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 import umu.pds.servicios.ServicioEstadisticas;
 import umu.pds.servicios.ServicioEstadisticas.EstadisticasCurso;
@@ -39,7 +40,7 @@ public class DashboardEstadisticas extends JPanel {
     private static final long serialVersionUID = 1L;
     private Usuario usuario;
     private ServicioEstadisticas servicioEstadisticas;
-
+    
     /**
      * Constructor del panel de estadísticas
      */
@@ -69,7 +70,20 @@ public class DashboardEstadisticas extends JPanel {
         panelCentral.setLayout(gbl_panelCentral);
         
         // Panel de resumen de actividad (arriba a la izquierda)
-        JPanel panelResumen = createPanelBase("Resumen General");
+        JPanel panelResumen = new JPanel();
+        panelResumen.setBackground(PioColores.GRIS_PANEL);
+        panelResumen.setBorder(BorderFactory.createCompoundBorder(
+            new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
+            new EmptyBorder(15, 15, 15, 15)
+        ));
+        panelResumen.setLayout(new BorderLayout(0, 15));
+        
+        // Título del panel resumen
+        JLabel lblTituloResumen = new JLabel("Resumen General");
+        lblTituloResumen.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTituloResumen.setForeground(PioColores.GRIS_TEXT);
+        panelResumen.add(lblTituloResumen, BorderLayout.NORTH);
+        
         GridBagConstraints gbc_panelResumen = new GridBagConstraints();
         gbc_panelResumen.insets = new Insets(0, 0, 5, 5);
         gbc_panelResumen.fill = GridBagConstraints.BOTH;
@@ -81,7 +95,20 @@ public class DashboardEstadisticas extends JPanel {
         addResumenData(panelResumen);
         
         // Panel de logros (arriba a la derecha)
-        JPanel panelLogros = createPanelBase("Logros Obtenidos");
+        JPanel panelLogros = new JPanel();
+        panelLogros.setBackground(PioColores.GRIS_PANEL);
+        panelLogros.setBorder(BorderFactory.createCompoundBorder(
+            new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
+            new EmptyBorder(15, 15, 15, 15)
+        ));
+        panelLogros.setLayout(new BorderLayout(0, 15));
+        
+        // Título del panel logros
+        JLabel lblTituloLogros = new JLabel("Logros Obtenidos");
+        lblTituloLogros.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTituloLogros.setForeground(PioColores.GRIS_TEXT);
+        panelLogros.add(lblTituloLogros, BorderLayout.NORTH);
+        
         GridBagConstraints gbc_panelLogros = new GridBagConstraints();
         gbc_panelLogros.insets = new Insets(0, 0, 5, 5);
         gbc_panelLogros.fill = GridBagConstraints.BOTH;
@@ -93,7 +120,20 @@ public class DashboardEstadisticas extends JPanel {
         addLogros(panelLogros);
         
         // Panel de progreso en cursos (abajo, spanning dos columnas)
-        JPanel panelProgreso = createPanelBase("Progreso por Cursos");
+        JPanel panelProgreso = new JPanel();
+        panelProgreso.setBackground(PioColores.GRIS_PANEL);
+        panelProgreso.setBorder(BorderFactory.createCompoundBorder(
+            new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
+            new EmptyBorder(15, 15, 15, 15)
+        ));
+        panelProgreso.setLayout(new BorderLayout(0, 15));
+        
+        // Título del panel progreso
+        JLabel lblTituloProgreso = new JLabel("Progreso por Cursos");
+        lblTituloProgreso.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTituloProgreso.setForeground(PioColores.GRIS_TEXT);
+        panelProgreso.add(lblTituloProgreso, BorderLayout.NORTH);
+        
         GridBagConstraints gbc_panelProgreso = new GridBagConstraints();
         gbc_panelProgreso.insets = new Insets(0, 0, 5, 5);
         gbc_panelProgreso.fill = GridBagConstraints.BOTH;
@@ -107,31 +147,9 @@ public class DashboardEstadisticas extends JPanel {
     }
     
     /**
-     * Crea un panel base con título
-     */
-    private JPanel createPanelBase(String titulo) {
-        JPanel panel = new JPanel();
-        panel.setBackground(PioColores.GRIS_PANEL);
-        panel.setBorder(BorderFactory.createCompoundBorder(
-            new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)),
-            new EmptyBorder(15, 15, 15, 15)
-        ));
-        
-        panel.setLayout(new BorderLayout(0, 15));
-        
-        // Título del panel
-        JLabel lblTitulo = new JLabel(titulo);
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        lblTitulo.setForeground(PioColores.GRIS_TEXT);
-        panel.add(lblTitulo, BorderLayout.NORTH);
-        
-        return panel;
-    }
-    
-    /**
      * Añade los datos del resumen de actividad
      */
-    private void addResumenData(JPanel panel) {
+    private void addResumenData(JPanel panelPadre) {
         JPanel dataPanel = new JPanel();
         dataPanel.setOpaque(false);
         dataPanel.setLayout(new GridBagLayout());
@@ -174,13 +192,13 @@ public class DashboardEstadisticas extends JPanel {
             gbc.insets = new Insets(8, 5, 8, 5); // Reset insets
         }
         
-        panel.add(dataPanel, BorderLayout.CENTER);
+        panelPadre.add(dataPanel, BorderLayout.CENTER);
     }
     
     /**
      * Añade los logros obtenidos
      */
-    private void addLogros(JPanel panel) {
+    private void addLogros(JPanel panelPadre) {
         JPanel logrosPanel = new JPanel();
         logrosPanel.setOpaque(false);
         logrosPanel.setLayout(new BoxLayout(logrosPanel, BoxLayout.Y_AXIS));
@@ -207,13 +225,13 @@ public class DashboardEstadisticas extends JPanel {
             }
         }
         
-        panel.add(logrosPanel, BorderLayout.CENTER);
+        panelPadre.add(logrosPanel, BorderLayout.CENTER);
     }
     
     /**
      * Añade el progreso de los cursos
      */
-    private void addProgresoCursos(JPanel panel) {
+    private void addProgresoCursos(JPanel panelPadre) {
         JPanel cursosContainer = new JPanel();
         cursosContainer.setOpaque(false);
         cursosContainer.setLayout(new BoxLayout(cursosContainer, BoxLayout.Y_AXIS));
@@ -245,7 +263,7 @@ public class DashboardEstadisticas extends JPanel {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         
-        panel.add(scrollPane, BorderLayout.CENTER);
+        panelPadre.add(scrollPane, BorderLayout.CENTER);
     }
     
     /**
@@ -350,140 +368,135 @@ public class DashboardEstadisticas extends JPanel {
     }
     
     /**
-     * Muestra un diálogo con detalles completos del curso
+     * Método mejorado para mostrar detalles completos del curso
      */
+    private void mostrarDetallesCurso(EstadisticasCurso estadistica) {
+        // Crear un panel personalizado para mostrar más detalles
+        JPanel panelDetalle = new JPanel(new BorderLayout());
+        panelDetalle.setPreferredSize(new Dimension(500, 400));
+        
+        // Información del curso
+        JPanel panelInfo = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+        
+        // Título del curso
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        JLabel lblTitulo = new JLabel(estadistica.getCurso().getTitulo());
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
+        panelInfo.add(lblTitulo, gbc);
+        
+        gbc.gridwidth = 1;
+        
+        // Estadísticas detalladas
+        String[][] datos = {
+            {"Progreso:", String.format("%.1f%% completado", estadistica.getPorcentajeCompletado())},
+            {"Ejercicios realizados:", String.valueOf(estadistica.getEjerciciosCompletados())},
+            {"Tiempo dedicado:", estadistica.getTiempoTotalMinutos() + " minutos"},
+            {"Precisión:", String.format("%.1f%%", estadistica.getPrecision())},
+            {"Dificultad:", estadistica.getCurso().getDificultad()},
+            {"Autor:", estadistica.getCurso().getAutor() != null ? estadistica.getCurso().getAutor() : "Desconocido"}
+        };
+        
+        for (int i = 0; i < datos.length; i++) {
+            gbc.gridx = 0; gbc.gridy = i + 1;
+            JLabel lblEtiqueta = new JLabel(datos[i][0]);
+            lblEtiqueta.setFont(new Font("Arial", Font.BOLD, 14));
+            panelInfo.add(lblEtiqueta, gbc);
+            
+            gbc.gridx = 1;
+            JLabel lblValor = new JLabel(datos[i][1]);
+            lblValor.setFont(new Font("Arial", Font.PLAIN, 14));
+            panelInfo.add(lblValor, gbc);
+        }
+        
+        panelDetalle.add(panelInfo, BorderLayout.NORTH);
+        
+        // Descripción del curso
+        if (estadistica.getCurso().getDescripcion() != null) {
+            JTextArea txtDescripcion = new JTextArea(estadistica.getCurso().getDescripcion());
+            txtDescripcion.setLineWrap(true);
+            txtDescripcion.setWrapStyleWord(true);
+            txtDescripcion.setEditable(false);
+            txtDescripcion.setOpaque(false);
+            txtDescripcion.setBorder(BorderFactory.createTitledBorder("Descripción"));
+            
+            JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
+            scrollDesc.setPreferredSize(new Dimension(450, 100));
+            panelDetalle.add(scrollDesc, BorderLayout.CENTER);
+        }
+        
+        // Botón para continuar estudiando
+        JPanel panelBotones = new JPanel(new FlowLayout());
+        JButton btnContinuar = new PioButton("Continuar Estudiando");
+        btnContinuar.setBackground(PioColores.VERDE_BUTTON);
+        btnContinuar.addActionListener(e -> {
+            // Abrir el curso para continuar estudiando
+            abrirCursoParaEstudiar(estadistica.getCurso());
+            SwingUtilities.getWindowAncestor(panelDetalle).dispose();
+        });
+        panelBotones.add(btnContinuar);
+        panelDetalle.add(panelBotones, BorderLayout.SOUTH);
+        
+        // Mostrar en diálogo
+        JOptionPane.showMessageDialog(
+            this,
+            panelDetalle,
+            "Estadísticas de " + estadistica.getCurso().getTitulo(),
+            JOptionPane.PLAIN_MESSAGE
+        );
+    }
 
-	/**
-	 * Método mejorado para mostrar detalles completos del curso
-	 */
-	private void mostrarDetallesCurso(EstadisticasCurso estadistica) {
-	    // Crear un panel personalizado para mostrar más detalles
-	    JPanel panelDetalle = new JPanel(new BorderLayout());
-	    panelDetalle.setPreferredSize(new Dimension(500, 400));
-	    
-	    // Información del curso
-	    JPanel panelInfo = new JPanel(new GridBagLayout());
-	    GridBagConstraints gbc = new GridBagConstraints();
-	    gbc.insets = new Insets(5, 5, 5, 5);
-	    gbc.anchor = GridBagConstraints.WEST;
-	    
-	    // Título del curso
-	    gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
-	    JLabel lblTitulo = new JLabel(estadistica.getCurso().getTitulo());
-	    lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
-	    panelInfo.add(lblTitulo, gbc);
-	    
-	    gbc.gridwidth = 1;
-	    
-	    // Estadísticas detalladas
-	    String[][] datos = {
-	        {"Progreso:", String.format("%.1f%% completado", estadistica.getPorcentajeCompletado())},
-	        {"Ejercicios realizados:", String.valueOf(estadistica.getEjerciciosCompletados())},
-	        {"Tiempo dedicado:", estadistica.getTiempoTotalMinutos() + " minutos"},
-	        {"Precisión:", String.format("%.1f%%", estadistica.getPrecision())},
-	        {"Dificultad:", estadistica.getCurso().getDificultad()},
-	        {"Autor:", estadistica.getCurso().getAutor() != null ? estadistica.getCurso().getAutor() : "Desconocido"}
-	    };
-	    
-	    for (int i = 0; i < datos.length; i++) {
-	        gbc.gridx = 0; gbc.gridy = i + 1;
-	        JLabel lblEtiqueta = new JLabel(datos[i][0]);
-	        lblEtiqueta.setFont(new Font("Arial", Font.BOLD, 14));
-	        panelInfo.add(lblEtiqueta, gbc);
-	        
-	        gbc.gridx = 1;
-	        JLabel lblValor = new JLabel(datos[i][1]);
-	        lblValor.setFont(new Font("Arial", Font.PLAIN, 14));
-	        panelInfo.add(lblValor, gbc);
-	    }
-	    
-	    panelDetalle.add(panelInfo, BorderLayout.NORTH);
-	    
-	    // Descripción del curso
-	    if (estadistica.getCurso().getDescripcion() != null) {
-	        JTextArea txtDescripcion = new JTextArea(estadistica.getCurso().getDescripcion());
-	        txtDescripcion.setLineWrap(true);
-	        txtDescripcion.setWrapStyleWord(true);
-	        txtDescripcion.setEditable(false);
-	        txtDescripcion.setOpaque(false);
-	        txtDescripcion.setBorder(BorderFactory.createTitledBorder("Descripción"));
-	        
-	        JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
-	        scrollDesc.setPreferredSize(new Dimension(450, 100));
-	        panelDetalle.add(scrollDesc, BorderLayout.CENTER);
-	    }
-	    
-	    // Botón para continuar estudiando
-	    JPanel panelBotones = new JPanel(new FlowLayout());
-	    JButton btnContinuar = new JButton("Continuar Estudiando");
-	    btnContinuar.setBackground(PioColores.VERDE_BUTTON);
-	    btnContinuar.addActionListener(e -> {
-	        // Abrir el curso para continuar estudiando
-	        abrirCursoParaEstudiar(estadistica.getCurso());
-	        SwingUtilities.getWindowAncestor(panelDetalle).dispose();
-	    });
-	    panelBotones.add(btnContinuar);
-	    panelDetalle.add(panelBotones, BorderLayout.SOUTH);
-	    
-	    // Mostrar en diálogo
-	    JOptionPane.showMessageDialog(
-	        this,
-	        panelDetalle,
-	        "Estadísticas de " + estadistica.getCurso().getTitulo(),
-	        JOptionPane.PLAIN_MESSAGE
-	    );
-	}
+    /**
+     * Abre un curso para continuar estudiando
+     */
+    private void abrirCursoParaEstudiar(Curso curso) {
+        try {
+            // Verificar que el curso tenga bloques y ejercicios
+            if (curso.getBloques() == null || curso.getBloques().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                    "Este curso no tiene ejercicios disponibles.",
+                    "Sin contenido",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Tomar el primer bloque con ejercicios
+            Bloque bloqueConEjercicios = null;
+            for (Bloque bloque : curso.getBloques()) {
+                if (bloque.getEjercicios() != null && !bloque.getEjercicios().isEmpty()) {
+                    bloqueConEjercicios = bloque;
+                    break;
+                }
+            }
+            
+            if (bloqueConEjercicios == null) {
+                JOptionPane.showMessageDialog(this,
+                    "Este curso no tiene ejercicios disponibles.",
+                    "Sin ejercicios",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            final Bloque bloqueParaAbrir = bloqueConEjercicios;
+            
+            // Abrir PioEjercicios
+            SwingUtilities.invokeLater(() -> {
+                PioEjercicios ventanaEjercicios = new PioEjercicios(bloqueParaAbrir.getEjercicios());
+                ventanaEjercicios.setVisible(true);
+            });
+            
+        } catch (Exception ex) {
+            System.err.println("Error al abrir ejercicios: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this,
+                "Error al abrir los ejercicios: " + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-	/**
-	 * Abre un curso para continuar estudiando
-	 */
-	private void abrirCursoParaEstudiar(Curso curso) {
-	    try {
-	        // Verificar que el curso tenga bloques y ejercicios
-	        if (curso.getBloques() == null || curso.getBloques().isEmpty()) {
-	            JOptionPane.showMessageDialog(this,
-	                "Este curso no tiene ejercicios disponibles.",
-	                "Sin contenido",
-	                JOptionPane.WARNING_MESSAGE);
-	            return;
-	        }
-	        
-	        // Tomar el primer bloque con ejercicios
-	        Bloque bloqueConEjercicios = null;
-	        for (Bloque bloque : curso.getBloques()) {
-	            if (bloque.getEjercicios() != null && !bloque.getEjercicios().isEmpty()) {
-	                bloqueConEjercicios = bloque;
-	                break;
-	            }
-	        }
-	        
-	        if (bloqueConEjercicios == null) {
-	            JOptionPane.showMessageDialog(this,
-	                "Este curso no tiene ejercicios disponibles.",
-	                "Sin ejercicios",
-	                JOptionPane.WARNING_MESSAGE);
-	            return;
-	        }
-	        
-	        // SOLUCIÓN: Crear variable final para usar en lambda
-	        final Bloque bloqueParaAbrir = bloqueConEjercicios;
-	        
-	        // Abrir PioEjercicios
-	        SwingUtilities.invokeLater(() -> {
-	            PioEjercicios ventanaEjercicios = new PioEjercicios(bloqueParaAbrir.getEjercicios());
-	            ventanaEjercicios.setVisible(true);
-	        });
-	        
-	    } catch (Exception ex) {
-	        System.err.println("Error al abrir ejercicios: " + ex.getMessage());
-	        JOptionPane.showMessageDialog(this,
-	            "Error al abrir los ejercicios: " + ex.getMessage(),
-	            "Error",
-	            JOptionPane.ERROR_MESSAGE);
-	    }
-	}
-
-	/**
+    /**
      * Método para refrescar las estadísticas
      */
     public void refrescarEstadisticas() {

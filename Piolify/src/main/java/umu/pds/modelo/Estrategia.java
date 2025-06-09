@@ -1,8 +1,6 @@
 package umu.pds.modelo;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Interfaz utilizada para definir una estrategia de aprendizaje que el usuario puede elegir 

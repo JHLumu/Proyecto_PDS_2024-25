@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import umu.pds.modelo.EjercicioRellenarHuecos;
+import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
 public class RellenarHuecosRenderer implements EjercicioRenderer {
@@ -66,7 +67,7 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setOpaque(false);
         
-        solucionButton = new JButton("Solución");
+        solucionButton = new PioButton("Solución");
         solucionButton.setFont(new Font("Arial", Font.BOLD, 14));
         solucionButton.setBackground(Color.BLUE);
         solucionButton.setForeground(Color.WHITE);
