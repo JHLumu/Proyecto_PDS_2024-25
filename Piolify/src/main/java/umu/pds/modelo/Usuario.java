@@ -1,6 +1,7 @@
 package umu.pds.modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -238,6 +239,26 @@ public class Usuario {
 	    return amistadesEnviadas.stream()
 	        .filter(a -> a.getEstado() == EstadoAmistad.PENDIENTE)
 	        .collect(Collectors.toList());
+	}
+
+	public boolean tieneLogroDesbloqueado(TipoLogro tipo) {
+		
+		return this.logros.stream().anyMatch(l -> l.getTipo().equals(tipo));
+	}
+
+	public void desbloquearLogro(TipoLogro tipo) {
+		// TODO Auto-generated method stub
+		boolean desbloqueado = this.logros.stream().anyMatch(l -> l.getTipo().equals(tipo));
+		if(!desbloqueado) {
+			Logro logro = new Logro( tipo.getNombre(), tipo.getDescripcion(), "", new Date(), tipo);
+			this.logros.add(logro);
+			
+		}
+	}
+
+	public int getCursosComenzados() {
+		
+		return this.biblioteca.size();
 	}
 
 	

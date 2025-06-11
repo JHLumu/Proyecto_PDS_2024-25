@@ -20,9 +20,28 @@ public class Logro {
 	private String descripcion;
 	private String imagen;
 	private Date fecha;
+	private TipoLogro tipo;
 	
 	@ManyToOne
 	private Usuario usuario;
+	
+	public Logro(){
+		
+	}
+	
+	public Logro(TipoLogro tipo) {
+		this.nombre = tipo.getNombre();
+		this.descripcion = tipo.getDescripcion();
+		this.fecha = new Date();
+	}
+	
+	public Logro(String nombre, String descripcion, String imagen, Date fecha, TipoLogro tipo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.fecha = fecha;
+        this.tipo = tipo;
+    }
 	
 	public String getNombre() {
 		return nombre;
@@ -47,6 +66,9 @@ public class Logro {
 	}
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+	public TipoLogro getTipo() {
+		return this.tipo;
 	}
 	
 	
