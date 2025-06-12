@@ -29,12 +29,11 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
     private JButton solucionButton;
     private JLabel resultadoLabel;
     private EjercicioRellenarHuecos ejercicio;
-    private JPanel containerPanel;
+
     
     @Override
     public void renderizar(JPanel containerPanel, Object ejercicioObj) {
         this.ejercicio = (EjercicioRellenarHuecos) ejercicioObj;
-        this.containerPanel = containerPanel;
         containerPanel.setLayout(new BorderLayout());
         
         camposHuecos = new ArrayList<>();

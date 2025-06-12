@@ -35,9 +35,15 @@ public class Bloque {
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
     
-    private int orden; // Orden del bloque dentro del curso
-    
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getTitulo() {
 		return titulo;
 	}
@@ -62,13 +68,6 @@ public class Bloque {
 		this.ejercicios = listaEjercicios;
 	}
 	
-	public int getOrden() {
-		return this.orden;
-	}
-	
-	public void setOrden(int orden) {
-		this.orden = orden;
-	}
 
 	public Curso getCurso() 
 	{return this.curso;

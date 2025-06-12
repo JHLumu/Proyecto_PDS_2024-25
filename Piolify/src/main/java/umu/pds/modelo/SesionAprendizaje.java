@@ -38,7 +38,6 @@ public class SesionAprendizaje {
 	private int aciertos;
 	private int fallos;
 	private int tiempoTotal; // en segundos
-	private int puntuacion;
 	private boolean completada; // Si la sesión fue completada exitosamente
 	
 	// Constructores
@@ -139,14 +138,6 @@ public class SesionAprendizaje {
 	
 	public void setTiempoTotal(int tiempoTotal) {
 		this.tiempoTotal = tiempoTotal;
-	}
-	
-	public int getPuntuacion() {
-		return puntuacion;
-	}
-	
-	public void setPuntuacion(int puntuacion) {
-		this.puntuacion = puntuacion;
 	}
 	
 	public boolean isCompletada() {
