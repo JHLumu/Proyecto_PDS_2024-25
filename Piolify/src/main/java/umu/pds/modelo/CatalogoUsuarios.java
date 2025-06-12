@@ -66,7 +66,7 @@ public class CatalogoUsuarios {
 	    
         
 	    /**
-	     * carga el catálogo de usuarios desde la base de datos
+	     * Método que carga el catálogo de usuarios desde la base de datos
 	     * 
 	     */
 		private void cargarCatalogo() {

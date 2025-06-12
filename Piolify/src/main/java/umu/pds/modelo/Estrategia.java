@@ -12,6 +12,8 @@ public interface Estrategia {
 	 * Método que realiza la ordenación de los ejercicios
 	 * según la lógica definida por la implementación
 	 * de la estrategia.
+	 * @param ejercicios Lista de ejercicios a ordenar.
+	 * @return Lista ordenada de ejercicios según la estrategia.
 	 */
 	public List<Ejercicio> ordenarEjercicios(List<Ejercicio> ejercicios);
 	

@@ -8,13 +8,18 @@ import umu.pds.modelo.Logro;
 import umu.pds.modelo.TipoLogro;
 import umu.pds.modelo.Usuario;
 
+
+/**
+ * Clase de apoyo para los controladores, utilizado para la gestión 
+ * de los logros de los usuarios.
+ */
 public class ServicioLogros {
-	    
-    public ServicioLogros() {
-    }
-    
+	
+
     /**
-     * Obtiene todos los logros con su estado actual (desbloqueado/bloqueado)
+     * Método que recupera todos los logros definidos, con un estado asociado según el usuario.
+     * @param usuario Instancia {@link Usuario} oara el cual se consultan el estado de los logros.
+     * @return Lista de instancias {@link LogroConEstado}, con un estado asociado.
      */
     public List<LogroConEstado> obtenerLogrosConEstado(Usuario usuario) {
         List<LogroConEstado> logrosConEstado = new ArrayList<>();
@@ -24,20 +29,41 @@ public class ServicioLogros {
             boolean desbloqueado = usuario.tieneLogroDesbloqueado(tipoLogro);
             logrosConEstado.add(new LogroConEstado(tipoLogro, desbloqueado));
         }
-
         return logrosConEstado;
     }
+    
 
     /**
-     * Desbloquea un logro específico para un usuario
+     * Método que comprueba si un logro específico se puede desbloquear para un usuario.
+     * @param usuario Instancia {@link Usuario} oara el cual se realiza la comprobación.
+     * @param tipo Constante {@link TipoLogro}. Logro definido que se comprueba. 
+     */
+    public boolean puedeDesbloquearLogro(Usuario usuario, TipoLogro tipo) {
+        if (usuario.tieneLogroDesbloqueado(tipo)) {
+            return false; // Ya está desbloqueado
+        }
+        
+        Estadisticas estadisticas = usuario.getEstadisticas();
+        int cursosComenzados = usuario.getCursosComenzados();
+        
+        return tipo.seCumpleCondicion(estadisticas, cursosComenzados);
+    }
+    
+
+    /**
+     * Método que desbloquea un logro específico para un usuario.
+     * @param usuario Instancia {@link Usuario} oara el cual se desbloquea un logro.
+     * @param tipo Constante {@link TipoLogro}. Logro definido en el sistema que se desbloquea. 
      */
     public void desbloquearLogro(Usuario usuario, TipoLogro tipo) {
         usuario.desbloquearLogro(tipo);
     }
 
     /**
-     * Comprueba y desbloquea automáticamente todos los logros que el usuario haya conseguido
-     * basándose en sus estadísticas actuales
+     * Métoo que comprueba y desbloquea automáticamente todos los logros que el usuario haya conseguido
+     * basándose en sus estadísticas actuales.
+     * @param usuario Instancia {@link Usuario} para el cual se comprobarán los logros definidos en el sistema.
+     * @return Lista de instancias {@link LogroConEstado} que han sido desbloqueados. 
      */
     public List<TipoLogro> comprobarYDesbloquearLogros(Usuario usuario) {
         List<TipoLogro> logrosDesbloqueados = new ArrayList<>();
@@ -60,26 +86,17 @@ public class ServicioLogros {
     }
 
     /**
-     * Comprueba si un logro específico se puede desbloquear para un usuario
-     */
-    public boolean puedeDesbloquearLogro(Usuario usuario, TipoLogro tipo) {
-        if (usuario.tieneLogroDesbloqueado(tipo)) {
-            return false; // Ya está desbloqueado
-        }
-        
-        Estadisticas estadisticas = usuario.getEstadisticas();
-        int cursosComenzados = usuario.getCursosComenzados();
-        
-        return tipo.seCumpleCondicion(estadisticas, cursosComenzados);
-    }
-    
-    /**
-     * Clase interna que representa un logro con su estado
+     * Clase interna que representa un logro con su estado asociado: bloqueado o desbloqueado.
      */
     public static class LogroConEstado {
         private final TipoLogro tipoLogro;
         private final boolean desbloqueado;
 
+        /**
+         * Constructor de la clase {@link LogroConEstado}. Asocia un logro definido en el sistema un estado.
+         * @param tipoLogro Constante {@link TipoLogro}. Logro definido en el sistema que se desbloquea.
+         * @param desbloqueado {@code true} si el logro está desbloqueado, {@code false} en caso contrario.
+         */
         public LogroConEstado(TipoLogro tipoLogro, boolean desbloqueado) {
             this.tipoLogro = tipoLogro;
             this.desbloqueado = desbloqueado;

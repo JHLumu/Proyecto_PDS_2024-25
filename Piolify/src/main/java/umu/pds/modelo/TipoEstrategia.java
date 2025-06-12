@@ -9,7 +9,11 @@ public enum TipoEstrategia {
 	REPETICION_ESPACIADA,
 	ALEATORIA;
 
-	
+	/**
+	 * Método encargado de la conversión de String a TipoEstrategia.
+	 * @param nombre String que contiene el nombre de un tipo de estrategia.
+	 * @return Instancia {@link TipoEstrategia} correspondiente.
+	 */
 	public static TipoEstrategia from(String nombre){
 		String nombreFormateado = nombre.toUpperCase().replace(" ", "_");
 		return Arrays.stream(values())

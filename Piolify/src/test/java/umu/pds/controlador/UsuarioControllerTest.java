@@ -143,18 +143,18 @@ class UsuarioControllerTest {
 
     @Test
     void testBuscarUsuarioPorEmail() {
-        when(usuarioServiceMock.buscarUsuarioPorEmail(EMAIL_TEST)).thenReturn(usuarioMock);
+        when(usuarioServiceMock.obtenerUsuarioPorEmail(EMAIL_TEST)).thenReturn(usuarioMock);
 
         Usuario resultado = controller.buscarUsuarioPorEmail(EMAIL_TEST);
 
         assertEquals(usuarioMock, resultado);
-        verify(usuarioServiceMock).buscarUsuarioPorEmail(EMAIL_TEST);
+        verify(usuarioServiceMock).obtenerUsuarioPorEmail(EMAIL_TEST);
     }
     
     @Test
     void testEnviarSolicitudAmistadExitoso() {
         when(piolifyMock.getUsuarioActual()).thenReturn(usuarioMock);
-        when(usuarioServiceMock.buscarUsuarioPorEmail(EMAIL_AMIGO)).thenReturn(usuarioMock);
+        when(usuarioServiceMock.obtenerUsuarioPorEmail(EMAIL_AMIGO)).thenReturn(usuarioMock);
         when(usuarioServiceMock.enviarSolicitudAmistad(usuarioMock, usuarioMock)).thenReturn(true);
         
         boolean resultado = controller.enviarSolicitudAmistad(EMAIL_AMIGO);
@@ -166,7 +166,7 @@ class UsuarioControllerTest {
     @Test
     void testEnviarSolicitudAmistadDestinatarioNull() {
         when(piolifyMock.getUsuarioActual()).thenReturn(usuarioMock);
-        when(usuarioServiceMock.buscarUsuarioPorEmail(EMAIL_AMIGO)).thenReturn(null);
+        when(usuarioServiceMock.obtenerUsuarioPorEmail(EMAIL_AMIGO)).thenReturn(null);
         
         assertThrows(RuntimeException.class, () -> controller.enviarSolicitudAmistad(EMAIL_AMIGO));
         verify(usuarioServiceMock, never()).enviarSolicitudAmistad(any(), any());
@@ -175,7 +175,7 @@ class UsuarioControllerTest {
     @Test
     void testEnviarSolicitudAmistadSolicitudExistente() {
         when(piolifyMock.getUsuarioActual()).thenReturn(usuarioMock);
-        when(usuarioServiceMock.buscarUsuarioPorEmail(EMAIL_AMIGO)).thenReturn(usuarioMock);
+        when(usuarioServiceMock.obtenerUsuarioPorEmail(EMAIL_AMIGO)).thenReturn(usuarioMock);
         when(usuarioServiceMock.enviarSolicitudAmistad(usuarioMock, usuarioMock)).thenReturn(false);
         
         Exception exception = assertThrows(RuntimeException.class, 

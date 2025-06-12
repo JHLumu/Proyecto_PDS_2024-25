@@ -127,7 +127,7 @@ public class UsuarioController {
 	 * @return Usuario encontrado o null si no existe
 	 */
 	public Usuario buscarUsuarioPorEmail(String email) {
-	    return usuarioService.buscarUsuarioPorEmail(email);
+	    return usuarioService.obtenerUsuarioPorEmail(email);
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public class UsuarioController {
 	 */
 	public boolean enviarSolicitudAmistad(String emailDestinatario) {
 	    Usuario usuarioActual = controlador.getUsuarioActual();
-	    Usuario destinatario = usuarioService.buscarUsuarioPorEmail(emailDestinatario);
+	    Usuario destinatario = usuarioService.obtenerUsuarioPorEmail(emailDestinatario);
 	    
 	    if (destinatario == null) {
 	        throw new RuntimeException("Usuario no encontrado");
