@@ -19,11 +19,25 @@ import umu.pds.persistencia.JPAFactoriaDAO;
 import umu.pds.persistencia.SesionAprendizajeDAO;
 import umu.pds.persistencia.UsuarioDAO;
 
-public class ServicioEstadisticas {
 
+/**
+ * Clase de apoyo para los controladores, utilizado para la gestión 
+ * de estadísticas de los usuarios.
+ */
+public class ServicioEstadisticas {
+	
+	/**
+	 * Instancia {@link SesionAprendizajeDAO} para la persistencia de estadísticas de un usuario.
+	 */
 	private final SesionAprendizajeDAO sesionDAO;
+	/**
+	 * Instancia {@link UsuarioDAO} para la persistencia de un usuario.
+	 */
 	private final UsuarioDAO usuarioDAO;
 
+	/**
+	 * Constructor por defecto. Inicializa las instancias  {@link SesionAprendizajeDAO} y {@link UsuarioDAO} desde la Factoría {@link @FactoriaDAO}.
+	 */
 	public ServicioEstadisticas() {
 		FactoriaDAO factoria = FactoriaDAO.getInstancia(JPAFactoriaDAO.class.getName());
 		this.sesionDAO = factoria.getSesionAprendizajeDAO();
@@ -31,7 +45,11 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Inicia una nueva sesión de aprendizaje
+	 * Método que inicia una nueva sesión de aprendizaje para un usuario.
+	 * @param usuario Instancia {@link Usuario}, que inicia la sesión.
+	 * @param curso Instancia {@link Curso}, del que se iniciará la sesión.
+	 * @param ejercicio Instancia {@link Ejercicio}. Primer ejercicio de la sesión.
+	 * @return Instancia {@link SesionAprendizaje}.
 	 */
 	public SesionAprendizaje iniciarSesion(Usuario usuario, Curso curso, Ejercicio ejercicio) {
 		SesionAprendizaje sesion = new SesionAprendizaje(usuario, curso, ejercicio);
@@ -40,7 +58,8 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Finaliza una sesión y actualiza las estadísticas del usuario
+	 * Método que finaliza una sesión y actualiza las estadísticas del usuario, persistiendo la actualización.
+	 * @param sesion Instancia {@link SesionAprendizaje} a finalizar.
 	 */
 	public void finalizarSesion(SesionAprendizaje sesion) {
 		sesion.finalizarSesion();
@@ -49,7 +68,8 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Registra un acierto en la sesión actual
+	 * Método que registra un acierto en la sesión actual, actualizando la sesión y persistiéndolo.
+	 * @param sesion Instancia {@link SesionAprendizaje} en curso.
 	 */
 	public void registrarAcierto(SesionAprendizaje sesion) {
 		sesion.registrarAcierto();
@@ -57,7 +77,8 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Registra un fallo en la sesión actual
+	 * Método que registra un fallo en la sesión actual, actualizando la sesión y persistiéndolo.
+	 * @param sesion Instancia {@link SesionAprendizaje} en curso.
 	 */
 	public void registrarFallo(SesionAprendizaje sesion) {
 		sesion.registrarFallo();
@@ -65,8 +86,9 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Actualiza las estadísticas generales del usuario basándose en todas sus
-	 * sesiones
+	 * Método que actualiza las estadísticas generales de un usuario basándose en todas sus
+	 * sesiones de aprendizaje completadas.
+	 * @param usuario Instancia {@link Usuario} cuyas estadísticas serán actualizadas.
 	 */
 	public void actualizarEstadisticasUsuario(Usuario usuario) {
 		List<SesionAprendizaje> todasLasSesiones = sesionDAO.buscarSesionesPorUsuario(usuario);
@@ -128,7 +150,8 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Calcula la racha actual de días consecutivos con actividad
+	 * Método que calcula la racha actual de días consecutivos con actividad.
+	 * @param sesiones Lista de instancias {@link SesionAprendizaje} de un usuario.
 	 */
 	private int calcularRachaActual(List<SesionAprendizaje> sesiones) {
 		if (sesiones.isEmpty())
@@ -173,7 +196,9 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Calcula la mejor racha histórica
+	 * Método que calcula la mejor racha histórica de días consecutivos con actividad.
+	 * @param sesiones Lista de instancias {@link SesionAprendizaje} de un usuario.
+	 * @return máxima racha histórica registrada.
 	 */
 	private int calcularMejorRacha(List<SesionAprendizaje> sesiones) {
 		if (sesiones.isEmpty())
@@ -205,7 +230,10 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Obtiene estadísticas específicas de un curso para un usuario
+	 * Método que obtiene estadísticas específicas de un curso para un usuario
+	 * @param usuario Instancia {@link Usuario} del que se obtienen las estadísticas de un curso.
+	 * @param curso Instancia {@link Curso},
+	 * @return Instancia {@link EstadisticasCurso} con tiempo, precisión, total de ejercicios completados y porcentaje de ejercicios completados.
 	 */
 	public EstadisticasCurso obtenerEstadisticasCurso(Usuario usuario, Curso curso) {
 		List<SesionAprendizaje> sesionesCurso = sesionDAO.buscarSesionesPorUsuarioYCurso(usuario, curso);
@@ -247,15 +275,20 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Obtiene todas las sesiones de un usuario
+	 * Método que obtiene todas las sesiones de un usuario.
+	 * @param usuario Instancia {@link Usuario} del que se obtienen las sesiones.
+	 * @return Lista de todas las instancias {@link SesionAprendizaje} asociadas al usuario.
+	 * 
 	 */
 	public List<SesionAprendizaje> obtenerSesionesUsuario(Usuario usuario) {
 		return sesionDAO.buscarSesionesPorUsuario(usuario);
 	}
 
 	/**
-	 * Obtiene estadísticas de todos los cursos en los que el usuario ha tenido
-	 * actividad
+	 * Método que obtiene estadísticas de todos los cursos en los que el usuario ha tenido
+	 * actividad.
+	 * @param usuario Instancia {@link Usuario} del que se recuperan todas las estadísticas de cursos.
+	 * @return Lista de instancias {@link EstadisticasCurso}, cada uno asociada a un curso del usuario.
 	 */
 	public List<EstadisticasCurso> obtenerEstadisticasTodosCursos(Usuario usuario) {
 		List<SesionAprendizaje> todasLasSesiones = sesionDAO.buscarSesionesPorUsuario(usuario);
@@ -268,7 +301,13 @@ public class ServicioEstadisticas {
 	}
 
 	/**
-	 * Clase interna para encapsular estadísticas específicas de un curso
+	 * Clase interna para encapsular estadísticas específicas de un curso. Contiene, para un curso asociado: <ul>
+	 * <li> Tiempo total de actividad del usuario en minutos. </li>
+	 * <li> Tiempo total de actividad del usuario en segundos. </li>
+	 * <li> Número de ejercicios completados. </li>
+	 * <li> Porcentaje de aciertos (precisión). </li>
+	 * <li> Porcentaje del curso completado. </li>
+	 * </ul>
 	 */
 	public static class EstadisticasCurso {
 		private final Curso curso;
@@ -278,6 +317,7 @@ public class ServicioEstadisticas {
 		private final double precision;
 		private final double porcentajeCompletado;
 
+		
 		public EstadisticasCurso(Curso curso, int tiempoTotalMinutos, int tiempoTotalSegundos,
 				int ejerciciosCompletados, double precision, double porcentajeCompletado) {
 			this.curso = curso;

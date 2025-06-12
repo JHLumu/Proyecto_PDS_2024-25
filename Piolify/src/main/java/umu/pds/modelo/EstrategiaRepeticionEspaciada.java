@@ -3,11 +3,24 @@ package umu.pds.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+/** 
+ * Implementación de {@link Estrategia} que, cada cierto número determinado de ejercicios, 
+ * repeite un ejercicio anterior.
+ *
+ */
 public class EstrategiaRepeticionEspaciada implements Estrategia{
 
-	//Intervalo de preguntas entre una pregunta y una repetición de esta.
-	private static final int REPETICIONES_POR_DEFECTO = 2;
+	/**
+	 * Constante que contiene el intervalo (número de ejercicios) entre un ejercicio y su repetición.
+	 */
+	private static final int INTERVALO_EJERCICIOS_POR_DEFECTO = 3;
 	
+	/**
+	 * {@inheritDoc}
+	 * <br> Para la estrategia de repetición espaciada, respeta el orden secuencial de los ejercicios, insertando un ejercicio ya visto
+	 * <br> (empezando según el orden secuencial) cada {@code INTERVALO_EJERCICIOS_POR_DEFECTO}.
+	 * 
+	 */
 	@Override
 	public List<Ejercicio> ordenarEjercicios(List<Ejercicio> ejercicios) {
 		if (ejercicios == null || ejercicios.isEmpty()) return List.of();
@@ -18,7 +31,7 @@ public class EstrategiaRepeticionEspaciada implements Estrategia{
 		for (Ejercicio ejer : ejercicios) {
 			listaConRepeticiones.add(ejer);
 			contador++;
-			if (contador == REPETICIONES_POR_DEFECTO+1) {
+			if (contador == INTERVALO_EJERCICIOS_POR_DEFECTO+1) {
 				listaConRepeticiones.add(ejercicios.get(ultimoEjercicioRepetido));
 				ultimoEjercicioRepetido++;
 				contador=0;
@@ -27,6 +40,9 @@ public class EstrategiaRepeticionEspaciada implements Estrategia{
 		return listaConRepeticiones;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public TipoEstrategia getTipoEstrategia() {
 		return TipoEstrategia.REPETICION_ESPACIADA;

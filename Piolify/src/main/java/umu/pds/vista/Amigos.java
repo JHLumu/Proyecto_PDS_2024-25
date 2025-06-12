@@ -325,7 +325,7 @@ public class Amigos extends JPanel {
 
 
         try {
-            Usuario encontrado = usuarioService.buscarUsuarioPorEmail(email);
+            Usuario encontrado = usuarioService.obtenerUsuarioPorEmail(email);
             if (encontrado == null) {
                 JOptionPane.showMessageDialog(this, "Usuario no encontrado");
                 return;

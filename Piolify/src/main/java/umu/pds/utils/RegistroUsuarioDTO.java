@@ -1,5 +1,9 @@
 package umu.pds.utils;
 
+
+/**
+ * Clase destinada a transportar la información recogida en el formulario de registro de un usuario ( Data Transfer Object).
+ */
 public class RegistroUsuarioDTO {
     private String nombre;
     private String apellidos;
@@ -39,6 +43,9 @@ public class RegistroUsuarioDTO {
 		return rutaImagenPerfil;
 	}
 
+	/**
+	 * Clase estática destinada a la creación de instancias {@link RegistroUsuarioDTO} (Patrón Builder).
+	 */
 	public static class Builder {
         private final RegistroUsuarioDTO dto = new RegistroUsuarioDTO();
 

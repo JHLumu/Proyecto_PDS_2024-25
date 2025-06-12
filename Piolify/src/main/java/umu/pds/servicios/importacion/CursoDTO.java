@@ -2,7 +2,10 @@ package umu.pds.servicios.importacion;
 
 import java.util.List;
 
-//DTO para representar un curso en formato de intercambio
+
+/**
+ *  Clase destinada a transportar la información recogida en la importación de un curso ( Data Transfer Object).
+ */
 public class CursoDTO {
  private String titulo;
  private String descripcion;
@@ -10,7 +13,7 @@ public class CursoDTO {
  private String autor;
  private List<BloqueDTO> bloques;
  
- // Constructors
+ // Constructores
  public CursoDTO() {}
  
  public CursoDTO(String titulo, String descripcion, String dificultad, String autor, List<BloqueDTO> bloques) {
