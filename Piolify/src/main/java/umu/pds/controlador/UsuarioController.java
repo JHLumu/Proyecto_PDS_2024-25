@@ -1,5 +1,11 @@
 package umu.pds.controlador;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import umu.pds.modelo.Estadisticas;
+import umu.pds.modelo.Logro;
+import umu.pds.modelo.TipoLogro;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.UsuarioService;
 import umu.pds.utils.RegistroUsuarioDTO;
@@ -156,6 +162,37 @@ public class UsuarioController {
 		Usuario usuarioActual = controlador.getUsuarioActual();
         return usuarioService.procesarSolicitudAmistad(id, usuarioActual, aceptar);
     }
+	
+	/**
+	 * Verifica y desbloquea automáticamente todos los logros que el usuario haya conseguido
+	 * basándose en sus estadísticas actuales.
+	 * 
+	 * @param estadisticas Las estadísticas actuales del usuario
+	 * @return Lista de logros recién desbloqueados en esta verificación
+	 */
+	public void verificarYDesbloquearLogros(Usuario usuario) {
+	    
+	    Estadisticas estadisticas = usuario.getEstadisticas();
+	    if (estadisticas == null) {
+	        return;
+	    }
+	    
+	    int cursosComenzados = usuario.getCursosComenzados();
+	    
+	    // Verificar cada tipo de logro
+	    for (TipoLogro tipoLogro : TipoLogro.values()) {
+	        // Solo verificar si el logro no está ya desbloqueado
+	        if (!usuario.tieneLogroDesbloqueado(tipoLogro)) {
+	            // Verificar si se cumple la condición para este logro
+	            if (tipoLogro.seCumpleCondicion(estadisticas, cursosComenzados)) {
+	                // Desbloquear el logro
+	                usuario.desbloquearLogro(tipoLogro);
+
+	            }
+	        }
+	    }
+	    
+	}
 
 	
 }

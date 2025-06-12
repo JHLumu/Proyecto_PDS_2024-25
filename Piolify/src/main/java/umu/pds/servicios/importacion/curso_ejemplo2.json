@@ -1,0 +1,196 @@
+{
+  "titulo": "Desarrollo Web Frontend",
+  "descripcion": "Curso completo sobre desarrollo web frontend con HTML, CSS y JavaScript",
+  "dificultad": "Intermedio",
+  "autor": "Dra. María Rodríguez",
+  "bloques": [
+    {
+      "titulo": "HTML: Estructura Web",
+      "descripcion": "Fundamentos de HTML y estructura de documentos web",
+      "orden": 1,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál es la función principal del elemento <head> en HTML?",
+          "respuesta": "A",
+          "dificultad": 1,
+          "orden": 1,
+          "opciones": [
+            "Contener metadatos e información no visible de la página",
+            "Mostrar el contenido principal de la página",
+            "Crear enlaces a otras páginas",
+            "Definir el estilo visual de la página"
+          ]
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "Para crear un enlace en HTML se usa la etiqueta _____ con el atributo _____ que especifica la URL de destino",
+          "respuesta": "a|href",
+          "dificultad": 2,
+          "orden": 2
+        },
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué significa HTML?",
+          "respuesta": "HyperText Markup Language - es el lenguaje de marcado estándar para crear páginas web",
+          "dificultad": 1,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de estos elementos HTML es semánticamente correcto para el contenido principal?",
+          "respuesta": "B",
+          "dificultad": 2,
+          "orden": 4,
+          "opciones": [
+            "<div id='main'>",
+            "<main>",
+            "<section class='principal'>",
+            "<article>"
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "CSS: Diseño y Estilos",
+      "descripcion": "Aprende a dar estilo y diseñar páginas web con CSS",
+      "orden": 2,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de las siguientes propiedades CSS se usa para cambiar el color de fondo?",
+          "respuesta": "C",
+          "dificultad": 1,
+          "orden": 1,
+          "opciones": [
+            "color",
+            "font-color",
+            "background-color",
+            "bg-color"
+          ]
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "El modelo de caja CSS está compuesto por: contenido, _____, _____ y _____",
+          "respuesta": "padding|border|margin",
+          "dificultad": 2,
+          "orden": 2
+        },
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué es CSS?",
+          "respuesta": "Cascading Style Sheets - es el lenguaje usado para describir la presentación y el diseño de documentos HTML",
+          "dificultad": 1,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál es la especificidad más alta en CSS?",
+          "respuesta": "A",
+          "dificultad": 3,
+          "orden": 4,
+          "opciones": [
+            "Estilos inline (!important)",
+            "IDs",
+            "Clases",
+            "Elementos"
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "JavaScript: Interactividad",
+      "descripcion": "Programación con JavaScript para crear páginas web interactivas",
+      "orden": 3,
+      "ejercicios": [
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué es el DOM en JavaScript?",
+          "respuesta": "Document Object Model - es la representación en memoria de la estructura HTML que permite a JavaScript manipular elementos de la página",
+          "dificultad": 2,
+          "orden": 1
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál es la forma correcta de seleccionar un elemento por su ID en JavaScript?",
+          "respuesta": "B",
+          "dificultad": 1,
+          "orden": 2,
+          "opciones": [
+            "document.getElement('myId')",
+            "document.getElementById('myId')",
+            "document.querySelector('#myId')",
+            "Tanto B como C son correctas"
+          ]
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "Para agregar un evento click a un elemento se usa el método _____ con el tipo de evento _____ y una función callback",
+          "respuesta": "addEventListener|click",
+          "dificultad": 2,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de estos métodos permite ejecutar código después de que se carga completamente el DOM?",
+          "respuesta": "C",
+          "dificultad": 2,
+          "orden": 4,
+          "opciones": [
+            "window.onload",
+            "setTimeout()",
+            "document.addEventListener('DOMContentLoaded', function(){})",
+            "document.ready()"
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Responsive Design",
+      "descripcion": "Diseño web adaptativo para diferentes dispositivos",
+      "orden": 4,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Qué meta tag es esencial para el diseño responsive?",
+          "respuesta": "A",
+          "dificultad": 1,
+          "orden": 1,
+          "opciones": [
+            "<meta name='viewport' content='width=device-width, initial-scale=1'>",
+            "<meta name='responsive' content='true'>",
+            "<meta name='device' content='mobile'>",
+            "<meta name='screen' content='adaptive'>"
+          ]
+        },
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué son las Media Queries?",
+          "respuesta": "Son reglas CSS que permiten aplicar estilos diferentes según las características del dispositivo como el ancho de pantalla, orientación, etc.",
+          "dificultad": 2,
+          "orden": 2
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "El enfoque _____ _____ significa diseñar primero para dispositivos móviles y luego adaptar para pantallas más grandes",
+          "respuesta": "mobile|first",
+          "dificultad": 2,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de estas unidades CSS es relativa y mejor para diseño responsive?",
+          "respuesta": "C",
+          "dificultad": 2,
+          "orden": 4,
+          "opciones": [
+            "px (píxeles)",
+            "pt (puntos)",
+            "rem (relative em)",
+            "cm (centímetros)"
+          ]
+        }
+      ]
+    }
+  ]
+}

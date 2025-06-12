@@ -16,14 +16,18 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 
 import umu.pds.modelo.Usuario;
@@ -31,6 +35,7 @@ import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 import umu.pds.servicios.ServicioEstadisticas;
 import umu.pds.servicios.ServicioEstadisticas.EstadisticasCurso;
+import umu.pds.utils.LogroListCellRenderer;
 import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Curso;
@@ -251,28 +256,51 @@ public class DashboardEstadisticas extends JPanel {
      */
     private void cargarLogros() {
         panelLogrosContainer.removeAll();
-        panelLogrosContainer.setLayout(new BoxLayout(panelLogrosContainer, BoxLayout.Y_AXIS));
         
-        usuario.desbloquearLogro(TipoLogro.PRIMER_CURSO);
+        Piolify.getUnicaInstancia().getUsuarioController().verificarYDesbloquearLogros(usuario);
         List<Logro> logros = usuario.getLogros();
+        
         if (logros == null || logros.isEmpty()) {
-            JLabel lbl = new JLabel("Aún no tienes logros.");
+            // Mostrar mensaje cuando no hay logros
+            panelLogrosContainer.setLayout(new BorderLayout());
+            JLabel lbl = new JLabel("Aún no tienes logros.", SwingConstants.CENTER);
             lbl.setFont(new Font("Arial", Font.ITALIC, 14));
             lbl.setForeground(PioColores.GRIS_TEXT);
-            panelLogrosContainer.add(lbl);
+            lbl.setBorder(new EmptyBorder(20, 20, 20, 20));
+            panelLogrosContainer.add(lbl, BorderLayout.CENTER);
         } else {
-            for (Logro logro : logros.subList(0, Math.min(logros.size(), 5))) { // Mostrar máximo 5
-                JLabel lbl = new JLabel("🏆 " + logro.getNombre());
-                lbl.setFont(new Font("Arial", Font.PLAIN, 14));
-                lbl.setToolTipText(logro.getDescripcion());
-                panelLogrosContainer.add(lbl);
+            // Configurar layout para la lista
+            panelLogrosContainer.setLayout(new BorderLayout());
+            
+            // Crear lista con los logros (máximo 5)
+            List<Logro> logrosAMostrar = logros.subList(0, Math.min(logros.size(), 5));
+            DefaultListModel<Logro> listModel = new DefaultListModel<>();
+            for (Logro logro : logrosAMostrar) {
+                listModel.addElement(logro);
             }
             
+            JList<Logro> listaLogros = new JList<>(listModel);
+            listaLogros.setCellRenderer(new LogroListCellRenderer());
+            listaLogros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            listaLogros.setFixedCellHeight(60); // Altura fija para cada celda
+            
+            // Scroll pane para la lista
+            JScrollPane scrollPane = new JScrollPane(listaLogros);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            
+            panelLogrosContainer.add(scrollPane, BorderLayout.CENTER);
+            
+            // Mostrar contador de logros adicionales si hay más de 5
             if (logros.size() > 5) {
+                JPanel panelFooter = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 JLabel lblMas = new JLabel("+" + (logros.size() - 5) + " logros más...");
                 lblMas.setFont(new Font("Arial", Font.ITALIC, 12));
                 lblMas.setForeground(PioColores.GRIS_TEXT);
-                panelLogrosContainer.add(lblMas);
+                panelFooter.add(lblMas);
+                panelFooter.setBorder(new EmptyBorder(5, 0, 5, 0));
+                panelLogrosContainer.add(panelFooter, BorderLayout.SOUTH);
             }
         }
         
