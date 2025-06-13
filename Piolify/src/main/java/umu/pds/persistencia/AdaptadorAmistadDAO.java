@@ -9,14 +9,28 @@ import umu.pds.modelo.Amistad;
 import umu.pds.modelo.EstadoAmistad;
 import umu.pds.modelo.Usuario;
 
+
+/**
+ * Adaptador que implementa {@link AmistadDAO} mediante JPA.
+ */
 public class AdaptadorAmistadDAO implements AmistadDAO {
-
+	
+	/**
+	 * Instancia {@link EntityManagerFactory} asociado, utilizado para crear {@link EntityManager}.
+	 */
     private final EntityManagerFactory emf;
-
+    
+    /**
+     * Constructor por defecto.
+     * @param emf  Instancia {@link EntityManagerFactory}.
+     */
     public AdaptadorAmistadDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void guardarAmistad(Amistad amistad) {
         EntityManager em = emf.createEntityManager();
@@ -34,6 +48,9 @@ public class AdaptadorAmistadDAO implements AmistadDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizarAmistad(Amistad amistad) {
         EntityManager em = emf.createEntityManager();
@@ -51,6 +68,9 @@ public class AdaptadorAmistadDAO implements AmistadDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Amistad buscarPorId(Long id) {
         EntityManager em = emf.createEntityManager();
@@ -61,6 +81,9 @@ public class AdaptadorAmistadDAO implements AmistadDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Amistad> buscarSolicitudesPendientes(Usuario receptor) {
         EntityManager em = emf.createEntityManager();
@@ -76,6 +99,9 @@ public class AdaptadorAmistadDAO implements AmistadDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Amistad> buscarAmistades(Usuario usuario) {
         EntityManager em = emf.createEntityManager();
@@ -90,7 +116,10 @@ public class AdaptadorAmistadDAO implements AmistadDAO {
             em.close();
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean existeAmistad(Usuario usuario1, Usuario usuario2) {
         EntityManager em = emf.createEntityManager();
@@ -108,6 +137,9 @@ public class AdaptadorAmistadDAO implements AmistadDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminarAmistad(Amistad amistad) {
         EntityManager em = emf.createEntityManager();
