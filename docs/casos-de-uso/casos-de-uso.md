@@ -314,17 +314,31 @@ El usuario puede ver las solicitudes de amistad pendientes que ha recibido y dec
 Sistema.
 
 ### Descripción
-El usuario obtiene un logro en función de una acción que haya realizado o debido a estadísticas de uso alcanzadas. El sistema puede lanzar este caso de uso dado a algún evento.
+El sistema verifica y otorga logros al usuario cuando este accede al panel de estadísticas. Durante esta consulta, el sistema evalúa las condiciones de todos los logros disponibles y otorga automáticamente aquellos que el usuario haya cumplido pero aún no posea.
 
 ### Precondiciones
-* El usuario debe estar registrado en el sistema.
-* Se ha cumplido unas condiciones específicas para el logro.
+* El usuario debe estar registrado y autenticado en el sistema
+* El usuario accede al panel de estadísticas
+* Existen logros definidos en el catálogo del sistema
+* El usuario ha realizado acciones o alcanzado estadísticas que pueden generar logros
 
 ### Flujo Básico
+1. El usuario accede al panel de estadísticas
+2. El sistema obtiene las estadísticas actuales del usuario
+3. El sistema recupera la lista de todos los logros disponibles en el catálogo
+4. El sistema recupera los logros que el usuario ya posee
+5. Para cada logro no poseído, el sistema evalúa si se cumplen sus condiciones específicas
+6. Si se cumplen las condiciones de un logro, el sistema lo registra en el perfil del usuario
+7. El sistema presenta el panel de estadísticas con todos los logros (incluyendo los recién obtenidos)
 
 ### Flujo Alternativo
+#### 5a. No se cumplen condiciones para nuevos logros
+1. El sistema registra que no hay nuevos logros para otorgar
+2. Se presenta el panel con los logros existentes únicament
 
 ### Postcondiciones
-
+* Los nuevos logros obtenidos se han registrado en el perfil del usuario
+* El panel de estadísticas muestra todos los logros del usuario (anteriores y nuevos)
+* Se ha registrado la fecha de obtención de los nuevos logros
 
 
