@@ -2,20 +2,25 @@ package umu.pds.vista;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -23,6 +28,7 @@ import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Logro;
 import umu.pds.modelo.Usuario;
 import umu.pds.utils.ImageUtils;
+import umu.pds.utils.LogroListCellRenderer;
 import umu.pds.vista.elementos.PioColores;
 
 public class PerfilAmigo extends JFrame {
@@ -239,6 +245,8 @@ public class PerfilAmigo extends JFrame {
         }
 
         // logros
+        
+        /*
         panelLogros.removeAll();
         
         if (amigo.getLogros() != null && !amigo.getLogros().isEmpty()) {
@@ -258,5 +266,63 @@ public class PerfilAmigo extends JFrame {
 
         panelLogros.revalidate();
         panelLogros.repaint();
+        
+        */
+        
+        cargarLogrosAmigo(amigo);
+    }
+    
+    private void cargarLogrosAmigo(Usuario amigo) {
+    	
+    	panelLogros.removeAll();
+    	List<Logro> logros = amigo.getLogros();
+    	System.out.println(logros);
+    	if (logros == null || logros.isEmpty()) {
+            // Mostrar mensaje cuando no hay logros
+            panelLogros.setLayout(new BorderLayout());
+            JLabel lbl = new JLabel("Aún no tiene logros.", SwingConstants.CENTER);
+            lbl.setFont(new Font("Arial", Font.ITALIC, 14));
+            lbl.setForeground(PioColores.GRIS_TEXT);
+            lbl.setBorder(new EmptyBorder(20, 20, 20, 20));
+            panelLogros.add(lbl, BorderLayout.CENTER);
+        } else {
+            // Configurar layout para la lista
+            panelLogros.setLayout(new BorderLayout());
+            
+            // Crear lista con los logros (máximo 5)
+            List<Logro> logrosAMostrar = logros.subList(0, Math.min(logros.size(), 5));
+            DefaultListModel<Logro> listModel = new DefaultListModel<>();
+            for (Logro logro : logrosAMostrar) {
+                listModel.addElement(logro);
+            }
+            
+            JList<Logro> listaLogros = new JList<>(listModel);
+            listaLogros.setCellRenderer(new LogroListCellRenderer());
+            listaLogros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            listaLogros.setFixedCellHeight(60); // Altura fija para cada celda
+            
+            // Scroll pane para la lista
+            JScrollPane scrollPane = new JScrollPane(listaLogros);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            
+            panelLogros.add(scrollPane, BorderLayout.CENTER);
+            
+            // Mostrar contador de logros adicionales si hay más de 5
+            if (logros.size() > 5) {
+                JPanel panelFooter = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                JLabel lblMas = new JLabel("+" + (logros.size() - 5) + " logros más...");
+                lblMas.setFont(new Font("Arial", Font.ITALIC, 12));
+                lblMas.setForeground(PioColores.GRIS_TEXT);
+                panelFooter.add(lblMas);
+                panelFooter.setBorder(new EmptyBorder(5, 0, 5, 0));
+                panelLogros.add(panelFooter, BorderLayout.SOUTH);
+            }
+        }
+    	
+    	panelLogros.revalidate();
+        panelLogros.repaint();
+    	
     }
 }

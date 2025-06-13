@@ -247,7 +247,7 @@ public class Usuario {
 	}
 
 	public void desbloquearLogro(TipoLogro tipo) {
-		Logro logro = new Logro( tipo.getNombre(), tipo.getDescripcion(), tipo.getImagePath(), new Date(), tipo);
+		Logro logro = new Logro( this, tipo);
 		this.logros.add(logro);
 	}
 

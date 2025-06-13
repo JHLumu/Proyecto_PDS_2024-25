@@ -16,9 +16,6 @@ public class Logro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nombre;
-	private String descripcion;
-	private String imagen;
 	private Date fecha;
 	private TipoLogro tipo;
 	
@@ -29,44 +26,28 @@ public class Logro {
 		
 	}
 	
-	public Logro(TipoLogro tipo) {
-		this.nombre = tipo.getNombre();
-		this.descripcion = tipo.getDescripcion();
+	public Logro(Usuario usuario, TipoLogro tipo) {
+		this.usuario = usuario;
 		this.fecha = new Date();
+		this.tipo = tipo;
 	}
-	
-	public Logro(String nombre, String descripcion, String imagen, Date fecha, TipoLogro tipo) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.imagen = imagen;
-        this.fecha = fecha;
-        this.tipo = tipo;
-    }
 	
 	public String getNombre() {
-		return nombre;
+		return this.tipo.getNombre();
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+
 	public String getDescripcion() {
-		return descripcion;
+		return this.tipo.getDescripcion();
 	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+
 	public String getImagen() {
-		return imagen;
+		return this.tipo.getImagePath();
 	}
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
+
 	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+
 	public TipoLogro getTipo() {
 		return this.tipo;
 	}
