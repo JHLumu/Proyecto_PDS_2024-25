@@ -20,7 +20,8 @@ import umu.pds.modelo.EjercicioFlashcard;
 
 
 public class FlashcardRenderer implements EjercicioRenderer {
-    private JTextPane contenido;
+   
+	private JTextPane contenido;
     private boolean mostrandoRespuesta = false;
     private EjercicioFlashcard ejercicio;
     private JPanel panelCentral;

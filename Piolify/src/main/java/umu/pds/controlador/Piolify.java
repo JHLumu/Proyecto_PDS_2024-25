@@ -9,17 +9,42 @@ import umu.pds.modelo.Usuario;
 import umu.pds.vista.Login;
 import umu.pds.vista.Principal;
 
-
+/**
+ * Clase principal de la aplicación. Se encarga de la coordinación
+ * de los controladores, la autenticación de los usuarios y de la 
+ * notificación a observadores registrados.
+ */
 public class Piolify {
     
+	/**
+	 * Instancia {@link Usuario} actualmente autenticado en la aplicación.
+	 */
 	private Usuario usuarioActual;
+	
+	/**
+	 * Instancia {@link UsuarioController}, controlador encargado de operaciones 
+	 * relacionadas con el usuario.
+	 */
     private final UsuarioController usuarioController;
+    
+    /**
+	 * Instancia {@link ImportacionController}, controlador encargado de la importación de cursos.
+	 */
     private final ImportacionController importacionController;
+    
+    /**
+	 * Instancia única de {@link Piolify} (Singleton).
+	 */
     private static Piolify unicaInstancia = null;
     
+    /**
+     * Lista utilizada para avisar a observadores cuando cambia el usuario actual autenticado.
+     */
     private List<Runnable> notificarCambiosUsuario = new ArrayList<>();
     
-	
+	/**
+	 * Controlador por defecto. Inicializa los controladores {@link UsuarioController} y {@link ImportacionController}.
+	 */
     public Piolify() {
         this.usuarioController = new UsuarioController(this);
         this.importacionController = new ImportacionController();
@@ -62,7 +87,6 @@ public class Piolify {
 	public ImportacionController getImportacionController() {
 		return this.importacionController;
 	}
-	
 
 	/**
 	 * Método para añadir un observador que se notificará de cambios en el usuario actual.

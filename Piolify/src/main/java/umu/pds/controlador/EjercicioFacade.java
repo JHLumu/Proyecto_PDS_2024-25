@@ -13,7 +13,7 @@ public class EjercicioFacade {
 
     
     /**
-     * Crea un ejercicio del tipo especificado y su renderer asociado.
+     * Método que crea un ejercicio del tipo especificado y su renderer asociado.
      * 
      * @param tipo Tipo de ejercicio a crear
      * @return Un objeto EjercicioCompleto que contiene el ejercicio y su renderer
@@ -23,7 +23,10 @@ public class EjercicioFacade {
         return factory.crearRenderer();
     }
 
-    /** clase interna que encapsula un ejercicio y su renderer */
+    /**
+     *  Clase interna que encapsula un ejercicio y su renderer.
+     */
+     
     public static class EjercicioCompleto {
         private final Ejercicio ejercicio;
         private final EjercicioRenderer renderer;

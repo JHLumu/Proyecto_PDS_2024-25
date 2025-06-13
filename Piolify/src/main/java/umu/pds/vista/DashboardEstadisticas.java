@@ -11,7 +11,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -41,7 +40,6 @@ import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Logro;
-import umu.pds.modelo.TipoLogro;
 
 public class DashboardEstadisticas extends JPanel {
 

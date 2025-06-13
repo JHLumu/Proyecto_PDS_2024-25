@@ -8,14 +8,28 @@ import umu.pds.modelo.Curso;
 import umu.pds.modelo.SesionAprendizaje;
 import umu.pds.modelo.Usuario;
 
+/**
+ * Adaptador que implementa {@link SesionAprendizajeDAO} mediante JPA.
+ */
 public class AdaptadorSesionAprendizajeDAO implements SesionAprendizajeDAO {
 
+
+	/**
+	 * Instancia {@link EntityManagerFactory} asociado, utilizado para crear {@link EntityManager}.
+	 */
     private final EntityManagerFactory emf;
 
+    /**
+	 * Constructor por defecto.
+	 * @param emf Instancia {@link EntityManagerFactory}.
+	 */
     public AdaptadorSesionAprendizajeDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void guardarSesion(SesionAprendizaje sesion) {
         EntityManager em = emf.createEntityManager();
@@ -33,6 +47,9 @@ public class AdaptadorSesionAprendizajeDAO implements SesionAprendizajeDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizarSesion(SesionAprendizaje sesion) {
         EntityManager em = emf.createEntityManager();
@@ -50,6 +67,9 @@ public class AdaptadorSesionAprendizajeDAO implements SesionAprendizajeDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SesionAprendizaje buscarPorId(Long id) {
         EntityManager em = emf.createEntityManager();
@@ -60,6 +80,9 @@ public class AdaptadorSesionAprendizajeDAO implements SesionAprendizajeDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<SesionAprendizaje> buscarSesionesPorUsuario(Usuario usuario) {
         EntityManager em = emf.createEntityManager();
@@ -74,6 +97,9 @@ public class AdaptadorSesionAprendizajeDAO implements SesionAprendizajeDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<SesionAprendizaje> buscarSesionesPorUsuarioYCurso(Usuario usuario, Curso curso) {
         EntityManager em = emf.createEntityManager();
@@ -89,6 +115,9 @@ public class AdaptadorSesionAprendizajeDAO implements SesionAprendizajeDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<SesionAprendizaje> buscarSesionesCompletadas(Usuario usuario) {
         EntityManager em = emf.createEntityManager();
@@ -103,6 +132,9 @@ public class AdaptadorSesionAprendizajeDAO implements SesionAprendizajeDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminarSesion(SesionAprendizaje sesion) {
         EntityManager em = emf.createEntityManager();
