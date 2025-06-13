@@ -17,7 +17,6 @@ import umu.pds.persistencia.JPAFactoriaDAO;
  * al iniciar su ejecución, reduciendo la latencia percibida por el usuario debido a un número elevado de accesos a 
  * la base de datos.
  * 
- * <br> Además, se ha implementado el Patrón Singleton.
  */
 public class CatalogoCursos {
 	
@@ -52,17 +51,17 @@ public class CatalogoCursos {
 	public static CatalogoCursos getInstancia() {return instancia;}
 	
 	/**
-	 * Guarda un curso en el catálogo.
+	 * Método que guarda un curso en el catálogo.
 	 * 
-	 * @param curso Curso a guardar en el catálogo.
+	 * @param curso Instancia {@link Curso} a guardar en el catálogo.
 	 */
 	public void nuevoCurso(Curso curso) {this.cursos.put(curso.getId(), curso);}
 	
 	/**
-	 * Verifica si existe un curso según un identificador.
+	 * Método que verifica si existe un curso según un identificador.
 	 * 
-	 * @param id ID del curso a verificar.
-	 * @return true si el curso existe en el catálogo de cursos, false en caso
+	 * @param id Identificador del curso.
+	 * @return {@code true} si el curso existe en el catálogo de cursos, {@code false} en caso
 	 *         contrario.
 	 */
 	public boolean existeCurso(Long id) {
@@ -70,15 +69,16 @@ public class CatalogoCursos {
 	}
 	
 	/**
-	 * Obtiene un curso por su ID.
+	 * Método que obtiene un curso por su ID.
 	 * 
-	 * @param id ID del curso a obtener.
-	 * @return Optional que contiene el curso si se encuentra, o vacío si no existe.
+	 * @param id Identificador del curso.
+	 * @return {@link Optional} que contiene la instancia {@link Curso} si el identificador dado es válido.
 	 */
 	public Optional<Curso> obtenerCursoPorID(Long id) {return Optional.ofNullable(this.cursos.get(id));}
 	
 	/**
-	 * Recupera todos los cursos almacenados en la base de datos del sistema..
+	 * Método que recupera todos los cursos almacenados en la base de datos del sistema.
+	 *
 	 * */
 	private void cargarCatalogo() {
 		try {

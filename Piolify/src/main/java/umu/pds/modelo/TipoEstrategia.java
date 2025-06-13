@@ -2,7 +2,7 @@ package umu.pds.modelo;
 import java.util.Arrays;
 
 /**
- * Enum que define los tipos de estrategias de aprendizaje disponibles.
+ * Enumerado que define los tipos de estrategias de aprendizaje disponibles.
  */
 public enum TipoEstrategia {
 	SECUENCIAL,

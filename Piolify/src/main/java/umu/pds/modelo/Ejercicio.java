@@ -15,6 +15,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Clase abstracta que representa los diferentes tipos de ejercicios (entidades persistentes) que puede contener un bloque. <br>
+ * Al tratarse de una jerarquía de clases, se especifica mediante @JsonTypeInfo un atributo discriminante
+ * para diferenciar subtipos a la hora de importar cursos.
+ */
 @Entity
 @Table(name = "ejercicios")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -29,34 +34,68 @@ import jakarta.persistence.Table;
 })
 public abstract class Ejercicio {
 	
-	
+	public final static int DIFICULTAD_POR_DEFECTO = 5; 
+	/**
+	 * Identificador único del ejercicio. Utilizado para persistencia.
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    /**
+     * Fecha y hora de la creación del ejercicio.
+     */
 	private final LocalDateTime fechaCreacion;
+	
+	/**
+	 * Nivel de dificultad asociada al ejercicio.
+	 */
 	private int dificultad;
+	
+	/**
+	 * Contenido del ejercicio, dependiendo del tipo de ejercicio que sea.
+	 */
 	private String contenido;
+	
+	/**
+	 * Respuesta correcta esperada para el ejercicio. Varía según el tipo de ejercicio.
+	 */
 	private String respuesta;
-	private int orden; // Orden del ejercicio dentro del bloque
+	
+	/**
+	 * Orden del ejercicio dentro del bloque.
+	 */
+	private int orden;
+	
+	/**
+	 * Tipo de ejercicio, representado mediante una constante {@link TipoEjercicio}. Atributo discriminante.
+	 */
 	private TipoEjercicio tipo;
 	
+	/**
+	 * Instancia {@link Bloque} al que pertenece el ejercicio.<br>
+	 * Relación muchos a uno: varios ejercicios pueden pertenecer a un mismo bloque.
+	 */
     @ManyToOne
     @JoinColumn(name = "bloque_id", nullable = false)
     private Bloque bloque;
     
+    /**
+     * Constructor por defecto. Inicializa la fecha de creación y le asigna una dificultad por defecto ({@code DIFICULTAD_POR_DEFECTO}).
+     */
 	public Ejercicio() {
 		this.fechaCreacion = LocalDateTime.now();
-		this.dificultad = 5;
+		this.dificultad = DIFICULTAD_POR_DEFECTO;
 	}
 	
 	/**
-	 * Constructor para crear un ejercicio con un contenido y respuesta específicos
-	 * @param contenido Contenido del ejercicio
-	 * @param respuesta Respuesta esperada
+	 * Constructor para crear un ejercicio con un contenido y respuesta específicos.
+	 * @param contenido Contenido del ejercicio.
+	 * @param respuesta Respuesta esperada.
 	 */
 	public Ejercicio(String contenido, String respuesta) {
 		this.fechaCreacion = LocalDateTime.now();
-		this.dificultad = 5;
+		this.dificultad = DIFICULTAD_POR_DEFECTO;
 		this.contenido = contenido;
 		this.respuesta = respuesta;
 	}
@@ -110,16 +149,16 @@ public abstract class Ejercicio {
 	}
 	
 	/**
-	 * Método abstracto para renderizar el ejercicio.
+	 * Método para renderizar el ejercicio.
 	 * Cada tipo de ejercicio implementará su propia lógica de renderizado.
 	 */
 	public abstract void renderEjercicio();
 	
 	/**
-	 * Método abstracto para validar la respuesta del usuario.
+	 * Método para validar la respuesta del usuario.
 	 * Cada tipo de ejercicio implementará su propia lógica de validación.
-	 * @param respuestaUsuario Respuesta proporcionada por el usuario
-	 * @return true si la respuesta es correcta, false en caso contrario
+	 * @param respuestaUsuario Respuesta proporcionada por el usuario.
+	 * @return {@code true} si la respuesta es correcta, {@code false} en caso contrario.
 	 */
 	public abstract boolean validarRespuesta(String respuestaUsuario);
 	

@@ -13,19 +13,46 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
+/**
+ * Clase que representa los cursos de aprendizaje. Entidad persistente.
+ */
 @Entity
 @Table(name = "cursos")
 public class Curso {
 	
+	/**
+	 * Identificador único de un curso. Utilizado para persistencia.
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    /**
+     * Título del curso.
+     */
 	private String titulo;
-	private String descripcion;
-	private String dificultad;
-	private String autor; //Nombre del autor que ha creado el curso
 	
-	// Relaciones
+	/**
+	 * Descripción del curso.
+	 */
+	private String descripcion;
+	
+	/**
+	 * Nivel de dificultad asociada al curso.
+	 */
+	private String dificultad;
+	
+	/**
+	 * Nombre del autor que ha creado el curso.
+	 */
+	private String autor;
+	
+	/**
+	 * Lista de instancias {@link Bloque} que conforman el curso, ordenados según el campo {@code orden} de {@link Bloque}
+	 * recuperados con la estrategia {@code EAGER} (se carga en memoria tanto las instancias  {@link Ejercicio} como sus instancias asociadas).
+	 * Relación uno a muchos: un curso puede contener varios bloques.<br>
+	 * 
+	 */
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("orden ASC")
     private List<Bloque> bloques = new ArrayList<>();

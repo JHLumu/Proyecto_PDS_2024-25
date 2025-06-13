@@ -12,11 +12,12 @@ import umu.pds.persistencia.UsuarioDAO;
 
 public class CatalogoUsuarios {
 
-		//Patron Singleton: Instancia única
+		//Instancia única de {@link CatalogoUsuarios} (Singleton).
 		private static CatalogoUsuarios instancia = new CatalogoUsuarios();
-		//Mapa que asocia correos electrónicos con usuarios
+		//Mapa que asocia correos electrónicos con las instancias {@link Usuario} correspondientes.
 		private final Map<String,Usuario> usuarios;
-		//Usuario DAO para la persistencia de usuarios
+		
+		//Instancia {@link UsuarioDAO} para la persistencia de usuarios.
 		private final UsuarioDAO usuarioDAO;
 		
 		/**
@@ -35,28 +36,28 @@ public class CatalogoUsuarios {
 		public static CatalogoUsuarios getInstancia() {return instancia;}
 		
 		/**
-		 * Guarda un usuario ya registrado en la base de datos en el catálogo de usuarios 
-		 * * @param usuario Usuario a guardar en el catálogo
+		 * Método que guarda un usuario ya registrado en la base de datos en el catálogo de usuarios. 
+		 * * @param usuario Instancia {@link Usuario} a guardar en el catálogo.
 		 * */
 		public void nuevoUsuario(Usuario usuario) {this.usuarios.put(usuario.getEmail(), usuario);}
 		
 		 /**
-	     * Busca un usuario por email
-	     * @param email Email del usuario a buscar
-	     * @return Un Optional que contiene el usuario si se encuentra, o vacío si no existe
+	     * Método que busca un usuario por email.
+	     * @param email Correo electrónico del usuario.
+	     * @return {@link Optional} que contiene la instancia {@link Usuario} correspondiente.
 	     */
 	    public Optional<Usuario> buscarPorEmail(String email) {return Optional.ofNullable(this.usuarios.get(email));}
 	    
 	    /**
-	     * Verifica si existe un email
-	     * @param email Email a verificar
-	     * @return true si el email existe en el catálogo de usuarios, false en caso contrario
+	     * Método que verifica si existe un email.
+	     * @param email Correo electrónico a verificar.
+	     * @return {@code true} si el email existe en el catálogo de usuarios, {@code false} en caso contrario.
 	     */
 	    public boolean existeEmail(String email) {return this.usuarios.containsKey(email);}
 		
 		/**
-		 * actualiza un usuario en el catálogo de usuarios
-		 * @param usuario Usuario a actualizar
+		 * Método que actualiza un usuario en el catálogo de usuarios.
+		 * @param usuario Instancia {@link Usuario} a actualizar.
 		    */
 	    public void actualizarUsuario(Usuario usuario) {
 	    	if (usuario == null || !this.usuarios.containsKey(usuario.getEmail())) return;

@@ -2,9 +2,18 @@ package umu.pds.modelo;
 
 /**
  * Enum que define los diferentes tipos de logros disponibles en el sistema.
- * Cada tipo tiene un nombre, descripción, condición y emoji asociado.
+ * Cada tipo tiene un nombre, descripción, condición y emoji asociado. 
+ * <br> Se diferencian varias categorías:
+ * <ul>
+ * <li>Ejercicios completados: Número total de ejercicios que el usuario ha completado.</li>
+ * <li>Racha diaria: Días consecutivos en el que el usuario ha completado una sesión.</li>
+ * <li>Tiempo acumulado: Tiempo total (en segundos) que el usuario ha estado realizando sesiones de aprendizaje.</li>
+ * <li>Cursos iniciados: Número de cursos que ha iniciado el usuario.</li>
+ * 
+ * </ul>
  */
 public enum TipoLogro {
+	
     PRIMER_EJERCICIO("Primer Paso", "Completa tu primer ejercicio", "trophy.png", 1),
     CINCO_EJERCICIOS("Aprendiz", "Completa 5 ejercicios", "trophy.png", 5),
     DIEZ_EJERCICIOS("Estudiante Dedicado", "Completa 10 ejercicios", "trophy.png", 10),
@@ -23,12 +32,36 @@ public enum TipoLogro {
     TRES_CURSOS("Curioso", "Comienza 3 cursos diferentes", "trophy.png", 3),
     CINCO_CURSOS("Investigador", "Comienza 5 cursos diferentes", "trophy.png", 5);
     
+	/**
+	 * Nombre del logro.
+	 */
     private final String nombre;
+    
+    /**
+     * Descripción del logro.
+     */
     private final String descripcion;
+    
+    /**
+     * Ruta de la imagen del logro.
+     */
     private final String imagenPath;
     
+    /**
+     * Carpeta que contiene las imágenes de los logros.
+     */
     private static final String RECURSOS_PATH = "/Logros/";
 
+    /**
+     * Número de condiciones necesarias para desbloquear el logro. Dependiendo de la categoría del logro, tendrá una interpretación u otra.
+     *  <ul>
+	 * <li>Ejercicios completados: Número total de ejercicios que el usuario debe completar.</li>
+	 * <li>Racha diaria: Días consecutivos en el que el usuario ha completado al menos una sesión.</li>
+	 * <li>Tiempo acumulado: Tiempo total (en segundos) que el usuario debe tener en sus sesiones de aprendizaje.</li>
+	 * <li>Cursos iniciados: Número de cursos que el usuario debe iniciar.</li>
+	 * 
+	 * </ul>
+     */
     private final int condicion;
     
     TipoLogro(String nombre, String descripcion, String imagenPath, int condicion) {
@@ -55,7 +88,10 @@ public enum TipoLogro {
     }
     
     /**
-     * Verifica si este logro se debe desbloquear basado en las estadísticas del usuario
+     * Método que verifica si este logro se debe desbloquear basado en las estadísticas del usuario.
+     * @param estadisticas Instancia {@link Estadisticas} asociada al usuario.
+     * @param cursosComenzados número de cursos comenzados por el usuario.
+     * @return {@code true} si el logro cumple las condiciones, {@code false} en caso contrario.
      */
     public boolean seCumpleCondicion(Estadisticas estadisticas, int cursosComenzados) {
         if (estadisticas == null) return false;

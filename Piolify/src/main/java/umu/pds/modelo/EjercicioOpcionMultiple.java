@@ -7,16 +7,21 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+/**
+* Subclase de {@link Ejercicio} que representa un ejercicio de tipo opción multiple. Entidad persistente.
+*/
 @Entity
 @DiscriminatorValue("OPCION_MULTIPLE")
 public class EjercicioOpcionMultiple extends Ejercicio {
 	
+	/**
+	 * Opciones disponibles para este ejercicio, separada por comas.
+	 */
     @Column(name = "opciones", columnDefinition = "TEXT")
-    private String opciones; // Almacenar como JSON o separado por comas
-    
+    private String opciones; 
     
     /**
-     * Constructor por defecto para crear un ejercicio de opción múltiple
+     * Constructor por defecto para crear un ejercicio de opción múltiple.
      */
 	public EjercicioOpcionMultiple() {
 		super();
@@ -24,17 +29,17 @@ public class EjercicioOpcionMultiple extends Ejercicio {
 	}
 	
     /**
-     * Constructor para crear un ejercicio de opción múltiple con un contenido y respuesta específicos
-     * @param contenido Contenido del ejercicio
-     * @param respuesta Respuesta esperada, que debe coincidir con una de las opciones
+     * Constructor para crear un ejercicio de opción múltiple con un contenido y respuesta específicos.
+     * @param contenido Contenido del ejercicio.
+     * @param respuesta Respuesta esperada, que debe coincidir con una de las opciones.
      */
 	public EjercicioOpcionMultiple(String contenido, String respuesta) {
 		super(contenido, respuesta);
 	}
 	
     /**
-     * Obtiene las opciones del ejercicio de opción múltiple
-     * @return Lista de opciones disponibles
+     * Método que obtiene las opciones del ejercicio de opción múltiple.
+     * @return Lista de opciones disponibles.
      */
     public List<String> getOpciones() {
         if (opciones == null || opciones.isEmpty()) {
@@ -44,16 +49,16 @@ public class EjercicioOpcionMultiple extends Ejercicio {
     }
     
     /**
-     * Establece las opciones del ejercicio de opción múltiple
-     * @param opciones Lista de opciones a establecer
+     * Método que establece las opciones del ejercicio de opción múltiple.
+     * @param opciones Lista de opciones a establecer.
      */
     public void setOpciones(List<String> opciones) {
         this.opciones = String.join("|", opciones);
     }
 
     /**
-     * Establece las opciones del ejercicio de opción múltiple como un String separado por comas
-     * @param opciones String con las opciones separadas por comas
+     * Método que establece las opciones del ejercicio de opción múltiple como un String separado por comas.
+     * @param opciones String con las opciones separadas por comas.
      */
     @Override
     public void renderEjercicio() {
@@ -64,10 +69,9 @@ public class EjercicioOpcionMultiple extends Ejercicio {
         }
     }
 
-    /**
-     * Valida la respuesta del usuario comparándola con la respuesta esperada
-     * @param respuestaUsuario Respuesta proporcionada por el usuario
-     * @return true si la respuesta es correcta, false en caso contrario
+    /** 
+     * {@inheritDoc}
+     * 
      */
     @Override
     public boolean validarRespuesta(String respuestaUsuario) {

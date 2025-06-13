@@ -11,36 +11,81 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
+/**
+ * Clase que representa una sesión de aprendizaje que un usuario realiza en un curso en específico. Entidad persistente.
+ */
 @Entity
 @Table(name = "sesiones_aprendizaje")
 public class SesionAprendizaje {
 	
+	/**
+	 * Identificador único de la sesión. Utilizado para persistencia.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	/**
+	 * Instancia {@link Usuario} que realiza la sesión. <br>
+	 * Relación muchos a uno: Varias sesiones pueden ser realizadas por el mismo usuario.
+	 */
 	@ManyToOne
 	private Usuario usuario;
 	
+	/**
+	 * Instancia {@link Curso} en el que se realiza la sesión. <br>
+	 * Relación muchos a uno: Varias sesiones pueden realizarse en el mismo curso.
+	 */
 	@ManyToOne
 	private Curso curso;
 	
+	/**
+	 * Instancia {@link Ejercicio} que se refiere al primer ejercicio realizado durante la sesión.
+	 * Relación muchos a uno: Varias sesiones pueden empezar por el mismo ejercicio.
+	 */
 	@ManyToOne
-	private Ejercicio ejercicio; // Ejercicio específico realizado
+	private Ejercicio ejercicio;
 	
+	/**
+	 * Fecha y hora en el que se inició la sesión de aprendizaje.
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaInicio;
 	
+	/**
+	 *  Fecha y hora en el que se finalizó la sesión de aprendizaje.
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaFin;
 	
+	/**
+	 * Número de ejercicios completados durante la sesión de aprendizaje.
+	 */
 	private int ejerciciosCompletados;
-	private int aciertos;
-	private int fallos;
-	private int tiempoTotal; // en segundos
-	private boolean completada; // Si la sesión fue completada exitosamente
 	
-	// Constructores
+	/**
+	 * Aciertos conseguidos durante la sesión de aprendizaje.
+	 */
+	private int aciertos;
+	
+	/**
+	 * Fallos obtenidos durante la sesión de aprendizaje.
+	 */
+	private int fallos;
+	
+	/**
+	 * Tiempo total que ha durado la sesión de aprendizaje.
+	 */
+	private int tiempoTotal; 
+	
+	/**
+	 * Booleano que indica si la sesión de aprendizaje ha sido completada (se han respondido todos los ejercicios de la sesión).
+	 */
+	private boolean completada;
+	
+	/**
+	 * Constructor por defecto.
+	 */
 	public SesionAprendizaje() {
 		this.fechaInicio = new Date();
 		this.completada = false;
@@ -48,9 +93,9 @@ public class SesionAprendizaje {
 	
 	/**
 	 * Constructor para crear una sesión de aprendizaje asociada a un usuario, curso y ejercicio.
-	 * @param usuario Usuario que realiza la sesión
-	 * @param curso Curso al que pertenece la sesión
-	 * @param ejercicio Ejercicio específico realizado en la sesión
+	 * @param usuario Instancia {@link Usuario} que realiza la sesión.
+	 * @param curso Instancia {@link Curso} al que pertenece la sesión.
+	 * @param ejercicio Instancia {@link Ejercicio} que empieza la sesión.
 	 */
 	public SesionAprendizaje(Usuario usuario, Curso curso, Ejercicio ejercicio) {
 		this();
@@ -59,7 +104,6 @@ public class SesionAprendizaje {
 		this.ejercicio = ejercicio;
 	}
 	
-	// Getters y Setters
 	public Long getId() {
 		return id;
 	}
@@ -149,7 +193,7 @@ public class SesionAprendizaje {
 	}
 	
 	/**
-	 * Inicia una nueva sesión de aprendizaje.
+	 * Método que inicia una nueva sesión de aprendizaje.
 	 * Se establece la fecha de inicio y se reinician los contadores.
 	 */
 	public void finalizarSesion() {
@@ -159,7 +203,7 @@ public class SesionAprendizaje {
 	}
 
 	/**
-	 * Calcula el tiempo total de la sesión en segundos.
+	 * Método que calcula el tiempo total de la sesión en segundos.
 	 * Se llama al finalizar la sesión.
 	 */
 	private void calcularTiempoTotal() {
@@ -169,7 +213,7 @@ public class SesionAprendizaje {
 	}
 	
 	/**
-	 * Registra un acierto en la sesión.
+	 * Método que registra un acierto en la sesión.
 	 * Incrementa el contador de aciertos y ejercicios completados.
 	 */
 	public void registrarAcierto() {
@@ -178,7 +222,7 @@ public class SesionAprendizaje {
 	}
 
 	/**
-	 * Registra un fallo en la sesión.
+	 * Método que registra un fallo en la sesión.
 	 * Incrementa el contador de fallos.
 	 */
 	public void registrarFallo() {
@@ -186,7 +230,7 @@ public class SesionAprendizaje {
 	}
 	
 	/**
-	 * Calcula el porcentaje de aciertos en la sesión.
+	 * Método que calcula el porcentaje de aciertos en la sesión.
 	 * @return Porcentaje de aciertos (0.0 si no hay intentos).
 	 */
 	public double getPorcentajeAciertos() {

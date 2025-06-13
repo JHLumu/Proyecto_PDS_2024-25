@@ -42,6 +42,9 @@ public class AdaptadorCursoDAO implements CursoDAO{
 		
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Curso> recuperarTodosCursos() {
 	    EntityManager em = emf.createEntityManager();
@@ -52,18 +55,21 @@ public class AdaptadorCursoDAO implements CursoDAO{
 		        em.close();
 		    }
 		}
-
-		@Override
-		public Curso recuperarCurso(int id) {
-		    EntityManager em = emf.createEntityManager();
-		    try {
-		        return em.find(Curso.class, id);
-		    } catch (Exception e) {
-		        return null;
-		    } finally {
-		        em.close();
-		    }
-		}
+	
+	/**
+	 * {@inheritDoc}
+	 */	
+	@Override
+	public Curso recuperarCurso(int id) {
+	    EntityManager em = emf.createEntityManager();
+	    try {
+	        return em.find(Curso.class, id);
+	    } catch (Exception e) {
+	        return null;
+	    } finally {
+	        em.close();
+	    }
+	}
 
 	    
 }

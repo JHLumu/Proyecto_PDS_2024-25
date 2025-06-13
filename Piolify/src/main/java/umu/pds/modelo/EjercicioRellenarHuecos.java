@@ -8,12 +8,15 @@ import java.util.regex.Pattern;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+/**
+ * Subclase de {@link Ejercicio} que representa un ejercicio de rellenar huecos. Entidad persistente.
+ */
 @Entity
 @DiscriminatorValue("COMPLETAR_HUECOS")
 public class EjercicioRellenarHuecos extends Ejercicio {
 	
 	/**
-	 * Constructor por defecto para crear un ejercicio de rellenar huecos
+	 * Constructor por defecto.
 	 */
 	public EjercicioRellenarHuecos() {
 		super();
@@ -21,9 +24,9 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 
 	/**
-	 * Constructor para crear un ejercicio de rellenar huecos con un contenido y respuesta específicos
-	 * @param contenido Contenido del ejercicio con huecos
-	 * @param respuesta Respuesta esperada, separada por "|"
+	 * Constructor para crear un ejercicio de rellenar huecos con un contenido y respuesta específicos.
+	 * @param contenido Contenido del ejercicio con huecos.
+	 * @param respuesta Respuesta esperada, separada por "|".
 	 */
 	public EjercicioRellenarHuecos(String contenido, String respuesta) {
 		super(contenido, respuesta);
@@ -31,9 +34,8 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Constructor para crear un ejercicio de rellenar huecos con un contenido y respuesta específicos
-	 * @param contenido Contenido del ejercicio con huecos
-	 * @param respuesta Respuesta esperada, separada por "|"
+	 * {@inheritDoc} <br>
+	 * Para los ejercicios de rellenar huecos, muestra los huecos como espacios en blanco ("_____").
 	 */
 	@Override
 	public void renderEjercicio() {
@@ -52,9 +54,7 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 
 	/**
-	 * Valida la respuesta del usuario comparándola con la respuesta esperada
-	 * @param respuestaUsuario Respuesta proporcionada por el usuario
-	 * @return true si la respuesta es correcta, false en caso contrario
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean validarRespuesta(String respuestaUsuario) {
@@ -115,9 +115,9 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Normaliza una respuesta eliminando espacios extra y convirtiendo a minúsculas
-	 * @param respuesta Respuesta a normalizar
-	 * @return Respuesta normalizada
+	 * Método que ormaliza una respuesta eliminando espacios extra y convirtiendo a minúsculas. 
+	 * @param respuesta Respuesta a normalizar.
+	 * @return Respuesta normalizada.
 	 */
 	private String normalizarRespuesta(String respuesta) {
 		if (respuesta == null) return "";
@@ -128,8 +128,8 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Extrae los huecos del ejercicio en formato {hueco}, [hueco] o _____
-	 * @return Lista de huecos encontrados
+	 * Método que extrae los huecos del ejercicio en formato {hueco}, [hueco] o _____
+	 * @return Lista de huecos encontrados.
 	 */
 	public List<String> extraerHuecos() {
 		String contenido = getContenido();
@@ -150,16 +150,16 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Cuenta el número de huecos en el ejercicio
-	 * @return Número de huecos encontrados
+	 * Método que cuenta el número de huecos en el ejercicio.
+	 * @return Número de huecos encontrados.
 	 */
 	public int contarHuecos() {
 		return extraerHuecos().size();
 	}
 	
 	/**
-	 * Obtiene el texto del ejercicio sin los marcadores de huecos
-	 * @return Texto limpio para mostrar
+	 * Método que obtiene el texto del ejercicio sin los marcadores de huecos.
+	 * @return Texto limpio para mostrar.
 	 */
 	public String getTextoParaMostrar() {
 		String contenido = getContenido();
@@ -171,8 +171,8 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Verifica si el ejercicio tiene un formato válido
-	 * @return true si el ejercicio es válido
+	 * Método que verifica si el ejercicio tiene un formato válido. 
+	 * @return true si el ejercicio es válido.
 	 */
 	public boolean esValido() {
 		if (getContenido() == null || getContenido().trim().isEmpty()) {
@@ -194,8 +194,8 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Obtiene las respuestas como lista
-	 * @return Lista de respuestas esperadas
+	 * Método que obtiene las respuestas como lista.
+	 * @return Lista de respuestas esperadas.
 	 */
 	public List<String> getRespuestasComoLista() {
 		String respuesta = getRespuesta();
@@ -210,8 +210,8 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	}
 	
 	/**
-	 * Establece las respuestas desde una lista
-	 * @param respuestas Lista de respuestas
+	 * Método que establece las respuestas desde una lista.
+	 * @param respuestas Lista de respuestas.
 	 */
 	public void setRespuestasDesdeList(List<String> respuestas) {
 		if (respuestas == null || respuestas.isEmpty()) {

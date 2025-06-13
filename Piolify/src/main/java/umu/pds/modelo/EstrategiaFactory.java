@@ -6,9 +6,12 @@ import java.util.Map;
 /**Factoría encargada de instanciar las diferentes estrategias
  * de aprendizaje implementadas en la aplicación.
  * */
-
 public class EstrategiaFactory {
-
+	
+	/**
+	 * Map que almacena para constante {@link TipoEstrategia} definida, una instancia de su implementación 
+	 * por defecto. Utilizado para el método crearEstrategia(). 
+	 */
 	private static final Map<TipoEstrategia,Estrategia> ESTRATEGIAS_DEFINIDAS = Map.of(
 			TipoEstrategia.SECUENCIAL,new EstrategiaSecuencial(),
 			TipoEstrategia.ALEATORIA, new EstrategiaAleatoria(),

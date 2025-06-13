@@ -15,22 +15,44 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
+/**
+ * Clase que representa un bloque de ejercicios dentro de un curso. Entidad persistente.
+ */
 @Entity
 @Table(name = "bloques")
 public class Bloque {
 	
+	/**
+	 * Identificador único del bloque. Utilizado para persistencia.
+	 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    /**
+	 * Título del bloque.
+	 */
 	private String titulo;
+	
+	/**
+	 * Descripción del bloque.
+	 */
 	private String descripcion;
 	
-	
+	/**
+	 * Lista de instancias {@link Ejercicio} pertenecientes al bloque, ordenados
+	 * según el campo {@code orden} de {@link Ejercicio}, recuperados con la estrategia {@code EAGER} (se carga en 
+	 * memoria tanto las instancias  {@link Ejercicio} como sus instancias asociadas).
+	 * Relación uno a muchos: un bloque puede contener varios ejercicios.
+	 */
     @OneToMany(mappedBy = "bloque", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("orden ASC")
 	private List<Ejercicio> ejercicios;
 	
-
+    /**
+     * Instancia {@link Curso} al que pertenece el bloque.
+     * Relación muchos a uno: varios bloques pertenecen al mismo curso.
+     */
     @ManyToOne
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;

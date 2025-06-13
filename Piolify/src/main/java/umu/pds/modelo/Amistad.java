@@ -13,24 +13,45 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Clase que representa una relación de amistad entre dos usuarios. Entidad persistente.
+ */
 @Entity
 @Table(name = "amistades")
 public class Amistad {
 	
+	/**
+	 * Identificador único de una amistad. Utilizado para persistencia.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	/**
+	 * Estado actual de la amistad, representado con una constante {@link EstadoAmistad}.
+	 */
 	@Enumerated(EnumType.STRING)
 	private EstadoAmistad estado;
 	
+	/**
+	 * Instancia {@link Usuario} emisor (usuario que envió la solicitud de amistad). <br>
+	 * Relación muchos a uno: varias amistades pueden tener el mismo usuario emisor.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "usuario_solicitante_id")
 	private Usuario usuario1;
 	
+	/**
+	 * Instancia {@link Usuario} receptor (usuario que recibió la solicitud de amistad).
+	 * Relación muchos a uno: varias amistades pueden tener el mismo usuario receptor.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "usuario_receptor_id")
 	private Usuario usuario2;
+	
+	/**
+	 * Fecha en la que se creó la solicitud de amistad.
+	 */
 	private Date fecha;
 	
 
@@ -65,14 +86,17 @@ public class Amistad {
 		this.fecha = fecha;
 	}
 	
+	/** 
+	 * Constructor necesario para JPA.
+	 */
 	public Amistad() {
-		// Constructor por defecto necesario para JPA
+		
 	}
 
 	/**
 	 * Constructor para crear una amistad entre dos usuarios.
-	 * @param solicitante Usuario que solicita la amistad
-	 * @param receptor Usuario que recibe la solicitud de amistad
+	 * @param solicitante Instancia {@link Usuario} que envía la solicitud de amistad.
+	 * @param receptor Instancia {@link Usuario} que recibe la solicitud de amistad.
 	 */
     public Amistad(Usuario solicitante, Usuario receptor) {
         this.usuario1 = solicitante;
@@ -99,9 +123,9 @@ public class Amistad {
 	}
 	
 	/**
-	 * Devuelve el otro usuario de la relacion de amistad, dado uno de ellos.
-	 * @param usuario Usuario conocido
-	 * @return El otro usuario de la amistad, o null si no es parte de esta amistad
+	 * Método que devuelve el otro usuario de la relacion de amistad, dado uno de ellos.
+	 * @param usuario Instancia {@link Usuario} asociado a la amistad.
+	 * @return El otro usuario de la amistad, o {@code null} si no es parte de esta amistad.
 	 */
 	public Usuario getOtroUsuario(Usuario usuario) {
 		if (usuario1.equals(usuario)) {
@@ -113,18 +137,18 @@ public class Amistad {
 	}
 	
 	/**
-	 * Comprueba si el usuario es el solicitante de la amistad.
-	 * @param usuario Usuario a comprobar
-	 * @return true si el usuario es el solicitante, false en caso contrario
+	 * Método que comprueba si el usuario es el solicitante de la amistad.
+	 * @param usuario Instancia {@link Usuario} a comprobar.
+	 * @return {@code true} si el usuario es el solicitante, {@code false} en caso contrario.
 	 */
 	public boolean esSolicitante(Usuario usuario) {
 		return usuario1.equals(usuario);
 	}
 	
 	/**
-	 * Comprueba si el usuario es el receptor de la amistad.
-	 * @param usuario Usuario a comprobar
-	 * @return true si el usuario es el receptor, false en caso contrario
+	 * Método que comprueba si el usuario es el receptor de la amistad.
+	 *  @param usuario Instancia {@link Usuario} a comprobar.
+	 * @return {@code true} si el usuario es el receptor, {@code false} en caso contrario.
 	 */
 	public boolean esReceptor(Usuario usuario) {
 		return usuario2.equals(usuario);

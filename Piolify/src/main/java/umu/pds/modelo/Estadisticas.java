@@ -8,6 +8,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Clase que representa las estadísticas asociadas a un usuario. Entidad persistente.
+ */
 @Entity
 @Table(name = "estadisticas")
 public class Estadisticas {
