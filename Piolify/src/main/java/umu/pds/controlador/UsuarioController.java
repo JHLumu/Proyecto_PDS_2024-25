@@ -62,6 +62,9 @@ public class UsuarioController {
 		usuarioValidador.validarLogin(email, password);
 		Usuario usuario = usuarioService.iniciarSesion(email, password);
 		if(usuario != null) {
+			//limpiar cursos duplicados al iniciar sesión
+			usuarioService.limpiarCursosDuplicados(usuario);
+			
 			controlador.setUsuarioActual(usuario);
 			controlador.loginExitoso();
 			return true;

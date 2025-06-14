@@ -11,7 +11,10 @@ import umu.pds.servicios.ServicioImportacion.ResultadoImportacion;
 import umu.pds.servicios.importacion.ImportacionException;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,8 +57,7 @@ public class ImportacionController {
 		this.cursoService = cursoService;
 	}
 	
-	
-    /**
+	/**
      * Método que importa cursos desde un archivo y los agrega al sistema.
      * @param rutaArchivo Ruta del archivo a importar.
      * @param usuario Instancia {@link Usuario} que realiza la importación.
@@ -68,12 +70,9 @@ public class ImportacionController {
             ResultadoImportacion resultado = servicioImportacion.importarDesdeArchivo(rutaArchivo);
             
             if (resultado.fueExitoso()) {
-                // Aquí podrías agregar lógica para persistir los cursos
-                // Por ejemplo, llamar a un DAO o repositorio
                 logger.info("Importación exitosa: " + resultado.getCantidadImportada() + 
                            " cursos importados usando formato " + resultado.getFormatoUtilizado());
                 
-                // Procesar cursos importados
                 procesarCursosImportados(resultado.getCursos(), usuario);
                 return true;
             } else {
@@ -148,25 +147,84 @@ public class ImportacionController {
      * @param usuario Instancia {@link Usuario} que realiza la importación.
      */
     private void procesarCursosImportados(List<Curso> cursos, Usuario usuario) {
-        // Establecer el usuario autor como el usuario actual
-        // Usuario usuarioActual = aplicacionPrincipal.getUsuarioActual();
+        
+        // Crear una copia de la biblioteca para trabajar localmente
+        List<Curso> bibliotecaTemporal = new ArrayList<>(usuario.getBiblioteca());
+        int cursosAñadidos = 0;
         
         for (Curso curso : cursos) {
-            // Asignar autor si no está establecido
-            // if (curso.getAutor() == null) {
-            //     curso.setAutor(usuarioActual);
-            // }
-            
             // Validaciones adicionales
             validarCursoImportado(curso);
-            cursoService.guardarCurso(curso);
-            usuario.getBiblioteca().add(curso);
-            Piolify.getUnicaInstancia().getUsuarioController().modificarUsuario(usuario);
-            logger.info("Curso procesado: " + curso.getTitulo());
+            
+            // Verificar contra la biblioteca temporal (no la original)
+            boolean yaExisteEnBiblioteca = bibliotecaTemporal.stream()
+                .anyMatch(cursoExistente -> 
+                    cursoExistente.getTitulo() != null && 
+                    cursoExistente.getTitulo().trim().equalsIgnoreCase(curso.getTitulo().trim()));
+            
+            if (!yaExisteEnBiblioteca) {
+                // Primero guardar en base de datos
+                cursoService.guardarCurso(curso);
+                
+                // Añadir a la biblioteca temporal
+                bibliotecaTemporal.add(curso);
+                cursosAñadidos++;
+                
+                logger.info("Curso importado: " + curso.getTitulo());
+            } else {
+                logger.info("Curso ya existe, saltando: " + curso.getTitulo());
+            }
         }
         
-        // Notificar cambios si es necesario
-        // aplicacionPrincipal.notificarCambiosUsuario();
+        // Actualizar la biblioteca real solo una vez al final
+        usuario.setBiblioteca(bibliotecaTemporal);
+        
+        // Solo guardar y verificar logros si se añadieron cursos nuevos
+        if (cursosAñadidos > 0) {
+            // Guardar el usuario actualizado con los nuevos cursos
+            Piolify.getUnicaInstancia().getUsuarioController().modificarUsuario(usuario);
+            
+            // Limpiar duplicados antes de verificar logros
+            limpiarDuplicadosEnBiblioteca(usuario);
+            
+            // Verificar logros con el número correcto
+            Piolify.getUnicaInstancia().getUsuarioController().verificarYDesbloquearLogros(usuario);
+            
+            logger.info("Se añadieron " + cursosAñadidos + " cursos nuevos a la biblioteca");
+        } else {
+            logger.info("No se añadieron cursos nuevos (todos ya existían)");
+        }
+    }
+
+    /**
+     * Método que limpia duplicados en la biblioteca del usuario durante la importación.
+     * @param usuario Usuario cuya biblioteca se quiere limpiar.
+     */
+    private void limpiarDuplicadosEnBiblioteca(Usuario usuario) {
+        if (usuario.getBiblioteca() == null || usuario.getBiblioteca().isEmpty()) {
+            return;
+        }
+        
+        List<Curso> cursosOriginales = usuario.getBiblioteca();
+        Map<String, Curso> cursosUnicos = new LinkedHashMap<>();
+        
+        // Eliminar duplicados basándose en el título
+        for (Curso curso : cursosOriginales) {
+            if (curso != null && curso.getTitulo() != null) {
+                cursosUnicos.putIfAbsent(curso.getTitulo().trim(), curso);
+            }
+        }
+        
+        List<Curso> cursosLimpios = new ArrayList<>(cursosUnicos.values());
+        
+        // Si había duplicados, actualizar
+        if (cursosLimpios.size() != cursosOriginales.size()) {
+            usuario.setBiblioteca(cursosLimpios);
+            Piolify.getUnicaInstancia().getUsuarioController().modificarUsuario(usuario);
+            
+            logger.info("Se eliminaron " + (cursosOriginales.size() - cursosLimpios.size()) + 
+                       " cursos duplicados de la biblioteca");
+        }
     }
     
     /**
@@ -215,7 +273,7 @@ public class ImportacionController {
     /**
      * Método que devuelve una instancia {@link Estrategia}, dada su tipo.
      * @param estrategia Tipo de estrategia. 
-     * @return Lista que contiene los valores definidos en el enum {@link TipoEstrategia}.
+     * @return Instancia {@link Estrategia} correspondiente al tipo especificado.
      */
     public Estrategia getEstrategia(String estrategia) {
     	return EstrategiaFactory.crearEstrategia(estrategia);

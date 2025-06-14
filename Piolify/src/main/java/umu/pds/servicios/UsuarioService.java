@@ -1,11 +1,14 @@
 package umu.pds.servicios;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import umu.pds.modelo.Amistad;
 import umu.pds.modelo.CatalogoUsuarios;
+import umu.pds.modelo.Curso;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.EstadoAmistad;
 import umu.pds.modelo.Logro;
@@ -234,5 +237,41 @@ public class UsuarioService {
 	        e.printStackTrace();
 	        return new ArrayList<>();
 	    }
+	}
+	
+
+	/**
+	 * Método que limpia cursos duplicados de la biblioteca de un usuario
+	 * @param usuario Usuario cuya biblioteca se quiere limpiar
+	 * @return true si se encontraron y eliminaron duplicados
+	 */
+	public boolean limpiarCursosDuplicados(Usuario usuario) {
+	    if (usuario == null || usuario.getBiblioteca() == null) {
+	        return false;
+	    }
+	    
+	    List<Curso> cursos = usuario.getBiblioteca();
+	    Map<String, Curso> cursosUnicos = new LinkedHashMap<>();
+	    
+	    // Eliminar duplicados basándose en el título
+	    for (Curso curso : cursos) {
+	        if (curso != null && curso.getTitulo() != null) {
+	            cursosUnicos.putIfAbsent(curso.getTitulo(), curso);
+	        }
+	    }
+	    
+	    List<Curso> cursosLimpios = new ArrayList<>(cursosUnicos.values());
+	    
+	    // Si había duplicados, actualizar
+	    if (cursosLimpios.size() != cursos.size()) {
+	        usuario.setBiblioteca(cursosLimpios);
+	        modificarUsuario(usuario);
+	        
+	        System.out.println("Se eliminaron " + (cursos.size() - cursosLimpios.size()) + 
+	                          " cursos duplicados de la biblioteca de " + usuario.getNombre());
+	        return true;
+	    }
+	    
+	    return false;
 	}
 }

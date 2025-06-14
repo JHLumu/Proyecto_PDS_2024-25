@@ -270,10 +270,9 @@ public class DashboardEstadisticas extends JPanel {
             // Configurar layout para la lista
             panelLogrosContainer.setLayout(new BorderLayout());
             
-            // Crear lista con los logros (máximo 5)
-            List<Logro> logrosAMostrar = logros.subList(0, Math.min(logros.size(), 5));
+            // Crear lista con TODOS los logros (sin límite)
             DefaultListModel<Logro> listModel = new DefaultListModel<>();
-            for (Logro logro : logrosAMostrar) {
+            for (Logro logro : logros) {
                 listModel.addElement(logro);
             }
             
@@ -281,6 +280,7 @@ public class DashboardEstadisticas extends JPanel {
             listaLogros.setCellRenderer(new LogroListCellRenderer());
             listaLogros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listaLogros.setFixedCellHeight(60); // Altura fija para cada celda
+            listaLogros.setBackground(PioColores.GRIS_PANEL);
             
             // Scroll pane para la lista
             JScrollPane scrollPane = new JScrollPane(listaLogros);
@@ -289,17 +289,7 @@ public class DashboardEstadisticas extends JPanel {
             scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             
             panelLogrosContainer.add(scrollPane, BorderLayout.CENTER);
-            
-            // Mostrar contador de logros adicionales si hay más de 5
-            if (logros.size() > 5) {
-                JPanel panelFooter = new JPanel(new FlowLayout(FlowLayout.CENTER));
-                JLabel lblMas = new JLabel("+" + (logros.size() - 5) + " logros más...");
-                lblMas.setFont(new Font("Arial", Font.ITALIC, 12));
-                lblMas.setForeground(PioColores.GRIS_TEXT);
-                panelFooter.add(lblMas);
-                panelFooter.setBorder(new EmptyBorder(5, 0, 5, 0));
-                panelLogrosContainer.add(panelFooter, BorderLayout.SOUTH);
-            }
+          
         }
         
         panelLogrosContainer.revalidate();

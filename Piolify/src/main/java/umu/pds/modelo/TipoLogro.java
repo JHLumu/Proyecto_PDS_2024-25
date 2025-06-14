@@ -105,8 +105,7 @@ public enum TipoLogro {
             case RACHA_3_DIAS:
             case RACHA_7_DIAS:
             case RACHA_15_DIAS:
-                return estadisticas.getRachaDias() >= this.condicion || 
-                       estadisticas.getMejorRacha() >= this.condicion;
+                return estadisticas.getRachaDias() >= this.condicion;
                 
             case TIEMPO_30_MIN:
             case TIEMPO_1_HORA:

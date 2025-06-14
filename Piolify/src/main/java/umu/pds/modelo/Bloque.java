@@ -57,6 +57,11 @@ public class Bloque {
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
     
+	/**
+	 * Orden del bloque dentro del curso, utilizado para definir la secuencia de
+	 * bloques.
+	 */
+    private int orden;
 	
 	public Long getId() {
 		return id;
@@ -99,5 +104,12 @@ public class Bloque {
 		this.curso = curso;
 	}
 	
+	public int getOrden() {
+		return orden;
+	}
+	
+	public void setOrden(int orden) {
+		this.orden = orden;
+	}
 	
 }

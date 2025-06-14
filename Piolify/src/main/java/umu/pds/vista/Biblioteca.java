@@ -6,8 +6,10 @@ import javax.swing.border.MatteBorder;
 
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Bloque;
@@ -152,55 +154,6 @@ public class Biblioteca extends JPanel {
 
         return panelImportarCursos;
     }
-
-    private void refrescarCursos() {
-        // Remover todo del panel excepto el título
-        Component titulo = null;
-        for (Component comp : panelListaCursos.getComponents()) {
-            if (comp instanceof JLabel) {
-                titulo = comp;
-                break;
-            }
-        }
-        
-        panelListaCursos.removeAll();
-        
-        // Re-añadir el título
-        if (titulo != null) {
-            panelListaCursos.add(titulo, BorderLayout.NORTH);
-        }
-        
-        List<Curso> cursos = usuario.getBiblioteca();
-        if (cursos.isEmpty()) {
-            panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
-        } else {
-            // Crear panel para los botones de cursos
-            JPanel panelBotonesCursos = new JPanel();
-            panelBotonesCursos.setLayout(new BoxLayout(panelBotonesCursos, BoxLayout.Y_AXIS));
-            panelBotonesCursos.setOpaque(false);
-            
-            for (Curso curso : cursos) {
-                PioButton btnCurso = new PioButton(curso.getTitulo());
-                btnCurso.setBackground(PioColores.MARRON_BUTTON);
-                btnCurso.setAlignmentX(Component.LEFT_ALIGNMENT);
-                btnCurso.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCurso.getPreferredSize().height));
-                
-                // Acción al pulsar el botón: mostrar selector de bloques
-                btnCurso.addActionListener(e -> {
-                	Estrategia estrategia = mostrarSelectorEstrategia();
-                	if (estrategia != null) mostrarSelectorBloques(curso, estrategia);
-                	});
-                
-                panelBotonesCursos.add(btnCurso);
-                panelBotonesCursos.add(Box.createRigidArea(new Dimension(0, 5))); // Espacio entre botones
-            }
-            
-            panelListaCursos.add(panelBotonesCursos, BorderLayout.CENTER);
-        }
-        
-        panelListaCursos.revalidate();
-        panelListaCursos.repaint();
-    }
     
     private Estrategia mostrarSelectorEstrategia() {
     	String[] opciones = this.importacionController.getTiposEstrategiasDefinidas().stream().map(t -> t.toString()).toArray(String[]::new);
@@ -301,6 +254,9 @@ public class Biblioteca extends JPanel {
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChooser.getSelectedFile();
             try {
+                // Contar cursos antes de la importación
+                int cursosAntes = usuario.getBiblioteca().size();
+                
             	boolean resultadoImportacion = controlador.getImportacionController().importarCursosDesdeArchivo(archivo.getAbsolutePath(), usuario);
                 
             	if (!resultadoImportacion) {
@@ -309,10 +265,26 @@ public class Biblioteca extends JPanel {
             	        "Error de Importación", 
             	        JOptionPane.ERROR_MESSAGE);
             	} else {
+            	    // Actualizar usuario desde el controlador para obtener los cambios más recientes
+            	    this.usuario = controlador.getUsuarioActual();
+            	    
+            	    // Contar cursos después de la importación
+            	    int cursosDepues = usuario.getBiblioteca().size();
+            	    int cursosImportados = cursosDepues - cursosAntes;
+            	    
+            	    // Refrescar la vista inmediatamente
             		refrescarCursos();
+            		
+            		String mensaje;
+            		if (cursosImportados > 0) {
+            		    mensaje = cursosImportados + " curso(s) importado(s) correctamente.\nYa puedes hacer clic sobre ellos para practicar los ejercicios.";
+            		} else {
+            		    mensaje = "Los cursos del archivo ya estaban en tu biblioteca.\nNo se añadieron cursos duplicados.";
+            		}
+            		
                     JOptionPane.showMessageDialog(this, 
-                        "Curso importado correctamente.\nYa puedes hacer clic sobre él para practicar los ejercicios.", 
-                        "Importación Exitosa", 
+                        mensaje, 
+                        "Importación Completada", 
                         JOptionPane.INFORMATION_MESSAGE);
             	}
                 
@@ -323,5 +295,93 @@ public class Biblioteca extends JPanel {
                     JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+    
+    private void refrescarCursos() {
+        // Remover todo del panel excepto el título
+        Component titulo = null;
+        for (Component comp : panelListaCursos.getComponents()) {
+            if (comp instanceof JLabel) {
+                titulo = comp;
+                break;
+            }
+        }
+        
+        panelListaCursos.removeAll();
+        
+        // Re-añadir el título
+        if (titulo != null) {
+            panelListaCursos.add(titulo, BorderLayout.NORTH);
+        }
+        
+        // NUEVO: Limpiar duplicados antes de mostrar
+        List<Curso> cursos = limpiarCursosDuplicados(usuario.getBiblioteca());
+        
+        if (cursos.isEmpty()) {
+            panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
+        } else {
+            // Crear panel para los botones de cursos
+            JPanel panelBotonesCursos = new JPanel();
+            panelBotonesCursos.setLayout(new BoxLayout(panelBotonesCursos, BoxLayout.Y_AXIS));
+            panelBotonesCursos.setOpaque(false);
+            
+            for (Curso curso : cursos) {
+                PioButton btnCurso = new PioButton(curso.getTitulo());
+                btnCurso.setBackground(PioColores.MARRON_BUTTON);
+                btnCurso.setAlignmentX(Component.LEFT_ALIGNMENT);
+                btnCurso.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCurso.getPreferredSize().height));
+                
+                // Acción al pulsar el botón: mostrar selector de bloques
+                btnCurso.addActionListener(e -> {
+                	Estrategia estrategia = mostrarSelectorEstrategia();
+                	if (estrategia != null) mostrarSelectorBloques(curso, estrategia);
+                	});
+                
+                panelBotonesCursos.add(btnCurso);
+                panelBotonesCursos.add(Box.createRigidArea(new Dimension(0, 5))); // Espacio entre botones
+            }
+            
+            panelListaCursos.add(panelBotonesCursos, BorderLayout.CENTER);
+        }
+        
+        panelListaCursos.revalidate();
+        panelListaCursos.repaint();
+    }
+
+    /**
+     * Método para limpiar cursos duplicados basándose en el título
+     */
+    private List<Curso> limpiarCursosDuplicados(List<Curso> cursos) {
+        if (cursos == null || cursos.isEmpty()) {
+            return cursos;
+        }
+        
+        // Usar un Map para eliminar duplicados por título
+        Map<String, Curso> cursosUnicos = new LinkedHashMap<>();
+        
+        for (Curso curso : cursos) {
+            if (curso != null && curso.getTitulo() != null) {
+                // Solo mantener el primer curso con cada título
+                cursosUnicos.putIfAbsent(curso.getTitulo(), curso);
+            }
+        }
+        
+        List<Curso> cursosLimpios = new ArrayList<>(cursosUnicos.values());
+        
+        // Si había duplicados, actualizar la biblioteca del usuario
+        if (cursosLimpios.size() != cursos.size()) {
+            System.out.println("Se encontraron " + (cursos.size() - cursosLimpios.size()) + " cursos duplicados. Limpiando...");
+            usuario.setBiblioteca(cursosLimpios);
+            
+            // Guardar los cambios
+            try {
+                controlador.getUsuarioController().modificarUsuario(usuario);
+                System.out.println("Biblioteca actualizada sin duplicados");
+            } catch (Exception e) {
+                System.err.println("Error al actualizar biblioteca: " + e.getMessage());
+            }
+        }
+        
+        return cursosLimpios;
     }
 }
