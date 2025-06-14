@@ -14,23 +14,23 @@ package umu.pds.modelo;
  */
 public enum TipoLogro {
 	
-    PRIMER_EJERCICIO("Primer Paso", "Completa tu primer ejercicio", "trophy.png", 1),
-    CINCO_EJERCICIOS("Aprendiz", "Completa 5 ejercicios", "trophy.png", 5),
-    DIEZ_EJERCICIOS("Estudiante Dedicado", "Completa 10 ejercicios", "trophy.png", 10),
+    PRIMER_EJERCICIO("Primer Paso", "Completa tu primer ejercicio", "primer_ejer.png", 1),
+    CINCO_EJERCICIOS("Aprendiz", "Completa 5 ejercicios", "cinco_ejer.png", 5),
+    DIEZ_EJERCICIOS("Estudiante Dedicado", "Completa 10 ejercicios", "diez_ejer.png", 10),
     
-    RACHA_3_DIAS("Constante", "Mantén una racha de 3 días", "trophy.png", 3),
-    RACHA_7_DIAS("Perseverante", "Mantén una racha de 7 días", "trophy.png", 7),
-    RACHA_15_DIAS("Disciplinado", "Mantén una racha de 15 días", "trophy.png", 15),
+    RACHA_3_DIAS("Constante", "Mantén una racha de 3 días", "3_dias.png", 3),
+    RACHA_7_DIAS("Perseverante", "Mantén una racha de 7 días", "7_dias.png", 7),
+    RACHA_15_DIAS("Disciplinado", "Mantén una racha de 15 días", "15_dias.png", 15),
     
     
-    TIEMPO_30_MIN("Media Hora", "Estudia durante 30 minutos acumulados", "trophy.png", 1800), // 30 min en segundos
-    TIEMPO_1_HORA("Una Hora", "Estudia durante 1 hora acumulada", "trophy.png", 3600), // 1 hora en segundos
-    TIEMPO_5_HORAS("Cinco Horas", "Estudia durante 5 horas acumuladas", "trophy.png", 18000), // 5 horas en segundos
-    TIEMPO_10_HORAS("Diez Horas", "Estudia durante 10 horas acumuladas", "trophy.png", 36000), // 10 horas en segundos
+    TIEMPO_30_MIN("Media Hora", "Estudia durante 30 minutos acumulados", "treinta_min.png", 1800), // 30 min en segundos
+    TIEMPO_1_HORA("Una Hora", "Estudia durante 1 hora acumulada", "una_hora.png", 3600), // 1 hora en segundos
+    TIEMPO_5_HORAS("Cinco Horas", "Estudia durante 5 horas acumuladas", "cinco_horas.png", 18000), // 5 horas en segundos
+    TIEMPO_10_HORAS("Diez Horas", "Estudia durante 10 horas acumuladas", "diez_horas.png", 36000), // 10 horas en segundos
     
-    PRIMER_CURSO("Explorador", "Comienza tu primer curso", "trophy.png", 1),
-    TRES_CURSOS("Curioso", "Comienza 3 cursos diferentes", "trophy.png", 3),
-    CINCO_CURSOS("Investigador", "Comienza 5 cursos diferentes", "trophy.png", 5);
+    PRIMER_CURSO("Explorador", "Comienza tu primer curso", "primer_curso.png", 1),
+    TRES_CURSOS("Curioso", "Comienza 3 cursos diferentes", "tres_cursos.png", 3),
+    CINCO_CURSOS("Investigador", "Comienza 5 cursos diferentes", "cinco_cursos.png", 5);
     
 	/**
 	 * Nombre del logro.

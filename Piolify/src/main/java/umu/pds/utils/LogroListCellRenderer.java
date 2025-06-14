@@ -10,43 +10,53 @@ import java.text.SimpleDateFormat;
 
 public class LogroListCellRenderer extends JPanel implements ListCellRenderer<Logro> {
     
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JLabel lblIcon;
+    private static final long serialVersionUID = 1L;
+    private JLabel lblIcon;
     private JLabel lblNombre;
     private JLabel lblDescripcion;
     private JLabel lblFecha;
     private SimpleDateFormat dateFormat;
     
     public LogroListCellRenderer() {
-        setLayout(new BorderLayout(10, 5));
-        setBorder(new EmptyBorder(8, 12, 8, 12));
+        setLayout(new BorderLayout(15, 5)); // Más espacio horizontal entre icono y texto
+        setBorder(new EmptyBorder(10, 15, 10, 15)); // Más padding general
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         
         // Panel izquierdo para el icono
-        JPanel panelIcon = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        JPanel panelIcon = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        panelIcon.setPreferredSize(new Dimension(70, 60)); // Tamaño fijo para el contenedor del icono
+        panelIcon.setMinimumSize(new Dimension(70, 60));
+        panelIcon.setMaximumSize(new Dimension(70, 60));
+        
         lblIcon = new JLabel("");
+        lblIcon.setHorizontalAlignment(JLabel.CENTER);
+        lblIcon.setVerticalAlignment(JLabel.CENTER);
+        lblIcon.setPreferredSize(new Dimension(60, 60)); // Tamaño del icono
         panelIcon.add(lblIcon);
         
         // Panel central para nombre y descripción
         JPanel panelInfo = new JPanel();
         panelInfo.setLayout(new BoxLayout(panelInfo, BoxLayout.Y_AXIS));
+        panelInfo.setOpaque(false);
         
         lblNombre = new JLabel();
-        lblNombre.setFont(new Font("Arial", Font.BOLD, 14));
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 16)); // Fuente más grande
+        lblNombre.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         lblDescripcion = new JLabel();
-        lblDescripcion.setFont(new Font("Arial", Font.PLAIN, 12));
+        lblDescripcion.setFont(new Font("Arial", Font.PLAIN, 13)); // Fuente más grande
         lblDescripcion.setForeground(Color.GRAY);
+        lblDescripcion.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         panelInfo.add(lblNombre);
-        panelInfo.add(Box.createVerticalStrut(2));
+        panelInfo.add(Box.createVerticalStrut(3));
         panelInfo.add(lblDescripcion);
         
         // Panel derecho para la fecha
         JPanel panelFecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        panelFecha.setOpaque(false);
+        panelFecha.setPreferredSize(new Dimension(80, 60)); // Tamaño fijo
+        
         lblFecha = new JLabel();
         lblFecha.setFont(new Font("Arial", Font.ITALIC, 11));
         lblFecha.setForeground(Color.GRAY);
@@ -64,7 +74,18 @@ public class LogroListCellRenderer extends JPanel implements ListCellRenderer<Lo
         // Configurar contenido
         lblNombre.setText(logro.getNombre());
         lblDescripcion.setText(logro.getDescripcion());
-        lblIcon.setIcon(ImageUtils.escalarImagen(logro.getImagen(), 50));
+        
+        ImageIcon iconoOriginal = ImageUtils.escalarImagen(logro.getImagen(), 60);
+        if (iconoOriginal != null) {
+            // Asegurar que el icono se ajuste perfectamente
+            Image img = iconoOriginal.getImage();
+            Image imgEscalada = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            lblIcon.setIcon(new ImageIcon(imgEscalada));
+        } else {
+            // Icono por defecto si no se puede cargar
+            lblIcon.setText("🏆");
+            lblIcon.setFont(new Font("Arial", Font.PLAIN, 40));
+        }
         
         if (logro.getFecha() != null) {
             lblFecha.setText(dateFormat.format(logro.getFecha()));
@@ -90,10 +111,10 @@ public class LogroListCellRenderer extends JPanel implements ListCellRenderer<Lo
         if (cellHasFocus) {
             setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(list.getSelectionBackground(), 1),
-                new EmptyBorder(7, 11, 7, 11)
+                new EmptyBorder(9, 14, 9, 14)
             ));
         } else {
-            setBorder(new EmptyBorder(8, 12, 8, 12));
+            setBorder(new EmptyBorder(10, 15, 10, 15));
         }
         
         return this;

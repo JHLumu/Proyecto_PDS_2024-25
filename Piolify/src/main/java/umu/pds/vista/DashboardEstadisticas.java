@@ -270,7 +270,7 @@ public class DashboardEstadisticas extends JPanel {
             // Configurar layout para la lista
             panelLogrosContainer.setLayout(new BorderLayout());
             
-            // Crear lista con TODOS los logros (sin límite)
+            // lista logros
             DefaultListModel<Logro> listModel = new DefaultListModel<>();
             for (Logro logro : logros) {
                 listModel.addElement(logro);
@@ -279,17 +279,16 @@ public class DashboardEstadisticas extends JPanel {
             JList<Logro> listaLogros = new JList<>(listModel);
             listaLogros.setCellRenderer(new LogroListCellRenderer());
             listaLogros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listaLogros.setFixedCellHeight(60); // Altura fija para cada celda
+            listaLogros.setFixedCellHeight(80); // Altura aumentada para iconos más grandes
             listaLogros.setBackground(PioColores.GRIS_PANEL);
             
             // Scroll pane para la lista
             JScrollPane scrollPane = new JScrollPane(listaLogros);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             
             panelLogrosContainer.add(scrollPane, BorderLayout.CENTER);
-          
         }
         
         panelLogrosContainer.revalidate();
