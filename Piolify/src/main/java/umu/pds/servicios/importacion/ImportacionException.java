@@ -6,7 +6,7 @@ public class ImportacionException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final String tipoError;
-    private final String detalles;
+    private String detalles;
     
     public ImportacionException(String mensaje, String tipoError) {
         super(mensaje);
@@ -20,6 +20,15 @@ public class ImportacionException extends Exception {
         this.detalles = detalles;
     }
     
-    public String getTipoError() { return tipoError; }
+    public ImportacionException(String string) {
+		super(string);
+		this.tipoError = new String("Error Importación");
+		this.detalles = null;
+	}
+
+	public String getTipoError() { return tipoError; }
     public String getDetalles() { return detalles; }
+    public void setDetalles(String detalles) {
+    	this.detalles = detalles;
+    }
 }
