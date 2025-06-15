@@ -29,6 +29,11 @@ import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.BaseRoundedFrame;
 import umu.pds.vista.elementos.PioColores;
 
+/**
+ * Clase que representa la ventana de ejercicios de Piolify.
+ * Permite a los usuarios interactuar con una serie de ejercicios
+ * y registrar sus respuestas, mostrando estadísticas al finalizar.
+ */
 public class PioEjercicios extends BaseRoundedFrame {
     private static final long serialVersionUID = 1L;
     private List<EjercicioRenderer> renderers;

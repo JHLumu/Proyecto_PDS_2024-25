@@ -3,16 +3,33 @@ package umu.pds.servicios.importacion;
 import java.util.List;
 
 public class EjercicioDTO {
-    private String tipo; // "OPCION_MULTIPLE", "COMPLETAR_HUECOS", "FLASHCARD"
-    private String contenido;
-    private String respuesta;
-    private int dificultad;
-    private int orden;
-    private List<String> opciones; // Para opciones múltiples
     
-    // Constructors
+    /* Tipo de ejercicio. Puede ser "OPCION_MULTIPLE", "COMPLETAR_HUECOS" o "FLASHCARD". */
+    private String tipo;
+    /* Contenido del ejercicio, que puede ser una pregunta, texto o imagen. */
+    private String contenido;
+    /* Respuesta esperada del ejercicio. Puede ser una respuesta única o una lista de respuestas separadas por comas. */
+    private String respuesta;
+    /* Dificultad del ejercicio, representada por un número entero. */
+    private int dificultad;
+    /* Orden del ejercicio dentro de un bloque o curso. */
+    private int orden;
+    /* Opciones específicas para ejercicios de opción múltiple. */
+    private List<String> opciones;
+    
+    /**
+     * Constructor por defecto para crear un ejercicio.
+     */
     public EjercicioDTO() {}
     
+    /**
+     * Constructor para crear un ejercicio con tipo, contenido, respuesta, dificultad y orden.
+     * @param tipo Tipo de ejercicio (OPCION_MULTIPLE, COMPLETAR_HUECOS, FLASHCARD).
+     * @param contenido Contenido del ejercicio.
+     * @param respuesta Respuesta esperada del ejercicio.
+     * @param dificultad Dificultad del ejercicio.
+     * @param orden Orden del ejercicio en el bloque o curso.
+     */
     public EjercicioDTO(String tipo, String contenido, String respuesta, int dificultad, int orden) {
         this.tipo = tipo;
         this.contenido = contenido;
@@ -38,6 +55,11 @@ public class EjercicioDTO {
     public void setOrden(int orden) { this.orden = orden; }
     
     public List<String> getOpciones() { return opciones; }
+
+    /**
+     * Establece las propiedades específicas del ejercicio, como las opciones para ejercicios de opción múltiple.
+     * @param propiedadesEspecificas Lista de opciones específicas del ejercicio.
+     */
     public void setPropiedadesEspecificas(List<String> propiedadesEspecificas) { 
         this.opciones = propiedadesEspecificas; 
     }

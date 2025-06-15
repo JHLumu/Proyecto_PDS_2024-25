@@ -11,14 +11,24 @@ import java.util.List;
 
 public class ImportadorYAML implements ImportadorStrategy {
     
+    /* * Manejador de excepciones personalizado para errores de importación. */
     private final ObjectMapper yamlMapper;
+    /* * Mapeador de cursos para convertir entre DTO y entidad. */
     private final CursoMapper cursoMapper;
     
+    /**
+     * Constructor que inicializa el mapeador de objetos YAML y el mapeador de cursos.
+     * Configura el mapeador para manejar adecuadamente los archivos YAML.
+     * @param cursoMapper Mapeador de cursos para convertir entre DTO y entidad.
+     */
     public ImportadorYAML(CursoMapper cursoMapper) {
         this.yamlMapper = new ObjectMapper(new YAMLFactory());
         this.cursoMapper = cursoMapper;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Curso> importar(InputStream inputStream) throws ImportacionException {
         try {
@@ -56,11 +66,17 @@ public class ImportadorYAML implements ImportadorStrategy {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean soportaFormato(String extension) {
         return "yaml".equalsIgnoreCase(extension) || "yml".equalsIgnoreCase(extension);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTipoFormato() {
         return "YAML";

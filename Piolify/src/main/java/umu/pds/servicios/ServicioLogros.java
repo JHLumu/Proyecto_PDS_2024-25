@@ -85,7 +85,8 @@ public class ServicioLogros {
     }
 
     /**
-     * Clase interna que representa un logro con su estado asociado: bloqueado o desbloqueado.
+     * Clase interna que representa un logro con su estado de desbloqueo.
+     * Se utiliza para mostrar los logros y su estado en la interfaz de usuario.
      */
     public static class LogroConEstado {
         private final TipoLogro tipoLogro;

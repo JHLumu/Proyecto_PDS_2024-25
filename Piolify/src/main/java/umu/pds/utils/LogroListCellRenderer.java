@@ -17,6 +17,11 @@ public class LogroListCellRenderer extends JPanel implements ListCellRenderer<Lo
     private JLabel lblFecha;
     private SimpleDateFormat dateFormat;
     
+    /**
+     * Constructor por defecto que inicializa el renderizador de celdas para la lista de logros.
+     * Configura el diseño, los paneles internos y los componentes necesarios para mostrar
+     * el icono, nombre, descripción y fecha del logro.
+     */
     public LogroListCellRenderer() {
         setLayout(new BorderLayout(15, 5)); // Más espacio horizontal entre icono y texto
         setBorder(new EmptyBorder(10, 15, 10, 15)); // Más padding general
@@ -67,6 +72,18 @@ public class LogroListCellRenderer extends JPanel implements ListCellRenderer<Lo
         add(panelFecha, BorderLayout.EAST);
     }
     
+    /**
+     * Método que se invoca para renderizar cada celda de la lista de logros.
+     * Configura el contenido de los componentes según el logro proporcionado,
+     * y ajusta los colores y bordes según el estado de selección y foco.
+     *
+     * @param list La lista que contiene los logros.
+     * @param logro El logro a renderizar.
+     * @param index El índice del logro en la lista.
+     * @param isSelected Indica si la celda está seleccionada.
+     * @param cellHasFocus Indica si la celda tiene el foco.
+     * @return El componente configurado para mostrar el logro.
+     */
     @Override
     public Component getListCellRendererComponent(JList<? extends Logro> list, 
             Logro logro, int index, boolean isSelected, boolean cellHasFocus) {

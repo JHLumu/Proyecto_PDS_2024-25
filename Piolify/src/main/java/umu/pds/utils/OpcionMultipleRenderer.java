@@ -28,6 +28,12 @@ public class OpcionMultipleRenderer implements EjercicioRenderer {
     private JLabel resultadoLabel;
     private EjercicioOpcionMultiple ejercicio;
     
+    /**
+     * Renderiza el ejercicio de tipo Opción Múltiple.
+     * 
+     * @param containerPanel Panel contenedor donde se renderizará el ejercicio.
+     * @param ejercicioObj Objeto del ejercicio a renderizar, debe ser de tipo EjercicioOpcionMultiple.
+     */
     @Override
     public void renderizar(JPanel containerPanel, Object ejercicioObj) {
         this.ejercicio = (EjercicioOpcionMultiple) ejercicioObj;
@@ -84,6 +90,9 @@ public class OpcionMultipleRenderer implements EjercicioRenderer {
         configurarEventos();
     }
     
+    /**
+     * Configura los eventos de los componentes del ejercicio.
+     */
     @Override
     public void configurarEventos() {
         solucionButton.addActionListener(e -> {
@@ -91,6 +100,11 @@ public class OpcionMultipleRenderer implements EjercicioRenderer {
         });
     }
     
+    /**
+     * Valida la respuesta del usuario.
+     * 
+     * @return true si la respuesta es correcta, false en caso contrario.
+     */
     @Override
     public boolean validarRespuesta() {
         ButtonModel seleccionado = opcionesGroup.getSelection();
@@ -105,12 +119,22 @@ public class OpcionMultipleRenderer implements EjercicioRenderer {
         return esCorrecta;
     }
     
+    /**
+     * Muestra la solución del ejercicio.
+     * Deshabilita el botón de solución para evitar múltiples clics.
+     */
     private void mostrarSolucion() {
         String respuestaCorrecta = ejercicio.getRespuesta();
         mostrarResultado(true, "La respuesta correcta es: " + respuestaCorrecta);
         solucionButton.setEnabled(false);
     }
     
+    /**
+     * Muestra el resultado de la validación de la respuesta.
+     * 
+     * @param esCorrecta Indica si la respuesta del usuario es correcta.
+     * @param mensaje Mensaje a mostrar al usuario.
+     */
     @Override
     public void mostrarResultado(boolean esCorrecta, String mensaje) {
         resultadoLabel.setText(mensaje);

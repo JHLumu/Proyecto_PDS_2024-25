@@ -26,6 +26,9 @@ import umu.pds.vista.elementos.*;
 import java.awt.Cursor;
 import javax.swing.JPasswordField;
 
+/* * Clase que representa la ventana de login de la aplicación Piolify.
+ * Permite a los usuarios autenticarse y acceder a la aplicación.
+ */
 public class Login {
 
 	private JFrame frmLoginPiolify;

@@ -156,16 +156,37 @@ public class ServicioImportacion {
         private final String formatoUtilizado;
         private final int cantidadImportada;
         
+        /**
+         * Constructor para crear un resultado de importación.
+         * @param cursos Lista de cursos importados.
+         * @param formatoUtilizado Formato utilizado para la importación (ej. "JSON", "YAML").
+         */
         public ResultadoImportacion(List<Curso> cursos, String formatoUtilizado) {
             this.cursos = cursos;
             this.formatoUtilizado = formatoUtilizado;
             this.cantidadImportada = cursos != null ? cursos.size() : 0;
         }
         
+        /**
+         * Obtiene la lista de cursos importados.
+         * @return Lista de cursos.
+         */
         public List<Curso> getCursos() { return cursos; }
+        /**
+         * Obtiene el formato utilizado para la importación.
+         * @return Formato del importador (ej. "JSON", "YAML").
+         */
         public String getFormatoUtilizado() { return formatoUtilizado; }
+        /**
+         * Obtiene la cantidad de cursos importados.
+         * @return Número de cursos importados.
+         */
         public int getCantidadImportada() { return cantidadImportada; }
         
+        /**
+         * Verifica si la importación fue exitosa.
+         * @return {@code true} si se importaron cursos, {@code false} en caso contrario.
+         */
         public boolean fueExitoso() {
             return cursos != null && !cursos.isEmpty();
         }

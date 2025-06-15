@@ -7,7 +7,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
-
+/**
+ * Clase que permite redimensionar un JFrame con esquinas redondeadas.
+ * Detecta el cursor en las esquinas y bordes del frame para permitir el redimensionamiento.
+ */
 public class ComponentResizer extends MouseAdapter {
 	private final JFrame frame;
     private final int cornerRadius;
@@ -16,6 +19,11 @@ public class ComponentResizer extends MouseAdapter {
     private Rectangle startBounds;
     private int currentCursor;
 
+    /**
+     * Constructor que inicializa el redimensionador para un JFrame con esquinas redondeadas.
+     * @param frame El JFrame al que se le aplicará el redimensionamiento.
+     * @param cornerRadius El radio de las esquinas redondeadas del JFrame.
+     */
     public ComponentResizer(JFrame frame, int cornerRadius) {
         this.frame = frame;
         this.cornerRadius = cornerRadius;
@@ -26,6 +34,11 @@ public class ComponentResizer extends MouseAdapter {
         }
     }
 
+    /**
+     * Verifica si el resizer debe ser omitido.
+     * Si el frame es una instancia de BaseRoundedFrame y está en modo diseño, se omite.
+     * @return true si se debe omitir el resizer, false en caso contrario.
+     */
     private boolean shouldSkipResizer() {
         if (frame instanceof BaseRoundedFrame) {
             BaseRoundedFrame brf = (BaseRoundedFrame) frame;
@@ -34,6 +47,10 @@ public class ComponentResizer extends MouseAdapter {
         return false;
     }
 
+    /**
+     * Configura el glass pane del JFrame para detectar los eventos de mouse.
+     * El glass pane permite interceptar los eventos de mouse y redimensionar el frame.
+     */
     private void setupGlassPane() {
         JComponent glassPane = new JComponent() {
             /**
@@ -57,6 +74,10 @@ public class ComponentResizer extends MouseAdapter {
         glassPane.setVisible(true);
     }
 
+    /**
+     * Métodos de MouseListener y MouseMotionListener para manejar los eventos de mouse.
+     * Estos métodos permiten detectar el movimiento del mouse y redimensionar el frame.
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         int x = e.getX();
@@ -83,12 +104,22 @@ public class ComponentResizer extends MouseAdapter {
         currentCursor = cursorType;
     }
 
+    /**
+     * Método que se llama cuando se presiona el mouse.
+     * Guarda la posición inicial del mouse y los límites actuales del frame.
+     * @param e Evento de mouse.
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         initialClick = e.getLocationOnScreen();
         startBounds = frame.getBounds();
     }
 
+    /**
+     * Método que se llama cuando se arrastra el mouse.
+     * Calcula el nuevo tamaño y posición del frame basado en el movimiento del mouse.
+     * @param e Evento de mouse.
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
         if (initialClick == null || startBounds == null) return;
@@ -105,6 +136,12 @@ public class ComponentResizer extends MouseAdapter {
         updateFrameShape();
     }
 
+    /**
+     * Actualiza los límites del frame según el cursor actual y el movimiento del mouse.
+     * @param bounds Los límites actuales del frame.
+     * @param dx Cambio en la posición horizontal.
+     * @param dy Cambio en la posición vertical.
+     */
     private void updateBounds(Rectangle bounds, int dx, int dy) {
         switch (currentCursor) {
             case Cursor.NW_RESIZE_CURSOR:
@@ -138,6 +175,12 @@ public class ComponentResizer extends MouseAdapter {
         }
     }
 
+    /**
+     * Método que asegura que el tamaño del frame no sea menor al tamaño mínimo definido.
+     * Ajusta los límites si son menores que el tamaño mínimo.
+     * @param bounds Los límites actuales del frame.
+     */
+      
     private void enforceMinimumSize(Rectangle bounds) {
         // Usar el mínimo tamaño definido en el frame, no el calculado
         Dimension frameMinSize = frame.getMinimumSize();
@@ -172,6 +215,11 @@ public class ComponentResizer extends MouseAdapter {
         });
     }
 
+    /**
+     * Método que se llama cuando se suelta el mouse.
+     * Limpia las variables de estado.
+     * @param e Evento de mouse.
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         initialClick = null;

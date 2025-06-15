@@ -7,6 +7,12 @@ import java.util.List;
 
 public class CursoMapper {
     
+    /**
+     * Convierte una lista de CursoDTO a una lista de Curso.
+     * @param cursosDTO Lista de CursoDTO a convertir.
+     * @return Lista de Curso convertida.
+     * @throws ImportacionException Si ocurre un error durante la conversión.
+     */
     public List<Curso> convertirDesdeDTO(List<CursoDTO> cursosDTO) throws ImportacionException {
         List<Curso> cursos = new ArrayList<>();
         
@@ -17,6 +23,12 @@ public class CursoMapper {
         return cursos;
     }
     
+    /**
+     * Convierte un CursoDTO a un Curso.
+     * @param cursoDTO CursoDTO a convertir.
+     * @return Curso convertido.
+     * @throws ImportacionException Si ocurre un error durante la conversión.
+     */
     public Curso convertirDesdeDTO(CursoDTO cursoDTO) throws ImportacionException {
         if (cursoDTO == null) {
             throw new ImportacionException("CursoDTO no puede ser null", "VALIDATION_ERROR");
@@ -39,6 +51,13 @@ public class CursoMapper {
         return curso;
     }
     
+    /**
+     * Convierte un BloqueDTO a un Bloque, asociándolo al Curso proporcionado.
+     * @param bloqueDTO BloqueDTO a convertir.
+     * @param curso Curso al que se asociará el bloque.
+     * @return Bloque convertido.
+     * @throws ImportacionException Si ocurre un error durante la conversión.
+     */
     private Bloque convertirBloqueDesdeDTO(BloqueDTO bloqueDTO, Curso curso) throws ImportacionException {
         if (bloqueDTO == null) {
             throw new ImportacionException("BloqueDTO no puede ser null", "VALIDATION_ERROR");
@@ -61,6 +80,13 @@ public class CursoMapper {
         return bloque;
     }
     
+    /**
+     * Convierte un EjercicioDTO a un Ejercicio, asociándolo al Bloque proporcionado.
+     * @param ejercicioDTO EjercicioDTO a convertir.
+     * @param bloque Bloque al que se asociará el ejercicio.
+     * @return Ejercicio convertido.
+     * @throws ImportacionException Si ocurre un error durante la conversión.
+     */
     private Ejercicio convertirEjercicioDesdeDTO(EjercicioDTO ejercicioDTO, Bloque bloque) throws ImportacionException {
         if (ejercicioDTO == null) {
             throw new ImportacionException("EjercicioDTO no puede ser null", "VALIDATION_ERROR");
@@ -95,6 +121,12 @@ public class CursoMapper {
         return ejercicio;
     }
     
+    /**
+     * Crea un EjercicioOpcionMultiple a partir de un EjercicioDTO.
+     * @param dto EjercicioDTO con las propiedades específicas.
+     * @return Un EjercicioOpcionMultiple con las opciones extraídas del DTO.
+     * @throws ImportacionException Si las opciones no son válidas.
+     */
     private EjercicioOpcionMultiple crearEjercicioOpcionMultiple(EjercicioDTO dto) throws ImportacionException {
         EjercicioOpcionMultiple ejercicio = new EjercicioOpcionMultiple();
         // Extraer opciones de las propiedades específicas
@@ -114,13 +146,24 @@ public class CursoMapper {
         return ejercicio;
     }
     
+    /**
+     * Crea un EjercicioRellenarHuecos a partir de un EjercicioDTO.
+     * @param dto EjercicioDTO con las propiedades específicas.
+     * @return Un EjercicioRellenarHuecos con las respuestas extraídas del DTO.
+     */
     private EjercicioRellenarHuecos crearEjercicioRellenarHuecos(EjercicioDTO dto) {
         return new EjercicioRellenarHuecos();
     }
     
+    /**
+     * Crea un EjercicioFlashcard a partir de un EjercicioDTO.
+     * @param dto EjercicioDTO con las propiedades específicas.
+     * @return Un EjercicioFlashcard con las propiedades necesarias.
+     */
     private EjercicioFlashcard crearEjercicioFlashcard(EjercicioDTO dto) {
         return new EjercicioFlashcard();
     }
+    
     
     // Métodos para conversión inversa (de entidad a DTO) si fuera necesario
     public CursoDTO convertirADTO(Curso curso) {

@@ -30,7 +30,12 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
     private JLabel resultadoLabel;
     private EjercicioRellenarHuecos ejercicio;
 
-    
+    /**
+     * Renderiza el ejercicio de tipo Rellenar Huecos.
+     * 
+     * @param containerPanel Panel contenedor donde se renderizará el ejercicio.
+     * @param ejercicioObj Objeto del ejercicio a renderizar, debe ser de tipo EjercicioRellenarHuecos.
+     */
     @Override
     public void renderizar(JPanel containerPanel, Object ejercicioObj) {
         this.ejercicio = (EjercicioRellenarHuecos) ejercicioObj;
@@ -83,6 +88,10 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         configurarEventos();
     }
     
+    /**
+     * Crea el contenido del ejercicio con los huecos para completar.
+     * Utiliza expresiones regulares para identificar los huecos en el texto.
+     */
     private void crearContenidoConHuecos() {
         // Implementación similar a la original
         String contenido = ejercicio.getContenido();
@@ -121,6 +130,13 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         contenidoPanel.add(lineaPanel);
     }
     
+    /**
+     * Agrega el texto en líneas al panel, separando las palabras.
+     * 
+     * @param panel El panel donde se agregará el texto.
+     * @param texto El texto a agregar.
+     * @param fuente La fuente a utilizar para el texto.
+     */
     private void agregarTextoEnLineas(JPanel panel, String texto, Font fuente) {
         String[] palabras = texto.split("\\s+");
         for (String palabra : palabras) {
@@ -132,6 +148,10 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         }
     }
     
+    /**
+     * Configura los eventos del componente.
+     * En este caso, al hacer clic en el botón de solución, se muestra la solución del ejercicio.
+     */
     @Override
     public void configurarEventos() {
         solucionButton.addActionListener(e -> {
@@ -139,6 +159,11 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         });
     }
     
+    /**
+     * Valida la respuesta del usuario.
+     * 
+     * @return true si la respuesta es correcta, false en caso contrario.
+     */
     @Override
     public boolean validarRespuesta() {
         // Implementación de validación similar a la original
@@ -193,6 +218,10 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         return todasCorrectas;
     }
     
+    /**
+     * Muestra la solución del ejercicio rellenando los campos con las respuestas correctas.
+     * Si no hay huecos, muestra un mensaje informativo.
+     */
     private void mostrarSolucion() {
         if (camposHuecos.isEmpty()) {
             mostrarResultado(true, "No hay huecos para mostrar");
@@ -218,6 +247,12 @@ public class RellenarHuecosRenderer implements EjercicioRenderer {
         solucionButton.setEnabled(false);
     }
     
+    /**
+     * Muestra el resultado de la validación de la respuesta.
+     * 
+     * @param esCorrecta Indica si la respuesta del usuario es correcta.
+     * @param mensaje Mensaje a mostrar al usuario.
+     */
     @Override
     public void mostrarResultado(boolean esCorrecta, String mensaje) {
         resultadoLabel.setText(mensaje);

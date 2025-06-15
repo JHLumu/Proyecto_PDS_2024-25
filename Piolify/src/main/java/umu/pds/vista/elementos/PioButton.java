@@ -4,6 +4,10 @@ import java.awt.Cursor;
 
 import javax.swing.JButton;
 
+/**
+ * Clase que representa un botón personalizado en la interfaz de usuario de Piolify.
+ * Extiende JButton para aplicar estilos y comportamientos específicos.
+ */
 public class PioButton extends JButton{
 	
 	/**

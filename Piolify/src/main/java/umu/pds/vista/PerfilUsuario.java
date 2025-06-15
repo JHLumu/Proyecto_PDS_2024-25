@@ -42,6 +42,10 @@ import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 
+/**
+ * Clase que representa el panel de perfil del usuario.
+ * Permite al usuario ver y editar su información personal y foto de perfil.
+ */
 public class PerfilUsuario extends JPanel {
 
 	private static final long serialVersionUID = 1L;

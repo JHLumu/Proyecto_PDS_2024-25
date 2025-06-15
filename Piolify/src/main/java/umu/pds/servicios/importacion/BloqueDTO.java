@@ -3,14 +3,28 @@ package umu.pds.servicios.importacion;
 import java.util.List;
 
 public class BloqueDTO {
+
+    /* Título del bloque. */
     private String titulo;
+    /* Descripción del bloque. */
     private String descripcion;
+    /* Orden del bloque en el curso. */
     private int orden;
+    /* Lista de ejercicios asociados al bloque. */
     private List<EjercicioDTO> ejercicios;
     
-    // Constructors
+    /**
+     * Constructor por defecto para crear un bloque.
+     */
     public BloqueDTO() {}
     
+    /**
+     * Constructor para crear un bloque con título, descripción, orden y lista de ejercicios.
+     * @param titulo Título del bloque.
+     * @param descripcion Descripción del bloque.
+     * @param orden Orden del bloque en el curso.
+     * @param ejercicios Lista de ejercicios asociados al bloque.
+     */
     public BloqueDTO(String titulo, String descripcion, int orden, List<EjercicioDTO> ejercicios) {
         this.titulo = titulo;
         this.descripcion = descripcion;

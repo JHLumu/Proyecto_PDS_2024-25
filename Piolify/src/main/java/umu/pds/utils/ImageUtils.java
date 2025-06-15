@@ -11,9 +11,21 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+/**
+ * Clase utilitaria para operaciones relacionadas con imágenes.
+ * Incluye escalado de imágenes, creación de iconos circulares y carga de imágenes desde diferentes fuentes.
+ */
 public class ImageUtils {
 
-	
+	/**
+	 * Escala una imagen a un tamaño específico manteniendo la calidad.
+	 * Utiliza interpolación bicúbica para mejorar la calidad de la imagen escalada.
+	 * 
+	 * @param imagen La imagen a escalar.
+	 * @param ancho El ancho deseado de la imagen escalada.
+	 * @param alto El alto deseado de la imagen escalada.
+	 * @return BufferedImage con la imagen escalada.
+	 */
 	public static BufferedImage escalarImagenCalidad(Image imagen, int ancho, int alto) {
 	    if (imagen == null) return null;
 	    BufferedImage bufferedImagen;
@@ -73,6 +85,14 @@ public class ImageUtils {
 	    return resultado;
 	}
 	
+	/**
+	 * Crea un icono circular a partir de una imagen.
+	 * Si la imagen es nula, utiliza una imagen por defecto.
+	 * 
+	 * @param img La imagen a convertir en icono circular.
+	 * @param diameter El diámetro del icono circular.
+	 * @return ImageIcon con la imagen circular.
+	 */
 	public static ImageIcon createCircularIcon(Image img, int diameter) {
 	    if (img == null) {
 	        return createCircularIcon(getImagenPorDefecto(), diameter);
@@ -120,6 +140,14 @@ public class ImageUtils {
 	    }
 	}
     
+	/**
+	 * Escala una imagen a un ancho específico manteniendo la proporción.
+	 * Si la imagen es nula, utiliza una imagen por defecto.
+	 * 
+	 * @param imagePath Ruta de la imagen a escalar.
+	 * @param width Ancho deseado de la imagen escalada.
+	 * @return ImageIcon con la imagen escalada.
+	 */
     public static ImageIcon escalarImagen(String imagePath, int width) {
         try {
             Image imagen = cargarImagen(imagePath);
@@ -147,9 +175,13 @@ public class ImageUtils {
         }
     }
     
-    /**
-     * Carga una imagen desde una ruta local, URL o recurso del classpath.
-     */
+	/**
+	 * Carga una imagen desde una ruta local, URL o recurso del classpath.
+	 * Si la ruta es nula o vacía, devuelve una imagen por defecto.
+	 * 
+	 * @param ruta Ruta de la imagen a cargar.
+	 * @return Image cargada desde la ruta especificada o imagen por defecto en caso de error.
+	 */
     public static Image cargarImagen(String ruta) {
         try {
             if (ruta == null || ruta.isEmpty()) {
@@ -167,17 +199,22 @@ public class ImageUtils {
         }
     }
 
-    /**
-     * Imagen por defecto en caso de error.
-     */
+	/**
+	 * Obtiene una imagen por defecto para usar cuando no se proporciona una imagen válida.
+	 * Utiliza un recurso del classpath llamado "fotoUser.png".
+	 * 
+	 * @return Image por defecto.
+	 */
     public static Image getImagenPorDefecto() {
         return new ImageIcon(ImageUtils.class.getResource("/fotoUser.png")).getImage();
     }
 
-
-    /**
-     * Valida si una ruta contiene una imagen válida.
-     */
+	/**
+	 * Verifica si una imagen es válida intentando cargarla desde la ruta especificada.
+	 * Si la imagen no se puede cargar, devuelve false.
+	 * @param ruta Ruta de la imagen a validar.
+	 * @return true si la imagen es válida, false en caso contrario.
+	 * */
     public static boolean esImagenValida(String ruta) {
         try {
             BufferedImage img = ImageIO.read(new File(ruta));

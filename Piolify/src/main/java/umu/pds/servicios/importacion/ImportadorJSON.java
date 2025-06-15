@@ -11,10 +11,17 @@ import java.util.List;
 
 
 public class ImportadorJSON implements ImportadorStrategy {
-    
+
+    /* * Manejador de excepciones personalizado para errores de importación.*/
     private final ObjectMapper objectMapper;
+    /* * Mapeador de cursos para convertir entre DTO y entidad.*/
     private final CursoMapper cursoMapper;
     
+    /**
+     * Constructor que inicializa el mapeador de objetos JSON y el mapeador de cursos.
+     * Configura el mapeador para ser más tolerante con errores de deserialización.
+     * @param cursoMapper Mapeador de cursos para convertir entre DTO y entidad.
+     */
     public ImportadorJSON(CursoMapper cursoMapper) {
         this.objectMapper = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
         // Configurar para ser más tolerante con JSON
@@ -22,7 +29,10 @@ public class ImportadorJSON implements ImportadorStrategy {
         this.objectMapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.cursoMapper = cursoMapper;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Curso> importar(InputStream inputStream) throws ImportacionException {
         try {
@@ -74,11 +84,17 @@ public class ImportadorJSON implements ImportadorStrategy {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean soportaFormato(String extension) {
         return "json".equalsIgnoreCase(extension);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTipoFormato() {
         return "JSON";

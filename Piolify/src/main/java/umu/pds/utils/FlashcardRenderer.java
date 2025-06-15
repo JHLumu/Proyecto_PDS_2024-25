@@ -19,6 +19,7 @@ import javax.swing.text.StyledDocument;
 import umu.pds.modelo.EjercicioFlashcard;
 
 
+
 public class FlashcardRenderer implements EjercicioRenderer {
    
 	private JTextPane contenido;
@@ -28,6 +29,11 @@ public class FlashcardRenderer implements EjercicioRenderer {
     private StyledDocument doc; 
     private SimpleAttributeSet center;
     
+    /* * Renderiza el ejercicio de tipo Flashcard.
+     * 
+     * @param containerPanel Panel contenedor donde se renderizará el ejercicio.
+     * @param ejercicioObj Objeto del ejercicio a renderizar, debe ser de tipo EjercicioFlashcard.
+     */
     @SuppressWarnings("serial")
 	@Override
     public void renderizar(JPanel containerPanel, Object ejercicioObj) {
@@ -80,6 +86,10 @@ public class FlashcardRenderer implements EjercicioRenderer {
         configurarEventos();
     }
     
+    /**
+     * Configura los eventos del componente.
+     * En este caso, al hacer clic en la flashcard, se alterna entre mostrar el contenido y la respuesta.
+     */
     @Override
     public void configurarEventos() {
         contenido.addMouseListener(new MouseAdapter() {
@@ -93,17 +103,31 @@ public class FlashcardRenderer implements EjercicioRenderer {
         });
     }
     
+    /**
+     * Alterna entre mostrar el contenido de la flashcard y su respuesta.
+     * Si se está mostrando la respuesta, cambia al contenido; si se está mostrando el contenido, cambia a la respuesta.
+     */
     private void toggleRespuesta() {
         mostrandoRespuesta = !mostrandoRespuesta;
         contenido.setText(mostrandoRespuesta ? 
             ejercicio.getRespuesta() : ejercicio.getContenido());
     }
 
+    /**
+     * Valida la respuesta del ejercicio.
+     * @return true si la respuesta es válida, false en caso contrario.
+     */
     @Override
     public boolean validarRespuesta() {
         return true; // Las flashcards no se validan automáticamente
     }
     
+    /**
+     * Muestra el resultado de la validación.
+     * En el caso de las flashcards, no es necesario mostrar un resultado ya que no se valida la respuesta.
+     * @param esCorrecta Indica si la respuesta es correcta o no.
+     * @param mensaje Mensaje a mostrar (no utilizado en este caso).
+     */
     @Override
     public void mostrarResultado(boolean esCorrecta, String mensaje) {
         // No necesario para flashcards

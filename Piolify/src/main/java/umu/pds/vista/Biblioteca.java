@@ -21,6 +21,10 @@ import umu.pds.controlador.Piolify;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
+/**
+ * Clase que representa la vista de la biblioteca de cursos del usuario.
+ * Permite al usuario ver los cursos disponibles y realizar importaciones.
+ */
 public class Biblioteca extends JPanel {
     private Usuario usuario;
     private Piolify controlador = Piolify.getUnicaInstancia();

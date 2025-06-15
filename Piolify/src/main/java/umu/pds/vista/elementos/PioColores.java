@@ -2,6 +2,10 @@ package umu.pds.vista.elementos;
 
 import java.awt.Color;
 
+/**
+ * Clase que define los colores utilizados en la interfaz de usuario de la aplicación.
+ * Estos colores se utilizan para mejorar la experiencia visual y la usabilidad de la aplicación.
+ */
 public class PioColores {
 	
     public static final Color AMARILLO_LABEL = new Color(240, 230, 140);

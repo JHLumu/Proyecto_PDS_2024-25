@@ -16,6 +16,14 @@ public class CursoDTO {
  // Constructores
  public CursoDTO() {}
  
+ /**
+  * Constructor para crear un curso con título, descripción, dificultad, autor y lista de bloques.
+  * @param titulo Título del curso.
+  * @param descripcion Descripción del curso.
+  * @param dificultad Dificultad del curso.
+  * @param autor Autor del curso.
+  * @param bloques Lista de bloques asociados al curso.
+  */
  public CursoDTO(String titulo, String descripcion, String dificultad, String autor, List<BloqueDTO> bloques) {
      this.titulo = titulo;
      this.descripcion = descripcion;

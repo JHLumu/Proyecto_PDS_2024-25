@@ -41,6 +41,10 @@ import umu.pds.modelo.Curso;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Logro;
 
+/**
+ * Panel que muestra las estadísticas del usuario actual.
+ * Incluye resumen de actividad, logros obtenidos y progreso en cursos.
+ */
 public class DashboardEstadisticas extends JPanel {
 
     private static final long serialVersionUID = 1L;

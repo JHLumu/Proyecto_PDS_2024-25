@@ -11,7 +11,13 @@ import umu.pds.persistencia.JPAFactoriaDAO;
  */
 public class CursoService {
 
+	/**
+	 * Repositorio de cursos, utilizado para la persistencia de los cursos.
+	 */
 	private final CursoDAO repoCursos;
+	/**
+	 * Catálogo de cursos, utilizado para la gestión en memoria de los cursos.
+	 */
 	private final CatalogoCursos catalogoCurso;
 	
 	/**

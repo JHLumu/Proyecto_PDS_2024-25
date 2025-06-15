@@ -13,6 +13,10 @@ import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
+/**
+ * Clase que representa la vista de amigos en la aplicación Piolify.
+ * Permite ver amigos, solicitudes de amistad y buscar nuevos amigos.
+ */
 public class Amigos extends JPanel {
     private static final long serialVersionUID = 1L;
     

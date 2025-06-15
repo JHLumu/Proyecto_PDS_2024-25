@@ -31,6 +31,10 @@ import umu.pds.utils.ImageUtils;
 import umu.pds.utils.LogroListCellRenderer;
 import umu.pds.vista.elementos.PioColores;
 
+/**
+ * Clase que representa el perfil de un amigo en la aplicación Piolify.
+ * Muestra información detallada del usuario amigo, incluyendo estadísticas y logros.
+ */
 public class PerfilAmigo extends JFrame {
 
     private static final long serialVersionUID = 1L;

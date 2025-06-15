@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
+/**
+ * Clase base para crear un JFrame con bordes redondeados y una barra de título personalizada.
+ * Permite personalizar colores y comportamientos en modo diseño y en tiempo de ejecución.
+ */
 public class BaseRoundedFrame extends JFrame {
     /**
 	 * 

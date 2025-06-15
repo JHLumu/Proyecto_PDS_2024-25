@@ -15,8 +15,10 @@ public abstract class RendererFactory {
      */
     public abstract TipoEjercicio getTipoEjercicio();
     
-    /**
-     * Factory Method estático para obtener la factory correcta
+    /** Método estático para obtener la fábrica de renderers según el tipo de ejercicio.
+     * 
+     * @param tipo Tipo de ejercicio para el que se desea obtener la fábrica de renderers.
+     * @return Una instancia de RendererFactory correspondiente al tipo de ejercicio.
      */
     public static RendererFactory getFactory(TipoEjercicio tipo) {
         switch (tipo) {
