@@ -49,7 +49,8 @@ public class Curso {
 	
 	/**
 	 * Lista de instancias {@link Bloque} que conforman el curso, ordenados según el campo {@code orden} de {@link Bloque}
-	 * recuperados con la estrategia {@code EAGER} (se carga en memoria tanto las instancias  {@link Ejercicio} como sus instancias asociadas).
+	 * recuperados con la estrategia {@code EAGER} (al cargar en memoria una instancia {@link Curso}, también se cargan estas
+	 * instancias {@link Bloque} asociadas).
 	 * Relación uno a muchos: un curso puede contener varios bloques.<br>
 	 * 
 	 */

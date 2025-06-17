@@ -9,11 +9,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+
+/**
+ * Estrategia de importación que procesa la importación de cursos definidos en formato YAML.
+ */
 public class ImportadorYAML implements ImportadorStrategy {
     
-    /* * Manejador de excepciones personalizado para errores de importación. */
+    /** 
+     * Manejador de excepciones personalizado para errores de importación.
+     */
     private final ObjectMapper yamlMapper;
-    /* * Mapeador de cursos para convertir entre DTO y entidad. */
+    /**
+     *  Mapeador de cursos para convertir entre DTO y entidad.
+     */
     private final CursoMapper cursoMapper;
     
     /**

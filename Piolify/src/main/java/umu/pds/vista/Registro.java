@@ -43,7 +43,8 @@ import java.net.URL;
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 
-/* Clase que representa la ventana de registro de usuario en la aplicación Piolify.
+/**
+ *  Clase que representa la ventana de registro de usuario en la aplicación Piolify.
  * Permite a los nuevos usuarios registrarse proporcionando su información personal.
  */
 public class Registro extends JFrame {
@@ -385,7 +386,7 @@ public class Registro extends JFrame {
 	        genero = "Mujer";
 	    }
 	    
-	    // USAR EL CONTROLADOR PARA GUARDAR EN BD
+	
 	    try {
 	        Piolify controlador = Piolify.getUnicaInstancia();
 	        RegistroUsuarioDTO dto = new RegistroUsuarioDTO.Builder()

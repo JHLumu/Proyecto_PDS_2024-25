@@ -45,7 +45,6 @@ class UsuarioTest {
         usuario.setAmistadesEnviadas(amistades);
         usuario.setAmistadesRecibidas(amistades);
         usuario.setBiblioteca(biblioteca);
-        usuario.setCursosCreados(cursosCreados);
         usuario.setEstadisticas(estadisticas);
 
         assertEquals(id, usuario.getId());
@@ -59,7 +58,6 @@ class UsuarioTest {
         assertEquals(amistades, usuario.getAmistadesEnviadas());
         assertEquals(amistades, usuario.getAmistadesRecibidas());
         assertEquals(biblioteca, usuario.getBiblioteca());
-        assertEquals(cursosCreados, usuario.getCursosCreados());
         assertEquals(estadisticas, usuario.getEstadisticas());
     }
     

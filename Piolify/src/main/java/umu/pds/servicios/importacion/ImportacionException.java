@@ -1,9 +1,11 @@
 package umu.pds.servicios.importacion;
 
+
+/**
+ * Excepción defnida para errores transcurridos durante la importación de un curso.
+ */
 public class ImportacionException extends Exception {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
     /**

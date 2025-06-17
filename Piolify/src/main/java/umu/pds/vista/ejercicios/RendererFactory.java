@@ -6,12 +6,12 @@ import umu.pds.utils.EjercicioRenderer;
 public abstract class RendererFactory {
     
     /**
-     * Crea un renderer del tipo correspondiente
+     * Método que crea un renderer del tipo correspondiente.
      */
     public abstract EjercicioRenderer crearRenderer();
     
     /**
-     * Obtiene el tipo de ejercicio que renderiza esta factory
+     * Método que devuelve el tipo de ejercicio asociado a esta Factory.
      */
     public abstract TipoEjercicio getTipoEjercicio();
     

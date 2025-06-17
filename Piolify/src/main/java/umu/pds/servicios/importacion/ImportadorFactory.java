@@ -4,11 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Fábrica encargada de la instanciación de implementaciones de {@link ImportadorStrategy}.
+ */
 public class ImportadorFactory {
     
-    /* Mapa que asocia extensiones de archivo a sus correspondientes estrategias de importación. */
+    /**
+     *  Mapa que asocia extensiones de archivo a sus correspondientes estrategias de importación.
+     */
     private final Map<String, ImportadorStrategy> importadores;
-    /* Mapeador de cursos para convertir entre DTO y entidad. */
+    
+    /**
+     *  Mapeador de cursos para convertir entre DTO y entidad.
+     */
     private final CursoMapper cursoMapper;
     
     /**

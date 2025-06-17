@@ -4,14 +4,12 @@ import umu.pds.modelo.TipoEjercicio;
 import umu.pds.utils.EjercicioRenderer;
 import umu.pds.utils.OpcionMultipleRenderer;
 
-/* * Clase que representa una fábrica de renderers para ejercicios de tipo Opción Múltiple.
- * Extiende RendererFactory para crear instancias de OpcionMultipleRenderer.
+/* Clase que representa una fábrica de renderers para ejercicios de tipo Opción Múltiple.
  */
 public class OpcionMultipleRendererFactory extends RendererFactory {
     
     /**
-     * Constructor por defecto.
-     * Inicializa la fábrica de renderers para ejercicios de tipo Opción Múltiple.
+     * {@inheritDoc}
      */
     @Override
     public EjercicioRenderer crearRenderer() {
@@ -19,9 +17,9 @@ public class OpcionMultipleRendererFactory extends RendererFactory {
     }
     
     /**
-     * Método que devuelve el tipo de ejercicio asociado a este renderer.
+     * {@inheritDoc}
      * 
-     * @return TipoEjercicio.OPCION_MULTIPLE
+     * @return {@code TipoEjercicio.OPCION_MULTIPLE}
      */
     @Override
     public TipoEjercicio getTipoEjercicio() {

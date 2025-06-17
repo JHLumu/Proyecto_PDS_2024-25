@@ -4,6 +4,9 @@ import umu.pds.modelo.Curso;
 import java.io.InputStream;
 import java.util.List;
 
+/**
+ * Interfaz que define la estrategia de importación de un curso, según su formato.
+ */
 public interface ImportadorStrategy {
     /**
      * Importa un curso desde un InputStream.

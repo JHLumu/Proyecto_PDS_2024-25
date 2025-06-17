@@ -30,7 +30,7 @@ import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
 
-/* * Clase que representa la ventana principal de la aplicación Piolify.
+/** Clase que representa la ventana principal de la aplicación Piolify.
  * Contiene un panel de navegación y un panel central con CardLayout
  * para gestionar diferentes vistas (estadísticas, cursos, perfil, amigos).
  */

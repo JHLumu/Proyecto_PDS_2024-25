@@ -17,41 +17,96 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Clase que representa a un usuario registrado en el sistema. Entidad persistente.
+ */
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
 	
+	/**
+	 * Identificador único del usuario. Utilizado para persistencia.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	/**
+	 * Nombre real del usuario.
+	 */
 	private String nombre;
+	
+	/**
+	 * Apellidos del usuario.
+	 */
 	private String apellidos;
+	
+	/**
+	 * Genero del usuario. Sólo puede ser Hombre o Mujer.
+	 */
 	private String genero;
+	
+	/**
+	 * Correo electrónico del usuario. Único para cada usuario.
+	 */
 	private String email;
+	
+	/**
+	 * Contraseña del usuario.
+	 */
 	private String password;
+	
+	/**
+	 * Ruta de la imagen de perfil del usuario.
+	 */
 	private String imagenPerfil;
 	
-	// Relaciones
+	/**
+	 * Lista de instancias {@link Amistad} enviadas por el usuario
+	 * ,recuperados con la estrategia {@code LAZY} (al cargar en memoria una instancia {@link Usuario}, se cargarán en memoria
+	 * estas instancias {@link Amistad} asociadas sólo cuando sea necesario).
+	 * Relación uno a muchos: un usuario puede enviar varias solicitudes de amistad.
+	 */
 	@OneToMany(mappedBy = "usuario1", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Amistad> amistadesEnviadas = new HashSet<>();
 
+	/**
+	 * Lista de instancias {@link Amistad} recibidas por el usuario, recuperados con la estrategia {@code LAZY}
+	 * (al cargar en memoria una instancia {@link Usuario}, se cargarán en memoria
+	 * estas instancias {@link Amistad} asociadas sólo cuando sea necesario).
+	 * Relacíón uno a muchos: un usuario puede recibir varias solicitudes de amistad. 
+	 */
 	@OneToMany(mappedBy = "usuario2", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Amistad> amistadesRecibidas = new HashSet<>();
 
-    
+    /**
+     * Lista de instancias {@link Logro} desbloqueados por el usuario, recuperados con la estrategia
+     * {@code EAGER} (al cargar en memoria una instancia {@link Usuario}, se cargarán también estas
+     * instancias {@link Logro} asociadas). 
+     * Relación uno a muchos: un usuario puede tener desbloqueado varios logros.
+     */
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Logro> logros = new ArrayList<>();
    
+    /**
+     * Instancia {@link Estadisticas} asociadas al usuario, recuperado con la estrategia {@code EAGER} 
+     * (al cargar una instancia {@link Usuario}, se carga también su instancia {@link Estrategia} asociada).
+     * Relación uno a uno.
+     */
 	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Estadisticas estadisticas;
 	
-    private List<String> cursosCreados = new ArrayList<>();
-
+	/**
+	 * Lista de instancias {@link Curso} que el usuario tiene en su biblioteca interna, recuperados con la 
+	 * estrategia {@code EAGER} (al cargar una instancia {@link Usuario}, se cargan también estas instancias
+	 * {@link Curso} asociadas.
+	 */
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Curso> biblioteca = new ArrayList<>(); // Cursos que el usuario tiene en su biblioteca
+    private List<Curso> biblioteca = new ArrayList<>(); 
 
+    
     /**
-     * Constructor por defecto para crear un usuario
+     * Constructor necesario para JPA.
      */
     public Usuario() {
 
@@ -157,13 +212,6 @@ public class Usuario {
 		this.biblioteca = biblioteca;
 	}
     
-	public List<String> getCursosCreados() {
-		return cursosCreados;
-	}
-	
-	public void setCursosCreados(List<String> cursosCreados) {
-		this.cursosCreados = cursosCreados;
-	}
 
 	public Set<Amistad> getAmistadesEnviadas() {
 		return amistadesEnviadas;
@@ -240,16 +288,36 @@ public class Usuario {
 	        .collect(Collectors.toList());
 	}
 
+	/**
+	 * Método que comprueba si este usuario tiene un logro en específico desbloqueado.
+	 * @param tipo Constante {@link TipoLogro} (logro en específico).
+	 * @return {@code true} si el usuario tiene dicho logro desbloqueado, {@code false} en caso contrario.
+	 */
 	public boolean tieneLogroDesbloqueado(TipoLogro tipo) {
 		
 		return this.logros.stream().anyMatch(l -> l.getTipo().equals(tipo));
 	}
 
+	/**
+	 * Método que desbloquea un logro en específico para este usuario.
+	 * @param tipo Constante {@link TipoLogro} (logro en específico).
+	 */
 	public void desbloquearLogro(TipoLogro tipo) {
 		Logro logro = new Logro( this, tipo);
 		this.logros.add(logro);
 	}
+	
+	/**
+	 * Método que desbloquea un logro en específico para este usuario.
+	 * @param Instancia {@link Logro} desbloqueado.
+	 */
+	public void desbloquearLogro(Logro logro) {
+		this.logros.add(logro);
+	}
 
+	/**
+	 * Método que devuelve el número de cursos empezados por el usuario.
+	 */
 	public int getCursosComenzados() {
 		
 		return this.biblioteca.size();

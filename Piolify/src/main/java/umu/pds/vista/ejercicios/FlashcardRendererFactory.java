@@ -4,14 +4,12 @@ import umu.pds.modelo.TipoEjercicio;
 import umu.pds.utils.EjercicioRenderer;
 import umu.pds.utils.FlashcardRenderer;
 
-/* * Clase que representa una fábrica de renderers para ejercicios de tipo Flashcard.
- * Extiende RendererFactory para crear instancias de FlashcardRenderer.
+/* Clase que representa una fábrica de renderers para ejercicios de tipo Flashcard.
  */
 public class FlashcardRendererFactory extends RendererFactory {
     
     /**
-     * Constructor por defecto.
-     * Inicializa la fábrica de renderers para ejercicios de tipo Flashcard.
+     * {@inheritDoc}
      */
     @Override
     public EjercicioRenderer crearRenderer() {
@@ -19,9 +17,9 @@ public class FlashcardRendererFactory extends RendererFactory {
     }
     
     /**
-     * Método que devuelve el tipo de ejercicio asociado a este renderer.
+     * {@inheritDoc}
      * 
-     * @return TipoEjercicio.FLASHCARD
+     * @return {@code TipoEjercicio.FLASHCARD}
      */
     @Override
     public TipoEjercicio getTipoEjercicio() {

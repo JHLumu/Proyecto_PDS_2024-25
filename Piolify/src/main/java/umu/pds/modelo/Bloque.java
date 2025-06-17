@@ -41,14 +41,14 @@ public class Bloque {
 	
 	/**
 	 * Lista de instancias {@link Ejercicio} pertenecientes al bloque, ordenados
-	 * según el campo {@code orden} de {@link Ejercicio}, recuperados con la estrategia {@code EAGER} (se carga en 
-	 * memoria tanto las instancias  {@link Ejercicio} como sus instancias asociadas).
+	 * según el campo {@code orden} de {@link Ejercicio}, recuperados con la estrategia {@code EAGER} (al cargar 
+	 * en memoria una instancia {@link Bloque}, tambien se cargan estas instancias {@link Ejercicio} asociadas).
 	 * Relación uno a muchos: un bloque puede contener varios ejercicios.
 	 */
     @OneToMany(mappedBy = "bloque", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("orden ASC")
 	private List<Ejercicio> ejercicios;
-	
+
     /**
      * Instancia {@link Curso} al que pertenece el bloque.
      * Relación muchos a uno: varios bloques pertenecen al mismo curso.
@@ -103,13 +103,14 @@ public class Bloque {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
-	
+
 	public int getOrden() {
 		return orden;
 	}
-	
+
 	public void setOrden(int orden) {
 		this.orden = orden;
 	}
+	
 	
 }

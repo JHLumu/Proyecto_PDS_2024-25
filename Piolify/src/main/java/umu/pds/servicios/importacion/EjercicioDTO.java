@@ -2,19 +2,34 @@ package umu.pds.servicios.importacion;
 
 import java.util.List;
 
+/**
+ *  Clase destinada a transportar la información recogida en la importación de un curso ( Data Transfer Object).
+ */
 public class EjercicioDTO {
     
-    /* Tipo de ejercicio. Puede ser "OPCION_MULTIPLE", "COMPLETAR_HUECOS" o "FLASHCARD". */
+    /**
+     *  Tipo de ejercicio. Puede ser "OPCION_MULTIPLE", "COMPLETAR_HUECOS" o "FLASHCARD".
+     */
     private String tipo;
-    /* Contenido del ejercicio, que puede ser una pregunta, texto o imagen. */
+    /**
+     *  Contenido del ejercicio, que puede ser una pregunta, texto o imagen.
+     */
     private String contenido;
-    /* Respuesta esperada del ejercicio. Puede ser una respuesta única o una lista de respuestas separadas por comas. */
+    /**
+     *  Respuesta esperada del ejercicio. Puede ser una respuesta única o una lista de respuestas separadas por comas.
+     */
     private String respuesta;
-    /* Dificultad del ejercicio, representada por un número entero. */
+    /**
+     * Dificultad del ejercicio, representada por un número entero.
+     */
     private int dificultad;
-    /* Orden del ejercicio dentro de un bloque o curso. */
+    /**
+     * Orden del ejercicio dentro de un bloque o curso.
+     */
     private int orden;
-    /* Opciones específicas para ejercicios de opción múltiple. */
+    /**
+     *  Opciones específicas para ejercicios de opción múltiple.
+     */
     private List<String> opciones;
     
     /**
@@ -57,7 +72,7 @@ public class EjercicioDTO {
     public List<String> getOpciones() { return opciones; }
 
     /**
-     * Establece las propiedades específicas del ejercicio, como las opciones para ejercicios de opción múltiple.
+     * Método que establece las propiedades específicas del ejercicio, como las opciones para ejercicios de opción múltiple.
      * @param propiedadesEspecificas Lista de opciones específicas del ejercicio.
      */
     public void setPropiedadesEspecificas(List<String> propiedadesEspecificas) { 

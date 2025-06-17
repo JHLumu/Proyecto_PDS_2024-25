@@ -2,6 +2,7 @@ package umu.pds.controlador;
 
 
 import umu.pds.modelo.Estadisticas;
+import umu.pds.modelo.Logro;
 import umu.pds.modelo.TipoLogro;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.UsuarioService;
@@ -209,6 +210,10 @@ public class UsuarioController {
 	        }
 	    }
 	    
+	}
+	
+	public void desbloquearLogro(Usuario usuario, TipoLogro logro) {
+		this.usuarioService.agregarLogro(usuario, logro);
 	}
 
 	

@@ -15,13 +15,36 @@ import jakarta.persistence.Table;
 @Table(name = "estadisticas")
 public class Estadisticas {
 	
+	/**
+	 * Identificador único de las estadísticas. Utilizado para persistencia.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	/**
+	 * Tiempo total, expresado en segundos, acumulado en todas las sesiones completadas por el usuario.
+	 */
 	private int tiempoTotal;
+	
+	/**
+	 * Racha de días consecutivos en la que el usuario ha completado al menos una sesión.
+	 */
 	private int rachaDias;
+	
+	/**
+	 * Mejor racha de días consecutivas en la que el usuario ha completado al menos una sesión.
+	 */
 	private int mejorRacha;
+	
+	/**
+	 * Número total de ejercicios completados por el usuario.
+	 */
 	private int totalEjerciciosCompletados;
+	
+	/**
+	 * Precisión de aciertos del usuario.
+	 */
 	private double precision;
 	
 	@OneToOne

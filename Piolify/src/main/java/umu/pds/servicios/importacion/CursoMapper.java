@@ -5,6 +5,9 @@ import umu.pds.modelo.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase encargada de la conversión entre objetos DTO a entidades del dominio para cursos, ejercicios y bloques.
+ */
 public class CursoMapper {
     
     /**
@@ -164,11 +167,5 @@ public class CursoMapper {
         return new EjercicioFlashcard();
     }
     
-    
-    // Métodos para conversión inversa (de entidad a DTO) si fuera necesario
-    public CursoDTO convertirADTO(Curso curso) {
-        // Implementar si necesitas exportar también
-        // Por ahora no implementado para mantener el foco en importación
-        throw new UnsupportedOperationException("Conversión a DTO no implementada aún");
-    }
+   
 }

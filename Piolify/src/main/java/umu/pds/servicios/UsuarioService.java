@@ -12,6 +12,7 @@ import umu.pds.modelo.Curso;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.EstadoAmistad;
 import umu.pds.modelo.Logro;
+import umu.pds.modelo.TipoLogro;
 import umu.pds.modelo.Usuario;
 import umu.pds.persistencia.AmistadDAO;
 import umu.pds.persistencia.JPAFactoriaDAO;
@@ -125,12 +126,11 @@ public class UsuarioService {
      * @param usuario Instancia {@link Usuario} que ha obtenido el logro.
      * @param logro Instancia {@link Logro} a añadir.
      */
-    public void agregarLogro(Usuario usuario, Logro logro) {
+    public void agregarLogro(Usuario usuario, TipoLogro logro) {
 		if (usuario == null || logro == null) throw new IllegalArgumentException("Usuario o logro no pueden ser nulos");
-		usuario.getLogros().add(logro);
+		usuario.desbloquearLogro(logro);
 		this.modificarUsuario(usuario);
 	}
-
     
     /**
      * Método que recupera las estádisticas de un usuario.

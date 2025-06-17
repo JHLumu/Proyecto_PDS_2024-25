@@ -147,7 +147,6 @@ public class ImportacionController {
      * @param usuario Instancia {@link Usuario} que realiza la importación.
      */
     private void procesarCursosImportados(List<Curso> cursos, Usuario usuario) {
-        
         // Crear una copia de la biblioteca para trabajar localmente
         List<Curso> bibliotecaTemporal = new ArrayList<>(usuario.getBiblioteca());
         int cursosAñadidos = 0;

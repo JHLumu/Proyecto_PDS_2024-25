@@ -3,6 +3,7 @@ package umu.pds.servicios;
 import java.util.ArrayList;
 import java.util.List;
 
+import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.TipoLogro;
 import umu.pds.modelo.Usuario;
@@ -55,7 +56,8 @@ public class ServicioLogros {
      * @param tipo Constante {@link TipoLogro}. Logro definido en el sistema que se desbloquea. 
      */
     public void desbloquearLogro(Usuario usuario, TipoLogro tipo) {
-        usuario.desbloquearLogro(tipo);
+    	System.out.println("Logro desbloqueado");
+       Piolify.getUnicaInstancia().getUsuarioController().desbloquearLogro(usuario, tipo);
     }
 
     /**

@@ -6,13 +6,11 @@ import umu.pds.utils.RellenarHuecosRenderer;
 
 /**
  * Clase que representa una fábrica de renderers para ejercicios de tipo Rellenar Huecos.
- * Extiende RendererFactory para crear instancias de RellenarHuecosRenderer.
  */
 public class RellenarHuecosRendererFactory extends RendererFactory {
     
     /**
-     * Constructor por defecto.
-     * Inicializa la fábrica de renderers para ejercicios de tipo Rellenar Huecos.
+     * {@inheritDoc}
      */
     @Override
     public EjercicioRenderer crearRenderer() {
@@ -20,9 +18,8 @@ public class RellenarHuecosRendererFactory extends RendererFactory {
     }
     
     /**
-     * Método que devuelve el tipo de ejercicio asociado a este renderer.
-     * 
-     * @return TipoEjercicio.COMPLETAR_HUECOS
+     * {@inheritDoc}
+     * @return {@code TipoEjercicio.COMPLETAR_HUECOS}
      */
     @Override
     public TipoEjercicio getTipoEjercicio() {

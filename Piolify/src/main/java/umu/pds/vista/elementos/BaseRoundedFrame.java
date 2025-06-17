@@ -13,9 +13,7 @@ import java.awt.geom.RoundRectangle2D;
  * Permite personalizar colores y comportamientos en modo diseño y en tiempo de ejecución.
  */
 public class BaseRoundedFrame extends JFrame {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	protected static final int CORNER_RADIUS = 30;
     private boolean designMode = false;
@@ -26,13 +24,15 @@ public class BaseRoundedFrame extends JFrame {
     private Color titleBarColor = PioColores.BLANCO;
     private Color closeButtonColor = PioColores.NEGRO;
 
-    // Constructor para WindowBuilder
+    /**
+     *  Constructor para WindowBuilder.
+     */
     public BaseRoundedFrame() {
         this.designMode = true;
         initComponents();
     }
 
-    // Constructor normal
+    // Constructor por defecto.
     public BaseRoundedFrame(String title) {
         super(title);
         initComponents();

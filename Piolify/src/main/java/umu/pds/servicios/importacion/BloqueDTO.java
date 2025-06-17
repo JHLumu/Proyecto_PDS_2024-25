@@ -2,15 +2,27 @@ package umu.pds.servicios.importacion;
 
 import java.util.List;
 
+
+/**
+ *  Clase destinada a transportar la información recogida en la importación de un curso ( Data Transfer Object).
+ */
 public class BloqueDTO {
 
-    /* Título del bloque. */
+    /**
+     *  Título del bloque.
+     */
     private String titulo;
-    /* Descripción del bloque. */
+    /** 
+     * Descripción del bloque. 
+     */
     private String descripcion;
-    /* Orden del bloque en el curso. */
+    /**
+     *  Orden del bloque en el curso.
+     */
     private int orden;
-    /* Lista de ejercicios asociados al bloque. */
+    /**
+     *  Lista de ejercicios asociados al bloque.
+     */
     private List<EjercicioDTO> ejercicios;
     
     /**
