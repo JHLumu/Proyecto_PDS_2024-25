@@ -29,6 +29,19 @@ public class CatalogoUsuarios {
 			cargarCatalogo();		
 		}
 		
+		
+		/**
+		 * Constructor para inyección de dependencias (para pruebas unitarias).
+		 * @param usuarioDAO Instancia {@link UsuarioDAO} para la persistencia de
+		 * usuarios.
+		 */
+		public CatalogoUsuarios(UsuarioDAO usuarioDAO) {
+			this.usuarios = new HashMap<String, Usuario>();
+			this.usuarioDAO = usuarioDAO;
+			cargarCatalogo();
+		}
+
+
 		/**
 		 * Método estático para obtener la instancia única del catálogo de usuarios
 		 * @return Instancia del catálogo de usuarios
