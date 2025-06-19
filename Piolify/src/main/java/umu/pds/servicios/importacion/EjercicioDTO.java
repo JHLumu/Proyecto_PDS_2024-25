@@ -71,6 +71,12 @@ public class EjercicioDTO {
     
     public List<String> getOpciones() { return opciones; }
 
+	public void setOpciones(List<String> opciones) {
+	    this.opciones = opciones;
+	}
+
+    
+
     /**
      * Método que establece las propiedades específicas del ejercicio, como las opciones para ejercicios de opción múltiple.
      * @param propiedadesEspecificas Lista de opciones específicas del ejercicio.
