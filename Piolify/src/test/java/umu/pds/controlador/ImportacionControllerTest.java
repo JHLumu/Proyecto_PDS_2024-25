@@ -51,17 +51,23 @@ public class ImportacionControllerTest {
     }
 	
 	static List<Arguments> casosBasicos() {
-		Curso curso = mock(Curso.class);
+		
+		Curso curso1 = mock(Curso.class);
+		Curso curso2 = mock(Curso.class);
 		Bloque bloque = mock(Bloque.class); 
 		Ejercicio ejercicio = mock(Ejercicio.class);
-		when(curso.getTitulo()).thenReturn("Mock");
+		when(curso1.getTitulo()).thenReturn("Mock");
+		when(curso2.getTitulo()).thenReturn("Mock");
 		when(bloque.getEjercicios()).thenReturn(List.of(ejercicio));
-		when(curso.getBloques()).thenReturn(List.of(bloque));
+		when(curso1.getBloques()).thenReturn(List.of(bloque));
+		when(curso2.getBloques()).thenReturn(List.of(bloque));
 		return List.of(
 				Arguments.of(true, Collections.emptyList()),
-				Arguments.of(true, List.of(curso)),
+				Arguments.of(true, List.of(curso1)),
+				Arguments.of(true, List.of(curso1, curso2)),
 				Arguments.of(false, Collections.emptyList()),
-				Arguments.of(false, List.of(curso))
+				Arguments.of(false, List.of(curso1)),
+				Arguments.of(false, List.of(curso1, curso2))
 				);
 		
 		
@@ -86,7 +92,7 @@ public class ImportacionControllerTest {
 	void testImportarCursosDesdeArchivo(boolean res, List<Curso> cursos) throws ImportacionException {
 		ResultadoImportacion resultado = inicializarResultadoImportacion(res, cursos);
 		when(servicioImportacion.importarDesdeArchivo(rutaArchivo)).thenReturn(resultado);
-		when(usuario.getBiblioteca()).thenReturn(cursos);
+		when(usuario.getBiblioteca()).thenReturn(Collections.emptyList());
 		
 		assertEquals(res, importacionController.importarCursosDesdeArchivo(rutaArchivo, usuario));
 		verify(servicioImportacion).importarDesdeArchivo(rutaArchivo);

@@ -158,7 +158,6 @@ public class ImportacionController {
             // Verificar contra la biblioteca temporal (no la original)
             boolean yaExisteEnBiblioteca = bibliotecaTemporal.stream()
                 .anyMatch(cursoExistente -> 
-                    cursoExistente.getTitulo() != null && 
                     cursoExistente.getTitulo().trim().equalsIgnoreCase(curso.getTitulo().trim()));
             
             if (!yaExisteEnBiblioteca) {
