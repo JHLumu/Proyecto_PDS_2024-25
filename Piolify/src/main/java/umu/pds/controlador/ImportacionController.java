@@ -39,22 +39,31 @@ public class ImportacionController {
      */
     private final CursoService cursoService;
     
+    
+    /**
+     * Instancia {@link Piolify}, definido para testing.
+     */
+    private final Piolify piolify;
+    
     /**
      * Constructor por defecto. Inicializa los serivicos de importación y gestión de cursos.
      */
     public ImportacionController() {
         this.servicioImportacion = new ServicioImportacion();
         this.cursoService = new CursoService();
+        this.piolify = Piolify.getUnicaInstancia();
     }
     
     /**
      * Constructor para inyección de dependencias.
      * @param servicioImportacion Servicio de importación
      * @param cursoService Servicio de gestión de cursos
+     * @param piolify Controlador principal de la aplicación
      */
-	public ImportacionController(ServicioImportacion servicioImportacion, CursoService cursoService) {
+	public ImportacionController(ServicioImportacion servicioImportacion, CursoService cursoService, Piolify piolify) {
 		this.servicioImportacion = servicioImportacion;
 		this.cursoService = cursoService;
+		this.piolify = piolify;
 	}
 	
 	/**
@@ -180,13 +189,13 @@ public class ImportacionController {
         // Solo guardar y verificar logros si se añadieron cursos nuevos
         if (cursosAñadidos > 0) {
             // Guardar el usuario actualizado con los nuevos cursos
-            Piolify.getUnicaInstancia().getUsuarioController().modificarUsuario(usuario);
+           this.piolify.getUsuarioController().modificarUsuario(usuario);
             
             // Limpiar duplicados antes de verificar logros
             limpiarDuplicadosEnBiblioteca(usuario);
             
             // Verificar logros con el número correcto
-            Piolify.getUnicaInstancia().getUsuarioController().verificarYDesbloquearLogros(usuario);
+            this.piolify.getUsuarioController().verificarYDesbloquearLogros(usuario);
             
             logger.info("Se añadieron " + cursosAñadidos + " cursos nuevos a la biblioteca");
         } else {
@@ -218,7 +227,7 @@ public class ImportacionController {
         // Si había duplicados, actualizar
         if (cursosLimpios.size() != cursosOriginales.size()) {
             usuario.setBiblioteca(cursosLimpios);
-            Piolify.getUnicaInstancia().getUsuarioController().modificarUsuario(usuario);
+            this.piolify.getUsuarioController().modificarUsuario(usuario);
             
             logger.info("Se eliminaron " + (cursosOriginales.size() - cursosLimpios.size()) + 
                        " cursos duplicados de la biblioteca");

@@ -37,8 +37,9 @@ public class ImportacionControllerTest {
 	
 	private Usuario usuario;
 	
-	
 	private String rutaArchivo;
+	
+	private Piolify piolify;
 	
 	@BeforeEach
 	  void setUp() {
@@ -46,7 +47,8 @@ public class ImportacionControllerTest {
 		usuario = mock(Usuario.class);
 		servicioImportacion = mock(ServicioImportacion.class);
 		cursoService = mock(CursoService.class);
-		importacionController = new ImportacionController(servicioImportacion, cursoService);
+		piolify = mock (Piolify.class);
+		importacionController = new ImportacionController(servicioImportacion, cursoService, piolify);
 		
     }
 	
@@ -57,7 +59,7 @@ public class ImportacionControllerTest {
 		Bloque bloque = mock(Bloque.class); 
 		Ejercicio ejercicio = mock(Ejercicio.class);
 		when(curso1.getTitulo()).thenReturn("Mock");
-		when(curso2.getTitulo()).thenReturn("Mock");
+		when(curso2.getTitulo()).thenReturn("Mock2");
 		when(bloque.getEjercicios()).thenReturn(List.of(ejercicio));
 		when(curso1.getBloques()).thenReturn(List.of(bloque));
 		when(curso2.getBloques()).thenReturn(List.of(bloque));
@@ -79,6 +81,7 @@ public class ImportacionControllerTest {
 	
 	private ResultadoImportacion inicializarResultadoImportacion(boolean res, List<Curso> cursos) {
 		ResultadoImportacion resultado = mock(ResultadoImportacion.class);
+		
 		when(resultado.fueExitoso()).thenReturn(res);
 		when(resultado.getCursos()).thenReturn(cursos);
 		when(resultado.getCantidadImportada()).thenReturn(cursos.size());
@@ -91,10 +94,14 @@ public class ImportacionControllerTest {
 	@MethodSource("casosBasicos")
 	void testImportarCursosDesdeArchivo(boolean res, List<Curso> cursos) throws ImportacionException {
 		ResultadoImportacion resultado = inicializarResultadoImportacion(res, cursos);
+		UsuarioController usuarioController = mock(UsuarioController.class);
+		
+		when(piolify.getUsuarioController()).thenReturn(usuarioController);
 		when(servicioImportacion.importarDesdeArchivo(rutaArchivo)).thenReturn(resultado);
 		when(usuario.getBiblioteca()).thenReturn(Collections.emptyList());
 		
 		assertEquals(res, importacionController.importarCursosDesdeArchivo(rutaArchivo, usuario));
+		if (res) verify(cursoService, times(cursos.size())).guardarCurso(any());
 		verify(servicioImportacion).importarDesdeArchivo(rutaArchivo);
 		verifyNoMoreInteractions(servicioImportacion, cursoService);
 	}
@@ -105,11 +112,15 @@ public class ImportacionControllerTest {
 	void testImportarCursoDesdeStream(boolean res, List<Curso> cursos) throws ImportacionException {
 		ResultadoImportacion resultado = inicializarResultadoImportacion(res, cursos);
 		InputStream stream = mock(InputStream.class);
+		UsuarioController usuarioController = mock(UsuarioController.class);
+
+		when(piolify.getUsuarioController()).thenReturn(usuarioController);
 		when(servicioImportacion.importarDesdeStream(stream, resultado.getFormatoUtilizado())).thenReturn(resultado);
-		when(usuario.getBiblioteca()).thenReturn(cursos);
+		when(usuario.getBiblioteca()).thenReturn(Collections.emptyList());
 		
 		assertEquals(res, importacionController.importarCursosDesdeStream(stream, resultado.getFormatoUtilizado(), usuario));
 		verify(servicioImportacion).importarDesdeStream(stream, resultado.getFormatoUtilizado());
+		if (res) verify(cursoService, times(cursos.size())).guardarCurso(any());
 		verifyNoMoreInteractions(servicioImportacion, cursoService);
 	}
 
