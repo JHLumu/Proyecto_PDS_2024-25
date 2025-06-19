@@ -4,6 +4,8 @@ import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+
 import java.util.List;
 
 /**
@@ -103,6 +105,24 @@ public class AdaptadorUsuarioDAO implements UsuarioDAO{
 			em.close();
 		}
 	}
-
 	
+	/**
+     * {@inheritDoc}
+     */
+	public Usuario recuperarUsuarioPorEmailConLogrosYEstadisticas(String email) {
+	    EntityManager em = emf.createEntityManager();
+	    try {
+	        return em.createQuery(
+	            "SELECT u FROM Usuario u " +
+	            "LEFT JOIN FETCH u.logros " +
+	            "LEFT JOIN FETCH u.estadisticas " +
+	            "WHERE u.email = :email", Usuario.class)
+	            .setParameter("email", email)
+	            .getSingleResult();
+	    } catch (NoResultException e) {
+	        return null;
+	    } finally {
+	        em.close();
+	    }
+	}
 }

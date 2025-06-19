@@ -1,5 +1,6 @@
 package umu.pds.persistencia;
 
+
 /**
  * Factoría abstracta para la creación de los diferentes DAO (Data Access Object) del sistema.
  */

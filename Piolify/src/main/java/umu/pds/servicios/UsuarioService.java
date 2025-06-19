@@ -126,10 +126,14 @@ public class UsuarioService {
      * @param usuario Instancia {@link Usuario} que ha obtenido el logro.
      * @param logro Instancia {@link Logro} a añadir.
      */
-    public void agregarLogro(Usuario usuario, TipoLogro logro) {
-		if (usuario == null || logro == null) throw new IllegalArgumentException("Usuario o logro no pueden ser nulos");
+	public void agregarLogro(Usuario usuario, TipoLogro logro) {
+		if (usuario == null || logro == null) {
+			throw new IllegalArgumentException("Usuario o logro no pueden ser nulos");
+		}
+		
 		usuario.desbloquearLogro(logro);
-		this.modificarUsuario(usuario);
+		repoUsuarios.modificarUsuario(usuario);
+		catalogoUsuarios.actualizarUsuario(usuario);
 	}
     
     /**

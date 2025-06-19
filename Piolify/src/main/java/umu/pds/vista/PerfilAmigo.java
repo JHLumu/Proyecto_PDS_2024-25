@@ -1,40 +1,21 @@
 package umu.pds.vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
+import java.net.MalformedURLException;
 import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Logro;
 import umu.pds.modelo.Usuario;
+import umu.pds.persistencia.AdaptadorUsuarioDAO;
+import umu.pds.persistencia.FactoriaDAO;
+import umu.pds.persistencia.JPAFactoriaDAO;
+import umu.pds.persistencia.UsuarioDAO;
 import umu.pds.utils.ImageUtils;
 import umu.pds.utils.LogroListCellRenderer;
 import umu.pds.vista.elementos.PioColores;
 
-/**
- * Clase que representa el perfil de un amigo en la aplicación Piolify.
- * Muestra información detallada del usuario amigo, incluyendo estadísticas y logros.
- */
 public class PerfilAmigo extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -48,61 +29,60 @@ public class PerfilAmigo extends JFrame {
     private JLabel lblMejorRacha;
     private JLabel lblTiempo;
     private JLabel lblEjercicios;
-    private JPanel panelLogros;
+    private JList<Logro> listaLogros;
+    private DefaultListModel<Logro> listModelLogros;
 
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    PerfilAmigo frame = new PerfilAmigo();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                PerfilAmigo frame = new PerfilAmigo();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    /**
-     * Constructor para WindowBuilder (sin parámetros)
-     */
     public PerfilAmigo() {
         initComponents();
     }
-    
-    /**
-     * Constructor para usar con un amigo real
-     */
+
     public PerfilAmigo(Usuario amigo) {
-        this.amigo = amigo;
+        FactoriaDAO factoria = JPAFactoriaDAO.getInstancia();
+        UsuarioDAO usuarioDAO = factoria.getUsuarioDAO();
+        if (usuarioDAO instanceof AdaptadorUsuarioDAO) {
+            this.amigo = ((AdaptadorUsuarioDAO) usuarioDAO)
+                .recuperarUsuarioPorEmailConLogrosYEstadisticas(amigo.getEmail());
+        } else {
+            try {
+                this.amigo = usuarioDAO.recuperarUsuario(amigo.getId());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
         initComponents();
         cargarDatosAmigo();
     }
 
-    /**
-     * Create the frame.
-     */
     private void initComponents() {
         setTitle("Perfil de Amigo");
         setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilAmigo.class.getResource("/mascota.png")));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 600, 500);
+        setBounds(100, 100, 762, 638);
         setLocationRelativeTo(null);
-        
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setBackground(PioColores.BLANCO);
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
 
+        // Panel superior con foto y datos básicos
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(PioColores.AMARILLO_LABEL);
         panelSuperior.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         contentPane.add(panelSuperior, BorderLayout.NORTH);
-        
+
         GridBagLayout gbl_panelSuperior = new GridBagLayout();
         gbl_panelSuperior.columnWidths = new int[]{120, 20, 0, 0};
         gbl_panelSuperior.rowHeights = new int[]{120, 0};
@@ -110,9 +90,8 @@ public class PerfilAmigo extends JFrame {
         gbl_panelSuperior.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         panelSuperior.setLayout(gbl_panelSuperior);
 
-        lblFoto = new JLabel("");
+        lblFoto = new JLabel("Foto");
         lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
-        lblFoto.setText("Foto");
         GridBagConstraints gbc_lblFoto = new GridBagConstraints();
         gbc_lblFoto.insets = new Insets(0, 0, 0, 5);
         gbc_lblFoto.gridx = 0;
@@ -132,7 +111,7 @@ public class PerfilAmigo extends JFrame {
         lblNombre.setFont(new Font("Arial", Font.BOLD, 18));
         lblNombre.setForeground(PioColores.GRIS_TEXT);
         panelInfo.add(lblNombre);
-        
+
         panelInfo.add(Box.createVerticalStrut(10));
 
         lblEmail = new JLabel("");
@@ -145,10 +124,11 @@ public class PerfilAmigo extends JFrame {
         lblGenero.setForeground(PioColores.GRIS_TEXT);
         panelInfo.add(lblGenero);
 
+        // Panel central con estadísticas y logros
         JPanel panelCentral = new JPanel();
         panelCentral.setBackground(PioColores.BLANCO);
         contentPane.add(panelCentral, BorderLayout.CENTER);
-        
+
         GridBagLayout gbl_panelCentral = new GridBagLayout();
         gbl_panelCentral.columnWidths = new int[]{0, 20, 0, 0};
         gbl_panelCentral.rowHeights = new int[]{0, 0};
@@ -156,12 +136,13 @@ public class PerfilAmigo extends JFrame {
         gbl_panelCentral.rowWeights = new double[]{1.0, Double.MIN_VALUE};
         panelCentral.setLayout(gbl_panelCentral);
 
+        // Panel de estadísticas con GridBagLayout
         JPanel panelEstadisticas = new JPanel();
         panelEstadisticas.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(PioColores.GRIS_TEXT), 
-            "Estadísticas", 
-            0, 0, 
-            new Font("Arial", Font.BOLD, 14), 
+            BorderFactory.createLineBorder(PioColores.GRIS_TEXT),
+            "Estadísticas",
+            0, 0,
+            new Font("Tahoma", Font.BOLD, 14),
             PioColores.GRIS_TEXT));
         panelEstadisticas.setBackground(PioColores.GRIS_PANEL);
         GridBagConstraints gbc_panelEstadisticas = new GridBagConstraints();
@@ -170,36 +151,94 @@ public class PerfilAmigo extends JFrame {
         gbc_panelEstadisticas.gridx = 0;
         gbc_panelEstadisticas.gridy = 0;
         panelCentral.add(panelEstadisticas, gbc_panelEstadisticas);
-        panelEstadisticas.setLayout(new BoxLayout(panelEstadisticas, BoxLayout.Y_AXIS));
 
-        lblRacha = new JLabel("Racha actual: 0 días");
-        lblRacha.setFont(new Font("Arial", Font.PLAIN, 12));
-        panelEstadisticas.add(lblRacha);
-        
-        panelEstadisticas.add(Box.createVerticalStrut(5));
+        panelEstadisticas.setLayout(new GridBagLayout());
+        Font labelFont = new Font("Tahoma", Font.BOLD, 13);
+        Font valueFont = new Font("Tahoma", Font.PLAIN, 13);
 
-        lblMejorRacha = new JLabel("Mejor racha: 0 días");
-        lblMejorRacha.setFont(new Font("Arial", Font.PLAIN, 12));
-        panelEstadisticas.add(lblMejorRacha);
-        
-        panelEstadisticas.add(Box.createVerticalStrut(5));
+        // Racha actual
+        GridBagConstraints gbcRachaTitulo = new GridBagConstraints();
+        gbcRachaTitulo.insets = new Insets(5, 10, 5, 10);
+        gbcRachaTitulo.anchor = GridBagConstraints.WEST;
+        gbcRachaTitulo.gridx = 0;
+        gbcRachaTitulo.gridy = 0;
+        JLabel lblRachaTitulo = new JLabel("Racha actual:");
+        lblRachaTitulo.setFont(labelFont);
+        panelEstadisticas.add(lblRachaTitulo, gbcRachaTitulo);
 
-        lblTiempo = new JLabel("Tiempo total: 0 min");
-        lblTiempo.setFont(new Font("Arial", Font.PLAIN, 12));
-        panelEstadisticas.add(lblTiempo);
-        
-        panelEstadisticas.add(Box.createVerticalStrut(5));
+        GridBagConstraints gbcRacha = new GridBagConstraints();
+        gbcRacha.insets = new Insets(5, 10, 5, 10);
+        gbcRacha.anchor = GridBagConstraints.WEST;
+        gbcRacha.gridx = 1;
+        gbcRacha.gridy = 0;
+        lblRacha = new JLabel("0 días");
+        lblRacha.setFont(valueFont);
+        panelEstadisticas.add(lblRacha, gbcRacha);
 
-        lblEjercicios = new JLabel("Ejercicios: 0");
-        lblEjercicios.setFont(new Font("Arial", Font.PLAIN, 12));
-        panelEstadisticas.add(lblEjercicios);
+        // Mejor racha
+        GridBagConstraints gbcMejorRachaTitulo = new GridBagConstraints();
+        gbcMejorRachaTitulo.insets = new Insets(5, 10, 5, 10);
+        gbcMejorRachaTitulo.anchor = GridBagConstraints.WEST;
+        gbcMejorRachaTitulo.gridx = 0;
+        gbcMejorRachaTitulo.gridy = 1;
+        JLabel lblMejorRachaTitulo = new JLabel("Mejor racha:");
+        lblMejorRachaTitulo.setFont(labelFont);
+        panelEstadisticas.add(lblMejorRachaTitulo, gbcMejorRachaTitulo);
 
+        GridBagConstraints gbcMejorRacha = new GridBagConstraints();
+        gbcMejorRacha.insets = new Insets(5, 10, 5, 10);
+        gbcMejorRacha.anchor = GridBagConstraints.WEST;
+        gbcMejorRacha.gridx = 1;
+        gbcMejorRacha.gridy = 1;
+        lblMejorRacha = new JLabel("0 días");
+        lblMejorRacha.setFont(valueFont);
+        panelEstadisticas.add(lblMejorRacha, gbcMejorRacha);
+
+        // Tiempo total
+        GridBagConstraints gbcTiempoTitulo = new GridBagConstraints();
+        gbcTiempoTitulo.insets = new Insets(5, 10, 5, 10);
+        gbcTiempoTitulo.anchor = GridBagConstraints.WEST;
+        gbcTiempoTitulo.gridx = 0;
+        gbcTiempoTitulo.gridy = 2;
+        JLabel lblTiempoTitulo = new JLabel("Tiempo total:");
+        lblTiempoTitulo.setFont(labelFont);
+        panelEstadisticas.add(lblTiempoTitulo, gbcTiempoTitulo);
+
+        GridBagConstraints gbcTiempo = new GridBagConstraints();
+        gbcTiempo.insets = new Insets(5, 10, 5, 10);
+        gbcTiempo.anchor = GridBagConstraints.WEST;
+        gbcTiempo.gridx = 1;
+        gbcTiempo.gridy = 2;
+        lblTiempo = new JLabel("0 min 0 s");
+        lblTiempo.setFont(valueFont);
+        panelEstadisticas.add(lblTiempo, gbcTiempo);
+
+        // Ejercicios
+        GridBagConstraints gbcEjerciciosTitulo = new GridBagConstraints();
+        gbcEjerciciosTitulo.insets = new Insets(5, 10, 5, 10);
+        gbcEjerciciosTitulo.anchor = GridBagConstraints.WEST;
+        gbcEjerciciosTitulo.gridx = 0;
+        gbcEjerciciosTitulo.gridy = 3;
+        JLabel lblEjerciciosTitulo = new JLabel("Ejercicios:");
+        lblEjerciciosTitulo.setFont(labelFont);
+        panelEstadisticas.add(lblEjerciciosTitulo, gbcEjerciciosTitulo);
+
+        GridBagConstraints gbcEjercicios = new GridBagConstraints();
+        gbcEjercicios.insets = new Insets(5, 10, 5, 10);
+        gbcEjercicios.anchor = GridBagConstraints.WEST;
+        gbcEjercicios.gridx = 1;
+        gbcEjercicios.gridy = 3;
+        lblEjercicios = new JLabel("0");
+        lblEjercicios.setFont(valueFont);
+        panelEstadisticas.add(lblEjercicios, gbcEjercicios);
+
+        // Panel de logros
         JPanel panelLogrosContainer = new JPanel();
         panelLogrosContainer.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(PioColores.GRIS_TEXT), 
-            "Logros", 
-            0, 0, 
-            new Font("Arial", Font.BOLD, 14), 
+            BorderFactory.createLineBorder(PioColores.GRIS_TEXT),
+            "Logros",
+            0, 0,
+            new Font("Arial", Font.BOLD, 14),
             PioColores.GRIS_TEXT));
         panelLogrosContainer.setBackground(PioColores.GRIS_PANEL);
         GridBagConstraints gbc_panelLogrosContainer = new GridBagConstraints();
@@ -210,11 +249,15 @@ public class PerfilAmigo extends JFrame {
         panelCentral.add(panelLogrosContainer, gbc_panelLogrosContainer);
         panelLogrosContainer.setLayout(new BorderLayout(0, 0));
 
-        panelLogros = new JPanel();
-        panelLogros.setOpaque(false);
-        panelLogros.setLayout(new BoxLayout(panelLogros, BoxLayout.Y_AXIS));
+        listModelLogros = new DefaultListModel<>();
+        listaLogros = new JList<>(listModelLogros);
+        listaLogros.setCellRenderer(new LogroListCellRenderer());
+        listaLogros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listaLogros.setBackground(PioColores.GRIS_PANEL);
+        listaLogros.setOpaque(true);
+        listaLogros.setVisibleRowCount(-1);
 
-        JScrollPane scrollLogros = new JScrollPane(panelLogros);
+        JScrollPane scrollLogros = new JScrollPane(listaLogros);
         scrollLogros.setBorder(null);
         scrollLogros.setOpaque(false);
         scrollLogros.getViewport().setOpaque(false);
@@ -224,109 +267,59 @@ public class PerfilAmigo extends JFrame {
     private void cargarDatosAmigo() {
         if (amigo == null) return;
 
-        // título
         setTitle("Perfil de " + amigo.getNombre());
 
-        //foto
+        // Foto
         Image imagen = ImageUtils.cargarImagen(amigo.getImagenPerfil());
         if (imagen != null) {
             lblFoto.setIcon(ImageUtils.createCircularIcon(imagen, 100));
             lblFoto.setText("");
         }
 
-        // información básica
+        // Información básica
         lblNombre.setText(amigo.getNombre() + " " + amigo.getApellidos());
         lblEmail.setText(amigo.getEmail());
         lblGenero.setText("Género: " + (amigo.getGenero() != null ? amigo.getGenero() : "No especificado"));
 
-        //estadísticas
+        // Estadísticas
         Estadisticas stats = amigo.getEstadisticas();
         if (stats != null) {
-            lblRacha.setText("Racha actual: " + stats.getRachaDias() + " días");
-            lblMejorRacha.setText("Mejor racha: " + stats.getMejorRacha() + " días");
-            lblTiempo.setText("Tiempo total: " + stats.getTiempoTotal() + " min");
-            lblEjercicios.setText("Ejercicios: " + stats.getTotalEjerciciosCompletados());
+            lblRacha.setText(stats.getRachaDias() + " días");
+            lblMejorRacha.setText(stats.getMejorRacha() + " días");
+            int totalSegundos = stats.getTiempoTotal();
+            int minutos = totalSegundos / 60;
+            int segundos = totalSegundos % 60;
+            lblTiempo.setText(minutos + " min " + segundos + " s");
+            lblEjercicios.setText(String.valueOf(stats.getTotalEjerciciosCompletados()));
         }
 
-        // logros
-        
-        /*
-        panelLogros.removeAll();
-        
-        if (amigo.getLogros() != null && !amigo.getLogros().isEmpty()) {
-            for (Logro logro : amigo.getLogros()) {
-                JLabel lblLogro = new JLabel("🏆 " + logro.getNombre());
-                lblLogro.setFont(new Font("Arial", Font.PLAIN, 12));
-                lblLogro.setToolTipText(logro.getDescripcion());
-                panelLogros.add(lblLogro);
-                panelLogros.add(Box.createVerticalStrut(3));
-            }
-        } else {
-            JLabel lblSinLogros = new JLabel("No tiene logros aún");
-            lblSinLogros.setFont(new Font("Arial", Font.ITALIC, 12));
-            lblSinLogros.setForeground(PioColores.GRIS_TEXT);
-            panelLogros.add(lblSinLogros);
+        try {
+            umu.pds.controlador.Piolify.getUnicaInstancia().getUsuarioController().verificarYDesbloquearLogros(amigo);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        panelLogros.revalidate();
-        panelLogros.repaint();
-        
-        */
-        
         cargarLogrosAmigo(amigo);
     }
-    
+
     private void cargarLogrosAmigo(Usuario amigo) {
-    	
-    	panelLogros.removeAll();
-    	List<Logro> logros = amigo.getLogros();
-    	System.out.println(logros);
-    	if (logros == null || logros.isEmpty()) {
-            // Mostrar mensaje cuando no hay logros
-            panelLogros.setLayout(new BorderLayout());
-            JLabel lbl = new JLabel("Aún no tiene logros.", SwingConstants.CENTER);
-            lbl.setFont(new Font("Arial", Font.ITALIC, 14));
-            lbl.setForeground(PioColores.GRIS_TEXT);
-            lbl.setBorder(new EmptyBorder(20, 20, 20, 20));
-            panelLogros.add(lbl, BorderLayout.CENTER);
+        listModelLogros.clear();
+        List<Logro> logros = amigo.getLogros();
+
+        if (logros == null || logros.isEmpty()) {
+            listModelLogros.addElement(new Logro(null, null) {
+                @Override
+                public String getNombre() { return "Aún no tiene logros."; }
+                @Override
+                public String getDescripcion() { return ""; }
+                @Override
+                public String getImagen() { return null; }
+            });
+            listaLogros.setEnabled(false);
         } else {
-            // Configurar layout para la lista
-            panelLogros.setLayout(new BorderLayout());
-            
-            // Crear lista con los logros (máximo 5)
-            List<Logro> logrosAMostrar = logros.subList(0, Math.min(logros.size(), 5));
-            DefaultListModel<Logro> listModel = new DefaultListModel<>();
-            for (Logro logro : logrosAMostrar) {
-                listModel.addElement(logro);
+            for (Logro logro : logros) {
+                listModelLogros.addElement(logro);
             }
-            
-            JList<Logro> listaLogros = new JList<>(listModel);
-            listaLogros.setCellRenderer(new LogroListCellRenderer());
-            listaLogros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listaLogros.setFixedCellHeight(60); // Altura fija para cada celda
-            
-            // Scroll pane para la lista
-            JScrollPane scrollPane = new JScrollPane(listaLogros);
-            scrollPane.setBorder(BorderFactory.createEmptyBorder());
-            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            
-            panelLogros.add(scrollPane, BorderLayout.CENTER);
-            
-            // Mostrar contador de logros adicionales si hay más de 5
-            if (logros.size() > 5) {
-                JPanel panelFooter = new JPanel(new FlowLayout(FlowLayout.CENTER));
-                JLabel lblMas = new JLabel("+" + (logros.size() - 5) + " logros más...");
-                lblMas.setFont(new Font("Arial", Font.ITALIC, 12));
-                lblMas.setForeground(PioColores.GRIS_TEXT);
-                panelFooter.add(lblMas);
-                panelFooter.setBorder(new EmptyBorder(5, 0, 5, 0));
-                panelLogros.add(panelFooter, BorderLayout.SOUTH);
-            }
+            listaLogros.setEnabled(true);
         }
-    	
-    	panelLogros.revalidate();
-        panelLogros.repaint();
-    	
     }
 }

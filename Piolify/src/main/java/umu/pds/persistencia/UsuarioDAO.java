@@ -45,4 +45,13 @@ public interface UsuarioDAO {
 	 */
 	public Estadisticas recuperarEstadisticas(Long id);
 	
+	/*
+	 * * Método que recupera un usuario por su email.
+	 * 
+	 * @param email Email del usuario.
+	 * 
+	 * @return Instancia {@link Usuario} asociada al email.
+	 */
+	public Usuario recuperarUsuarioPorEmailConLogrosYEstadisticas(String email);
+	
 }
