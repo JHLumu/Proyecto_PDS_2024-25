@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,10 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
 import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Ejercicio;
+import umu.pds.modelo.EstrategiaFactory;
 import umu.pds.modelo.TipoEstrategia;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.CursoService;
