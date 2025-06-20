@@ -104,6 +104,10 @@ public abstract class Ejercicio {
 		return this.id;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public LocalDateTime getFechaCreacion(){
 		return this.fechaCreacion;
 	}

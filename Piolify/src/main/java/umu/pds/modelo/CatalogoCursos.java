@@ -9,6 +9,7 @@ import java.util.Optional;
 import umu.pds.persistencia.CursoDAO;
 import umu.pds.persistencia.FactoriaDAO;
 import umu.pds.persistencia.JPAFactoriaDAO;
+import umu.pds.persistencia.UsuarioDAO;
 
 /**
  * Clase que actua como Repositorio/Catálogo que implementa métodos CRUD para 
@@ -41,6 +42,19 @@ public class CatalogoCursos {
 	private CatalogoCursos() {
 		this.cursoDAO  = FactoriaDAO.getInstancia(JPAFactoriaDAO.class.getName()).getCursoDAO();
 		this.cursos = new HashMap<Long,Curso>();
+		cargarCatalogo();
+	}
+	
+
+	/**
+	 * Constructor para inyección de dependencias (para pruebas unitarias).
+	 * @param cursoDAO Instancia {@link CursoDAO} para la persistencia de
+	 * cursos.
+	 * @param cursos Map entre Identificador de curso - Instancia tipo {@link Curso}.
+	 */
+	public CatalogoCursos(CursoDAO cursoDAO, Map<Long,Curso> cursos) {
+		this.cursoDAO = cursoDAO;
+		this.cursos = cursos;
 		cargarCatalogo();
 	}
 	
