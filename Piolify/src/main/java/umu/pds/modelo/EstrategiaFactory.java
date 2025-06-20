@@ -3,20 +3,12 @@ package umu.pds.modelo;
 import java.util.List;
 import java.util.Map;
 
+import umu.pds.utils.EjercicioRenderer;
+
 /**Factoría encargada de instanciar las diferentes estrategias
  * de aprendizaje implementadas en la aplicación.
  * */
 public class EstrategiaFactory {
-	
-	/**
-	 * Map que almacena para constante {@link TipoEstrategia} definida, una instancia de su implementación 
-	 * por defecto. Utilizado para el método crearEstrategia(). 
-	 */
-	private static final Map<TipoEstrategia,Estrategia> ESTRATEGIAS_DEFINIDAS = Map.of(
-			TipoEstrategia.SECUENCIAL,new EstrategiaSecuencial(),
-			TipoEstrategia.ALEATORIA, new EstrategiaAleatoria(),
-			TipoEstrategia.REPETICION_ESPACIADA, new EstrategiaRepeticionEspaciada()
-			);
 	
 	/**
 	 * Método estático para obtener los tipos de estrategias definidos en el sistema.
@@ -30,9 +22,22 @@ public class EstrategiaFactory {
 	 * Método estático para la creación de una instancia Estrategia a partir
 	 * de su tipo.
 	 *  @param tipo Constante del enum {@link TipoEstrategia}.
+	 *  @return una clase Estrategia del tipo que se ha solicitado.
 	 */
 	public static Estrategia crearEstrategia(TipoEstrategia tipo) {
-		return ESTRATEGIAS_DEFINIDAS.get(tipo);
+		String className = "umu.pds.modelo." + tipo.getClase();
+        try {
+            Class<?> clazz = Class.forName(className);
+            if (Estrategia.class.isAssignableFrom(clazz)) {
+                return (Estrategia) clazz.getDeclaredConstructor().newInstance();
+            } else {
+                throw new IllegalArgumentException("Clase " + className + " no es una Estrategia válido.");
+            }
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("No se encontró la clase para el tipo: " + tipo, e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al instanciar la clase para el tipo: " + tipo, e);
+        }
 	}
 	
 	/**

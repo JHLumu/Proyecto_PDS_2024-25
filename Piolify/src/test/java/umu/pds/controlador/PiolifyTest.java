@@ -17,8 +17,6 @@ class PiolifyTest {
     @Mock
     private ImportacionController importacionControllerMock;
     
-    @Mock
-    private EjercicioFacade ejercicioFacade;
     
     private Piolify piolify;
     

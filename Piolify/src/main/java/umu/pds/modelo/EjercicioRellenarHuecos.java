@@ -20,7 +20,7 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	 */
 	public EjercicioRellenarHuecos() {
 		super();
-		this.setTipo(TipoEjercicio.COMPLETAR_HUECOS);
+		this.setTipo(TipoEjercicio.RELLENAR_HUECOS);
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class EjercicioRellenarHuecos extends Ejercicio {
 	 */
 	public EjercicioRellenarHuecos(String contenido, String respuesta) {
 		super(contenido, respuesta);
-		this.setTipo(TipoEjercicio.COMPLETAR_HUECOS);
+		this.setTipo(TipoEjercicio.RELLENAR_HUECOS);
 	}
 	
 	/**

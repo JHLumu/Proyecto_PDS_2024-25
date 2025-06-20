@@ -48,10 +48,10 @@ public class ImportacionController {
     /**
      * Constructor por defecto. Inicializa los serivicos de importación y gestión de cursos.
      */
-    public ImportacionController() {
+    public ImportacionController(Piolify piolify) {
         this.servicioImportacion = new ServicioImportacion();
         this.cursoService = new CursoService();
-        this.piolify = Piolify.getUnicaInstancia();
+        this.piolify = piolify;
     }
     
     /**

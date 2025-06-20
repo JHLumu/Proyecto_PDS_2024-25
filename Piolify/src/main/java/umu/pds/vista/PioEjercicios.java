@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import umu.pds.controlador.EjercicioFacade;
 import umu.pds.controlador.Piolify;
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Ejercicio;
@@ -25,6 +24,7 @@ import umu.pds.modelo.SesionAprendizaje;
 import umu.pds.modelo.Usuario;
 import umu.pds.servicios.ServicioEstadisticas;
 import umu.pds.utils.EjercicioRenderer;
+import umu.pds.utils.EjercicioRendererFactory;
 import umu.pds.utils.ImageUtils;
 import umu.pds.vista.elementos.BaseRoundedFrame;
 import umu.pds.vista.elementos.PioColores;
@@ -243,7 +243,7 @@ public class PioEjercicios extends BaseRoundedFrame {
             Ejercicio ejercicio = listaEjercicios.get(i);
             
             // Crear renderer para este ejercicio
-            EjercicioRenderer renderer = EjercicioFacade.crearRenderer(ejercicio.getTipo());
+            EjercicioRenderer renderer = EjercicioRendererFactory.crearRenderer(ejercicio.getTipo());
             renderers.set(i, renderer);
             
             // Crear panel para este ejercicio

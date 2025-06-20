@@ -47,7 +47,7 @@ public class Piolify {
 	 */
     public Piolify() {
         this.usuarioController = new UsuarioController(this);
-        this.importacionController = new ImportacionController();
+        this.importacionController = new ImportacionController(this);
         
     }
     
