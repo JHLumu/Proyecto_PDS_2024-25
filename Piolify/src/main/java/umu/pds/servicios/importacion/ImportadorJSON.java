@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class ImportadorJSON implements ImportadorStrategy {
 
+    /** Extensiones de archivo soportadas por este importador. */
+    private static final String[] EXTENSIONES_SOPORTADAS = {"json"};
+    
     /** Manejador de excepciones personalizado para errores de importación.*/
     private final ObjectMapper objectMapper;
     /** Mapeador de cursos para convertir entre DTO y entidad.*/
@@ -25,10 +28,12 @@ public class ImportadorJSON implements ImportadorStrategy {
      * @param cursoMapper Mapeador de cursos para convertir entre DTO y entidad.
      */
     public ImportadorJSON(CursoMapper cursoMapper) {
-        this.objectMapper = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+        this.objectMapper = JsonMapper.builder()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .build();
         // Configurar para ser más tolerante con JSON
         this.objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS, true);
-        this.objectMapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.cursoMapper = cursoMapper;
     }
 
@@ -91,7 +96,14 @@ public class ImportadorJSON implements ImportadorStrategy {
      */
     @Override
     public boolean soportaFormato(String extension) {
-        return "json".equalsIgnoreCase(extension);
+        if (extension == null) return false;
+        String ext = extension.toLowerCase().trim();
+        for (String soportada : EXTENSIONES_SOPORTADAS) {
+            if (soportada.equals(ext)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
@@ -100,5 +112,13 @@ public class ImportadorJSON implements ImportadorStrategy {
     @Override
     public String getTipoFormato() {
         return "JSON";
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getExtensionesSuportadas() {
+        return EXTENSIONES_SOPORTADAS.clone(); // Devolver copia para evitar modificaciones
     }
 }

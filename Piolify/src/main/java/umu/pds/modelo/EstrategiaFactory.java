@@ -1,9 +1,6 @@
 package umu.pds.modelo;
 
 import java.util.List;
-import java.util.Map;
-
-import umu.pds.utils.EjercicioRenderer;
 
 /**Factoría encargada de instanciar las diferentes estrategias
  * de aprendizaje implementadas en la aplicación.

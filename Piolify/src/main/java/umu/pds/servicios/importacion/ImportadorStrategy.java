@@ -16,6 +16,7 @@ public interface ImportadorStrategy {
      * @throws ImportacionException Si ocurre un error durante la importación.
      */
     List<Curso> importar(InputStream inputStream) throws ImportacionException;
+    
     /**
      * Verifica si el importador soporta un formato específico basado en la extensión del archivo.
      *
@@ -23,10 +24,19 @@ public interface ImportadorStrategy {
      * @return true si el formato es soportado, false en caso contrario.
      */
     boolean soportaFormato(String extension);
+    
     /**
      * Obtiene el tipo de formato que maneja el importador.
      *
      * @return Tipo de formato del importador, como "JSON", "YAML", etc.
      */
     String getTipoFormato();
+    
+    /**
+     * Obtiene las extensiones de archivo soportadas por este importador.
+     * Cada implementación debe definir qué extensiones maneja.
+     *
+     * @return Array de extensiones soportadas por el importador.
+     */
+    String[] getExtensionesSuportadas();
 }

@@ -9,18 +9,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-
 /**
  * Estrategia de importación que procesa la importación de cursos definidos en formato YAML.
  */
 public class ImportadorYAML implements ImportadorStrategy {
+    
+    /** Extensiones de archivo soportadas por este importador. */
+    private static final String[] EXTENSIONES_SOPORTADAS = {"yaml", "yml"};
     
     /** 
      * Manejador de excepciones personalizado para errores de importación.
      */
     private final ObjectMapper yamlMapper;
     /**
-     *  Mapeador de cursos para convertir entre DTO y entidad.
+     * Mapeador de cursos para convertir entre DTO y entidad.
      */
     private final CursoMapper cursoMapper;
     
@@ -79,7 +81,14 @@ public class ImportadorYAML implements ImportadorStrategy {
      */
     @Override
     public boolean soportaFormato(String extension) {
-        return "yaml".equalsIgnoreCase(extension) || "yml".equalsIgnoreCase(extension);
+        if (extension == null) return false;
+        String ext = extension.toLowerCase().trim();
+        for (String soportada : EXTENSIONES_SOPORTADAS) {
+            if (soportada.equals(ext)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
@@ -88,5 +97,13 @@ public class ImportadorYAML implements ImportadorStrategy {
     @Override
     public String getTipoFormato() {
         return "YAML";
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getExtensionesSuportadas() {
+        return EXTENSIONES_SOPORTADAS.clone(); // Devolver copia para evitar modificaciones
     }
 }
