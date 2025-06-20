@@ -12,6 +12,7 @@
         <class>umu.pds.modelo.Logro</class>
         <class>umu.pds.modelo.Estadisticas</class>
         <class>umu.pds.modelo.ProgresoCurso</class>
+        <class>umu.pds.modelo.SesionAprendizaje</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlite:testbasedatos.db"/>
