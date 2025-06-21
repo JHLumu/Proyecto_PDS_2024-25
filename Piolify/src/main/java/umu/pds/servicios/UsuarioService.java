@@ -135,13 +135,14 @@ public class UsuarioService {
 		repoUsuarios.modificarUsuario(usuario);
 		catalogoUsuarios.actualizarUsuario(usuario);
 	}
-    
-    /**
-     * Método que recupera las estádisticas de un usuario.
-     * @param usuario Instancia {@link Usuario} del que recuperar sus estadísticas.
-     * @return Instancia {@link Estadísticas} asociada con el usuario.
-     * @throws IllegalArgumentException si instancia {@link Usuario} es igual a {@code null}.
-     */
+
+	/**
+	 * Método que obtiene las estadísticas de un usuario.
+	 * 
+	 * @param usuario Instancia {@link Usuario} del que se quieren obtener las estadísticas.
+	 * @return Instancia {@link Estadisticas} asociada al usuario.
+	 * @throws IllegalArgumentException si el usuario es {@code null}.
+	 */
 	public Estadisticas obtenerEstadisticas(Usuario usuario) {
 		if (usuario == null) {
 			throw new IllegalArgumentException("Usuario no puede ser nulo");

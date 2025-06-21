@@ -16,9 +16,6 @@ import umu.pds.servicios.importacion.ImportadorStrategy;
 import umu.pds.servicios.importacion.ValidadorCurso;
 import umu.pds.servicios.importacion.ValidadorCurso.ResultadoValidacion;
 
-/**
- * Clase de apoyo utilizado por {@link ImportacionController}, encargado para la importación de cursos.
- */
 public class ServicioImportacion {
     
 	/**
@@ -104,11 +101,13 @@ public class ServicioImportacion {
         return new ResultadoImportacion(cursos, importador.getTipoFormato());
     }
     
-    /**
-     * Método que valida un curso antes de guardarlo en el sistema.
-     * @param curso Instancia {@link CursoDTO} que contiene la información del curso recogida en la importación.
-     * @return Instancia {@link ResultadoValidación} con el estado de la validación.
-     */
+	/**
+	 * Método que valida un curso antes de importarlo.
+	 * 
+	 * @param curso Curso a validar.
+	 * @return Resultado de la validación, indicando si es válido o no, y posibles
+	 *         errores.
+	 */
     public ResultadoValidacion validarCurso(CursoDTO curso) {
         return ValidadorCurso.validar(curso);
     }

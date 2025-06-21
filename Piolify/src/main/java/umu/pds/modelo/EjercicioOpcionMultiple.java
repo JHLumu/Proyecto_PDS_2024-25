@@ -56,10 +56,10 @@ public class EjercicioOpcionMultiple extends Ejercicio {
         this.opciones = String.join("|", opciones);
     }
 
-    /**
-     * Método que establece las opciones del ejercicio de opción múltiple como un String separado por comas.
-     * @param opciones String con las opciones separadas por comas.
-     */
+	/**
+	 * Método que establece las opciones del ejercicio de opción múltiple a partir
+	 * de un array.
+	 */
     @Override
     public void renderEjercicio() {
         System.out.println("Pregunta: " + getContenido());

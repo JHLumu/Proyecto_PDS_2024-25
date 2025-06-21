@@ -8,9 +8,8 @@ import java.util.List;
 public class EstrategiaFactory {
 	
 	/**
-	 * Método estático para obtener los tipos de estrategias definidos en el sistema.
-	 * @returns Lista de las constantes actuales del enumerado {@link TipoEstrategia}.
-	 * */
+	 * Enum que define los tipos de estrategias disponibles.
+	 */
 	public static List<TipoEstrategia> getEstrategiasDefinidas(){
 		return List.of(TipoEstrategia.values());
 	} 

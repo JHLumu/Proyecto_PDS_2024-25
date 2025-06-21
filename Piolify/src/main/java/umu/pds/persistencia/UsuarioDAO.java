@@ -39,9 +39,9 @@ public interface UsuarioDAO {
 	public List<Usuario> recuperarTodosUsuarios() throws MalformedURLException;
 	
 	/**
-	 * Método que recupera las estadísticas de un un usuario existente.
-	 * @param id Identiicador del usuario.
-	 * @return Instancia {@link Estadísticas} asociada al usuario.
+	 * Método que elimina un usuario de la base de datos.
+	 * 
+	 * @param id Identificador del usuario a eliminar.
 	 */
 	public Estadisticas recuperarEstadisticas(Long id);
 	

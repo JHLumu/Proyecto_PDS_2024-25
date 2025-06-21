@@ -66,11 +66,12 @@ public class RegistroUsuarioDTO {
             dto.nombre = nombre;
             return this;
         }
-        /**
-         * Método para establecer el nombre del usuario.
-         * @param nombre Nombre del usuario.
-         * @return Instancia del Builder para encadenar llamadas.
-         */
+        
+		/**
+		 * Método para establecer el nombre del usuario.
+		 * @param apellidos Apellidos del usuario.
+		 * @return Instancia del Builder para encadenar llamadas.
+		 */
         public Builder apellidos(String apellidos) {
             dto.apellidos = apellidos;
             return this;

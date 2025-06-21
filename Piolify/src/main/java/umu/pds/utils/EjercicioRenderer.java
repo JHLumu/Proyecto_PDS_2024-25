@@ -8,9 +8,10 @@ import javax.swing.JPanel;
 public interface EjercicioRenderer {
 	
 	/**
-	 * Método que renderiza un ejercicio en un panel.
-	 * @param containerPanel Instancia {@link JPanel} donde se mostrará el ejercicio.
-	 * @param ejercicio Instancia {@link Ejercicio} a renderizar.
+	 * Método para renderizar un ejercicio en un panel dado.
+	 * 
+	 * @param containerPanel Panel donde se renderizará el ejercicio.
+	 * @param ejercicio      Objeto que representa el ejercicio a renderizar.
 	 */
     void renderizar(JPanel containerPanel, Object ejercicio);
     

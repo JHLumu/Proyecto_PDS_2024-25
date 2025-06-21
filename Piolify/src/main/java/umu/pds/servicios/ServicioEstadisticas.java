@@ -35,8 +35,10 @@ public class ServicioEstadisticas {
 	 */
 	private final UsuarioDAO usuarioDAO;
 
+
 	/**
-	 * Constructor por defecto. Inicializa las instancias  {@link SesionAprendizajeDAO} y {@link UsuarioDAO} desde la Factoría {@link @FactoriaDAO}.
+	 * Constructor por defecto que inicializa las instancias de DAOs utilizando la
+	 * fábrica de DAOs. Utiliza la implementación JPAFactoriaDAO.
 	 */
 	public ServicioEstadisticas() {
 		FactoriaDAO factoria = FactoriaDAO.getInstancia(JPAFactoriaDAO.class.getName());

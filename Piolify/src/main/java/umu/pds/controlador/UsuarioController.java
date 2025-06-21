@@ -181,11 +181,9 @@ public class UsuarioController {
     }
 	
 	/**
-	 * Método que verifica y desbloquea automáticamente todos los logros que el usuario haya conseguido
-	 * basándose en sus estadísticas actuales.
+	 * Método que verifica y desbloquea logros para un usuario.
 	 * 
-	 * @param usuario Instancia {@link Usuario} para el que se verificarán sus logros sin desbloquear.
-	 * @return Lista de logros desbloqueados en esta verificación.
+	 * @param usuario Usuario para el cual se verifican y desbloquean logros.
 	 */
 	public void verificarYDesbloquearLogros(Usuario usuario) {
 	    

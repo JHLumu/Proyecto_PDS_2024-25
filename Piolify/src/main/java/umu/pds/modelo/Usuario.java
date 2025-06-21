@@ -307,9 +307,11 @@ public class Usuario {
 		this.logros.add(logro);
 	}
 	
+
 	/**
-	 * Método que desbloquea un logro en específico para este usuario.
-	 * @param Instancia {@link Logro} desbloqueado.
+	 * Método que desbloquea un logro para este usuario.
+	 * 
+	 * @param logro Instancia {@link Logro} a desbloquear.
 	 */
 	public void desbloquearLogro(Logro logro) {
 		this.logros.add(logro);
