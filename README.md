@@ -26,7 +26,7 @@ Aunque el enfoque actual es la programación en Java, la arquitectura del sistem
 - 📚 **Múltiples estrategias** de aprendizaje: secuencial, repetición espaciada y aleatoria
 - 💾 **Guardado de progreso**
 - 📊 **Estadísticas de uso**
-- 📁 **Importación/exportación de cursos mediante JSON/YAML**
+- 📁 **Importación/exportación de cursos mediante JSON**
 
 ## Características adicionales
 
@@ -43,7 +43,7 @@ Aunque el enfoque actual es la programación en Java, la arquitectura del sistem
 - **Lenguaje**: Java
 - **Framework GUI**: Swing
 - **Base de datos**: JPA
-- **Formatos de datos**: JSON, YAML
+- **Formatos de datos**: JSON
 - **Arquitectura**: MVC (Modelo-Vista-Controlador)
 
 
