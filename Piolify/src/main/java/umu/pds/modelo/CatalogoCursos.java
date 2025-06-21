@@ -9,8 +9,6 @@ import java.util.Optional;
 import umu.pds.persistencia.CursoDAO;
 import umu.pds.persistencia.FactoriaDAO;
 import umu.pds.persistencia.JPAFactoriaDAO;
-import umu.pds.persistencia.UsuarioDAO;
-
 /**
  * Clase que actua como Repositorio/Catálogo que implementa métodos CRUD para 
  * las instancias tipo {@link Curso}. Actua como intermediario entre la capa de

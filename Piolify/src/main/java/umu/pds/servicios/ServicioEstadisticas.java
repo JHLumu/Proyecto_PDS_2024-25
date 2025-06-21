@@ -43,6 +43,20 @@ public class ServicioEstadisticas {
 		this.sesionDAO = factoria.getSesionAprendizajeDAO();
 		this.usuarioDAO = factoria.getUsuarioDAO();
 	}
+	
+	/**
+	 * Constructor que permite inyectar dependencias de forma manual, útil para
+	 * pruebas unitarias.
+	 * 
+	 * @param sesionDAO  Instancia {@link SesionAprendizajeDAO} para la persistencia
+	 *                   de estadísticas de un usuario.
+	 * @param usuarioDAO Instancia {@link UsuarioDAO} para la persistencia de un
+	 *                   usuario.
+	 */
+	public ServicioEstadisticas(SesionAprendizajeDAO sesionDAO, UsuarioDAO usuarioDAO) {
+		this.sesionDAO = sesionDAO;
+		this.usuarioDAO = usuarioDAO;
+	}
 
 	/**
 	 * Método que inicia una nueva sesión de aprendizaje para un usuario.
