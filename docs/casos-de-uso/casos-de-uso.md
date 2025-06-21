@@ -6,14 +6,27 @@
 - [3. Modificar Información Personal](#3-modificar-información-personal)
 - [4. Cambiar contraseña](#4-cambiar-contraseña)
 - [5. Realizar un curso](#5-realizar-un-curso)
-- [6 Consultar Estadísticas y Progresos de Cursos](#6-consultar-estadísticas-y-logros)
-- [7. Instalar un curso](#8-importar-curso)
-- [8. Enviar Petición de Amistad](#9-enviar-peticion-de-amistad)
-- [9. Gestionar Peticiones de Amistad](#10-gestionar-peticiones-de-amistad)
-- [10. Obtener Logro](#11-obtener-logro)
+- [6. Consultar estadísticas y logros](#6-consultar-estadísticas-y-logros)
+- [7. Importar curso](#7-importar-curso)
+- [8. Enviar Petición de Amistad](#8-enviar-peticion-de-amistad)
+- [9. Gestionar Peticiones de Amistad](#9-gestionar-peticiones-de-amistad)
+- [10. Obtener Logro](#10-obtener-logro)
   
 ---
 
+
+## 1. Registrar Usuario
+
+### Actor Principal
+Usuario.
+
+### Descripción
+El usuario se registra para tener acceso completo a la plataforma.
+
+### Flujo Básico
+
+1. El usuario inicia el proceso de registro.
+2. El usuario introduce los datos necesarios (Nombre, Nombre de Usuario, Correo Electrónico, Contraseña) en la pantalla de regi
 
 ## 1. Registrar Usuario
 
