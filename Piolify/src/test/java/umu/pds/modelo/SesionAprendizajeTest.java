@@ -36,7 +36,7 @@ public class SesionAprendizajeTest {
     	Calendar calFin = Calendar.getInstance();
     	calInicio.set(2025, Calendar.JANUARY, 16, 10, 0, 0);
     	Date inicio = calInicio.getTime();
-    	Date fin    = calInicio.getTime();
+    	Date fin    =  calFin.getTime();
 
     	int ejerciciosCompletados = 5;
     	int aciertos = 3;

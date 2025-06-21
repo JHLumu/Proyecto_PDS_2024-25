@@ -31,7 +31,6 @@ class UsuarioTest {
         List<Logro> logros = new ArrayList<>();
         Set<Amistad> amistades = new HashSet<>();
         List<Curso> biblioteca = new ArrayList<>();
-        List<String> cursosCreados = new ArrayList<>();
         Estadisticas estadisticas = new Estadisticas();
 
         usuario.setId(id);
