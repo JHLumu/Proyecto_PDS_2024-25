@@ -16,6 +16,7 @@
 ---
 
 <div align="justify">
+  
 ## Descripción
 **Piolify** es un sistema de aprendizaje interactivo, centrado inicialmente en el dominio de la programación en Java. Inspirado en aplicaciones como Duolingo y Mochi, **Piolify** permite a los usuarios aprender y repasar conceptos fundamentales y avanzados de Java mediante una variedad de ejercicios, flashcards y retos interactivos. 
 
