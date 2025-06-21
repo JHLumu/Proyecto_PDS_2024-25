@@ -347,7 +347,7 @@ El sistema verifica y otorga logros al usuario cuando este accede al panel de es
 ### Flujo Alternativo
 #### 5a. No se cumplen condiciones para nuevos logros
 1. El sistema registra que no hay nuevos logros para otorgar
-2. Se presenta el panel con los logros existentes únicament
+2. Se presenta el panel con los logros existentes únicamente
 
 ### Postcondiciones
 * Los nuevos logros obtenidos se han registrado en el perfil del usuario
