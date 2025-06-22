@@ -136,8 +136,6 @@ classDiagram
     Bloque "1" --> "1..*" Ejercicio : incluye
     Bloque "1" --> "0..*" ProgresoBloque : seguimiento
     
-    ProgresoBloque "1" --> "1" Usuario : pertenece_a
-    ProgresoBloque "1" --> "1" Bloque : registra_progreso
     ProgresoBloque "1" --> "1" EstrategiaAprendizaje : utiliza
     
     SesionAprendizaje "1" --> "1" Usuario : pertenece_a
@@ -146,7 +144,6 @@ classDiagram
     SesionAprendizaje "1" --> "1" EstrategiaAprendizaje : utiliza
     
     Logro "1" --> "1" TipoLogro : tipo
-    Logro "1" --> "1" Usuario : pertenece_a
     
     Amistad "1" --> "1" EstadoAmistad : estado
 
