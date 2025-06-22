@@ -124,6 +124,70 @@ Una vez finalizada la sesión, Piolify muestra un resumen con las estadísticas 
 
 ### Consultar Estadísticas y Logros
 
+En esta sección, el usuario puede obtener una visión detallada sobre su desempeño en la plataforma Piolify.
+
+<p align="center"><img src="./imagenes/dashboard.png"  alt="Ventana Realizar Bloque" width=700, style="padding-top:1rem"></p>
+
+ La información se encuentra organizada en tres apartados principales:
+
+<div style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+
+<!-- Columna 1: Resumen General -->
+<div style="flex: 1; min-width: 280px;">
+<h4>📊 Resumen General</h4>
+<ul>
+  <li><strong>Racha actual:</strong> Número de días consecutivos en los que el usuario ha realizado al menos una sesión.</li>
+  <li><strong>Mejor racha:</strong> Mayor cantidad de días consecutivos con actividad registrada.</li>
+  <li><strong>Tiempo total:</strong> Tiempo total de estudio registrado en todas las sesiones.</li>
+  <li><strong>Ejercicios completados:</strong> Total de ejercicios resueltos satisfactoriamente.</li>
+  <li><strong>Precisión promedio:</strong> Porcentaje total de aciertos en todos los ejercicios completados.</li>
+</ul>
+</div>
+
+<!-- Columna 2: Logros Obtenidos -->
+<div style="flex: 1; min-width: 280px;">
+<h4>🏅 Logros Obtenidos</h4>
+<ul>
+  <li><strong>Primer Paso:</strong> Completar el primer ejercicio.</li>
+  <li><strong>Aprendiz:</strong> Completar 5 ejercicios.</li>
+  <li><strong>Estudiante Dedicado:</strong> Completar 10 ejercicios.</li>
+  <li><strong>Explorador:</strong> Completar un curso entero.</li>
+  <li><strong>Curioso:</strong> Comenzar 3 cursos distintos.</li>
+</ul>
+<p>Cada logro incluye su nombre, una breve descripción y la <strong>fecha de obtención</strong>.</p>
+</div>
+
+<!-- Columna 3: Progreso por Cursos -->
+<div style="flex: 1; min-width: 280px;">
+<h4>📚 Progreso por Cursos</h4>
+<p>Esta sección muestra una lista de todos los cursos realizados por el usuario, junto con su estado de avance. Para cada curso se indica:</p>
+<ul>
+  <li><strong>Nombre del curso</strong></li>
+  <li><strong>Progreso (%):</strong> Porcentaje completado del contenido del curso.</li>
+  <li><strong>Tiempo dedicado:</strong> Tiempo invertido específicamente en ese curso.</li>
+  <li><strong>Precisión:</strong> Porcentaje de respuestas correctas.</li>
+</ul>
+<p>Al hacer clic sobre un curso específico, se abre una ventana emergente con estadísticas detalladas como ejercicios realizados, precisión, dificultad y descripción.</p>
+</div>
+
+</div>
+
+Al hacer clic sobre un curso específico, se abre una ventana emergente con estadísticas detalladas:
+
+<p align="center"><img src="./imagenes/progreso-curso.png"  alt="Ventana Realizar Bloque" width=400, style="padding-top:1rem"></p>
+
+
+- **Ejercicios realizados**
+- **Tiempo dedicado exacto**
+- **Precisión obtenida**
+- **Dificultad estimada**
+- **Descripción del curso**
+
+Esto permite al usuario evaluar su progreso en cada curso, identificar fortalezas y debilidades, y decidir dónde enfocar su siguiente sesión de estudio.
+
+
+
+
 
 ### Enviar solicitudes de amistad
 
