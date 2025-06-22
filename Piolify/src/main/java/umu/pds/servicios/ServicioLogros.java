@@ -34,23 +34,6 @@ public class ServicioLogros {
     
 
     /**
-     * Método que comprueba si un logro específico se puede desbloquear para un usuario.
-     * @param usuario Instancia {@link Usuario} oara el cual se realiza la comprobación.
-     * @param tipo Constante {@link TipoLogro}. Logro definido que se comprueba. 
-     */
-    public boolean puedeDesbloquearLogro(Usuario usuario, TipoLogro tipo) {
-        if (usuario.tieneLogroDesbloqueado(tipo)) {
-            return false; // Ya está desbloqueado
-        }
-        
-        Estadisticas estadisticas = usuario.getEstadisticas();
-        int cursosComenzados = usuario.getCursosComenzados();
-        
-        return tipo.seCumpleCondicion(estadisticas, cursosComenzados);
-    }
-    
-
-    /**
      * Método que desbloquea un logro específico para un usuario.
      * @param usuario Instancia {@link Usuario} oara el cual se desbloquea un logro.
      * @param tipo Constante {@link TipoLogro}. Logro definido en el sistema que se desbloquea. 

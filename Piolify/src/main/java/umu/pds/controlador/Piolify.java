@@ -33,6 +33,12 @@ public class Piolify {
     private final ImportacionController importacionController;
     
     /**
+	 * Instancia {@link ProgresoController}, controlador encargado de la importación de cursos.
+	 */
+    private final ProgresoController progresoController;
+    
+    
+    /**
 	 * Instancia única de {@link Piolify} (Singleton).
 	 */
     private static Piolify unicaInstancia = null;
@@ -48,6 +54,7 @@ public class Piolify {
     public Piolify() {
         this.usuarioController = new UsuarioController(this);
         this.importacionController = new ImportacionController(this);
+        this.progresoController = new ProgresoController(this);
         
     }
     
@@ -56,9 +63,10 @@ public class Piolify {
 	 * @param usuarioController Controlador de usuario
 	 * @param importacionController Controlador de importación
 	 */
-	public Piolify(UsuarioController usuarioController, ImportacionController importacionController) {
+	public Piolify(UsuarioController usuarioController, ImportacionController importacionController, ProgresoController progresoController) {
 		this.usuarioController = usuarioController;
 		this.importacionController = importacionController;
+		this.progresoController = progresoController;
 	}
     
 	/**
@@ -86,6 +94,14 @@ public class Piolify {
 	 */
 	public ImportacionController getImportacionController() {
 		return this.importacionController;
+	}
+	
+	/**
+	 * Método para obtener el controlador de progreso.
+	 * @return Controlador de progreso
+	 */
+	public ProgresoController getProgresoController() {
+		return this.progresoController;
 	}
 
 	/**
@@ -151,6 +167,7 @@ public class Piolify {
 		Principal ventanaPrincipal = new Principal();
         ventanaPrincipal.setVisible(true);
 	}
+
 	
 	
 	

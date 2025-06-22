@@ -36,7 +36,6 @@ import umu.pds.servicios.ServicioEstadisticas;
 import umu.pds.servicios.ServicioEstadisticas.EstadisticasCurso;
 import umu.pds.utils.LogroListCellRenderer;
 import umu.pds.controlador.Piolify;
-import umu.pds.modelo.Bloque;
 import umu.pds.modelo.Curso;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.Logro;
@@ -538,48 +537,8 @@ public class DashboardEstadisticas extends JPanel {
      * Abre un curso para continuar estudiando
      */
     private void abrirCursoParaEstudiar(Curso curso) {
-        try {
-            // Verificar que el curso tenga bloques y ejercicios
-            if (curso.getBloques() == null || curso.getBloques().isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                    "Este curso no tiene ejercicios disponibles.",
-                    "Sin contenido",
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Tomar el primer bloque con ejercicios
-            Bloque bloqueConEjercicios = null;
-            for (Bloque bloque : curso.getBloques()) {
-                if (bloque.getEjercicios() != null && !bloque.getEjercicios().isEmpty()) {
-                    bloqueConEjercicios = bloque;
-                    break;
-                }
-            }
-            
-            if (bloqueConEjercicios == null) {
-                JOptionPane.showMessageDialog(this,
-                    "Este curso no tiene ejercicios disponibles.",
-                    "Sin ejercicios",
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            final Bloque bloqueParaAbrir = bloqueConEjercicios;
-            
-            // Abrir PioEjercicios
-            SwingUtilities.invokeLater(() -> {
-                PioEjercicios ventanaEjercicios = new PioEjercicios(bloqueParaAbrir.getEjercicios());
-                ventanaEjercicios.setVisible(true);
-            });
-            
-        } catch (Exception ex) {
-            System.err.println("Error al abrir ejercicios: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this,
-                "Error al abrir los ejercicios: " + ex.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
+        // Obtenemos la instancia del controlador y llamamos al método centralizado
+        Piolify.getUnicaInstancia().getProgresoController().iniciarOContinuarCurso(curso, this);
     }
 
     /**

@@ -13,13 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import umu.pds.modelo.Curso;
-import umu.pds.modelo.Bloque;
-import umu.pds.modelo.Ejercicio;
-import umu.pds.modelo.Estrategia;
-import umu.pds.modelo.ProgresoBloque;
 import umu.pds.modelo.Usuario;
-import umu.pds.servicios.ServicioProgreso;
-import umu.pds.controlador.ImportacionController;
 import umu.pds.controlador.Piolify;
 import umu.pds.vista.elementos.PioButton;
 import umu.pds.vista.elementos.PioColores;
@@ -27,13 +21,11 @@ import umu.pds.vista.elementos.PioColores;
 public class Biblioteca extends JPanel {
 	private Usuario usuario;
 	private Piolify controlador = Piolify.getUnicaInstancia();
-	private ImportacionController importacionController = this.controlador.getImportacionController();
 	private JPanel panelCentral;
 	private JPanel panelListaCursos;
 	private JPanel panelImportarCursos;
 	private JTextArea descripcionAreaListaCursos;
 	private Color panelColor = PioColores.GRIS_PANEL;
-	private ServicioProgreso servicioProgreso;
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +34,6 @@ public class Biblioteca extends JPanel {
 	 */
 	public Biblioteca(Usuario usuario) {
 		this.usuario = usuario;
-		this.servicioProgreso = new ServicioProgreso();
 		
 		setLayout(new BorderLayout());
 		setBackground(PioColores.BLANCO);
@@ -154,19 +145,6 @@ public class Biblioteca extends JPanel {
 		return panelImportarCursos;
 	}
 
-	private Estrategia mostrarSelectorEstrategia() {
-		String[] opciones = this.importacionController.getTiposEstrategiasDefinidas().stream().map(t -> t.toString())
-				.toArray(String[]::new);
-		String seleccion = (String) JOptionPane.showInputDialog(this,
-				"Selecciona la estrategia de aprendizaje para la sesión", "Seleccionar Estrategia",
-				JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
-
-		if (seleccion == null)
-			return null;
-		else
-			return this.importacionController.getEstrategia(seleccion);
-	}
-
 	private void importarCurso() {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JSON (*.json)", "json"));
@@ -265,257 +243,9 @@ public class Biblioteca extends JPanel {
 	 * Maneja el clic en un botón de curso.
 	 */
 	private void manejarClicCurso(Curso curso) {
-	    boolean cursoCompletado = servicioProgreso.isCursoCompletado(usuario, curso);
-	    
-	    if (cursoCompletado) {
-	        // Curso completado
-	        manejarCursoCompletado(curso);
-	    } else {
-	        // Curso nuevo o en progreso, mostrar selector de bloques
-	        mostrarSelectorBloques(curso);
-	    }
+	    controlador.getProgresoController().iniciarOContinuarCurso(curso, this);
 	}
 
-	/**
-	 * Muestra el selector de bloques con información de progreso.
-	 */
-	private void mostrarSelectorBloques(Curso curso) {
-	    List<Bloque> bloques = curso.getBloques();
-	    
-	    if (bloques == null || bloques.isEmpty()) {
-	        JOptionPane.showMessageDialog(this,
-	            "El curso \"" + curso.getTitulo() + "\" no tiene bloques de ejercicios.",
-	            "Sin ejercicios", JOptionPane.WARNING_MESSAGE);
-	        return;
-	    }
-
-	    // Crear opciones que incluyan información de progreso
-	    String[] opcionesBloques = bloques.stream()
-	        .map(bloque -> {
-	            ProgresoBloque progreso = servicioProgreso.obtenerProgreso(usuario, bloque);
-	            if (progreso == null) {
-	                return bloque.getTitulo() + " (No iniciado)";
-	            } else if (progreso.isCompletado()) {
-	                return bloque.getTitulo() + " (✓ Completado)";
-	            } else {
-	                return bloque.getTitulo() + String.format(" (%.1f%% completado)", 
-	                    progreso.getPorcentajeCompletado());
-	            }
-	        })
-	        .toArray(String[]::new);
-
-	    String mensaje = String.format(
-	        "Curso: %s\nProgreso general: %.1f%%\n\nSelecciona el bloque que quieres estudiar:",
-	        curso.getTitulo(),
-	        servicioProgreso.calcularPorcentajeCurso(usuario, curso)
-	    );
-
-	    String seleccionBloque = (String) JOptionPane.showInputDialog(
-	        this, mensaje, "Elegir Bloque",
-	        JOptionPane.QUESTION_MESSAGE, null, opcionesBloques, opcionesBloques[0]
-	    );
-
-	    if (seleccionBloque == null) return;
-
-	    // Encontrar el bloque seleccionado
-	    int indiceSeleccionado = -1;
-	    for (int i = 0; i < opcionesBloques.length; i++) {
-	        if (opcionesBloques[i].equals(seleccionBloque)) {
-	            indiceSeleccionado = i;
-	            break;
-	        }
-	    }
-	    
-	    if (indiceSeleccionado >= 0) {
-	        Bloque bloqueSeleccionado = bloques.get(indiceSeleccionado);
-	        manejarSeleccionBloque(bloqueSeleccionado);
-	    }
-	}
-
-	/**
-	 * Maneja la selección de un bloque específico.
-	 */
-	private void manejarSeleccionBloque(Bloque bloque) {
-	    ProgresoBloque progreso = servicioProgreso.obtenerProgreso(usuario, bloque);
-	    
-	    if (progreso == null) {
-	        // Bloque nuevo
-	        iniciarBloqueNuevo(bloque);
-	    } else if (progreso.isCompletado()) {
-	        // Bloque completado
-	        manejarBloqueCompletado(bloque);
-	    } else {
-	        // Bloque en progreso
-	        manejarBloqueEnProgreso(bloque, progreso);
-	    }
-	}
-
-	/**
-	 * Inicia un bloque que no se ha empezado nunca.
-	 */
-	private void iniciarBloqueNuevo(Bloque bloque) {
-	    Estrategia estrategia = mostrarSelectorEstrategia();
-	    if (estrategia == null) return;
-	    
-	    // Crear progreso del bloque
-	    ProgresoBloque progresoBloque = servicioProgreso.iniciarProgreso(
-	        usuario, bloque, estrategia.getTipoEstrategia()
-	    );
-	    
-	    // Abrir ventana de ejercicios
-	    abrirVentanaEjercicios(bloque, estrategia, progresoBloque);
-	}
-
-	/**
-	 * Maneja un bloque que está completado.
-	 */
-	private void manejarBloqueCompletado(Bloque bloque) {
-	    int respuesta = JOptionPane.showConfirmDialog(this,
-	        "El bloque \"" + bloque.getTitulo() + "\" ya está completado.\n¿Deseas repetirlo?", 
-	        "Bloque Completado", JOptionPane.YES_NO_OPTION);
-	        
-	    if (respuesta == JOptionPane.YES_OPTION) {
-	        reiniciarBloque(bloque);
-	    }
-	}
-
-	/**
-	 * Maneja un bloque que está en progreso.
-	 */
-	private void manejarBloqueEnProgreso(Bloque bloque, ProgresoBloque progreso) {
-	    String estrategiaActual = progreso.getEstrategiaUtilizada().toString();
-	    
-	    String mensaje = String.format(
-	        "Bloque: \"%s\"\n" +
-	        "Progreso: %.1f%% (%d/%d ejercicios)\n" +
-	        "Estrategia actual: %s\n\n" +
-	        "¿Qué deseas hacer?",
-	        bloque.getTitulo(),
-	        progreso.getPorcentajeCompletado(),
-	        progreso.getEjerciciosCompletados(),
-	        bloque.getEjercicios().size(),
-	        estrategiaActual
-	    );
-	    
-	    String[] opciones = {
-	        "Continuar donde lo dejé",
-	        "Cambiar estrategia y continuar",
-	        "Reiniciar este bloque",
-	        "Cancelar"
-	    };
-	    
-	    int seleccion = JOptionPane.showOptionDialog(
-	        this, mensaje, "Bloque en Progreso", 
-	        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
-	        null, opciones, opciones[0]
-	    );
-	    
-	    switch (seleccion) {
-	        case 0: // Continuar donde lo dejé
-	            continuarBloque(bloque, progreso);
-	            break;
-	            
-	        case 1: // Cambiar estrategia y continuar
-	            cambiarEstrategiaYContinuar(bloque, progreso);
-	            break;
-	            
-	        case 2: // Reiniciar este bloque
-	            reiniciarBloque(bloque);
-	            break;
-	            
-	        case 3: // Cancelar
-	        default:
-	            return;
-	    }
-	}
-
-	/**
-	 * Continúa un bloque manteniendo la estrategia actual.
-	 */
-	private void continuarBloque(Bloque bloque, ProgresoBloque progreso) {
-	    String estrategiaActual = progreso.getEstrategiaUtilizada().toString();
-	    Estrategia estrategia = importacionController.getEstrategia(estrategiaActual);
-	    
-	    abrirVentanaEjercicios(bloque, estrategia, progreso);
-	}
-
-	/**
-	 * Permite cambiar la estrategia antes de continuar.
-	 */
-	private void cambiarEstrategiaYContinuar(Bloque bloque, ProgresoBloque progreso) {
-	    Estrategia nuevaEstrategia = mostrarSelectorEstrategia();
-	    if (nuevaEstrategia == null) return;
-	    
-	    // Actualizar estrategia en el progreso
-	    progreso.setEstrategiaUtilizada(nuevaEstrategia.getTipoEstrategia());
-	    servicioProgreso.guardarProgreso(progreso);
-	    
-	    abrirVentanaEjercicios(bloque, nuevaEstrategia, progreso);
-	}
-
-	/**
-	 * Reinicia un bloque desde el principio.
-	 */
-	private void reiniciarBloque(Bloque bloque) {
-	    Estrategia estrategia = mostrarSelectorEstrategia();
-	    if (estrategia == null) return;
-	    
-	    // Eliminar progreso anterior del bloque
-	    servicioProgreso.eliminarProgreso(usuario, bloque);
-	    
-	    // Crear nuevo progreso
-	    ProgresoBloque nuevoProgreso = servicioProgreso.iniciarProgreso(
-	        usuario, bloque, estrategia.getTipoEstrategia()
-	    );
-	    
-	    // Abrir ventana desde el principio
-	    abrirVentanaEjercicios(bloque, estrategia, nuevoProgreso);
-	}
-
-	/**
-	 * Abre la ventana de ejercicios para un bloque específico.
-	 */
-	private void abrirVentanaEjercicios(Bloque bloque, Estrategia estrategia, ProgresoBloque progreso) {
-	    try {
-	        if (bloque.getEjercicios() == null || bloque.getEjercicios().isEmpty()) {
-	            JOptionPane.showMessageDialog(this,
-	                "El bloque \"" + bloque.getTitulo() + "\" no tiene ejercicios.",
-	                "Sin ejercicios", JOptionPane.WARNING_MESSAGE);
-	            return;
-	        }
-
-	        List<Ejercicio> ejercicios = estrategia.ordenarEjercicios(bloque.getEjercicios());
-	        
-	        SwingUtilities.invokeLater(() -> {
-	            PioEjerciciosConProgreso ventanaEjercicios = new PioEjerciciosConProgreso(
-	                ejercicios, progreso, servicioProgreso
-	            );
-	            ventanaEjercicios.setVisible(true);
-	        });
-	        
-	    } catch (Exception e) {
-	        JOptionPane.showMessageDialog(this,
-	            "Error al abrir los ejercicios: " + e.getMessage(),
-	            "Error", JOptionPane.ERROR_MESSAGE);
-	    }
-	}
-
-	/**
-	 * Maneja un curso que está completado.
-	 */
-	private void manejarCursoCompletado(Curso curso) {
-		int respuesta = JOptionPane.showConfirmDialog(this,
-				"\"" + curso.getTitulo() + "\" ya está completado.\n¿Deseas repetirlo?", "Curso Completado",
-				JOptionPane.YES_NO_OPTION);
-
-		if (respuesta == JOptionPane.YES_OPTION) {
-			// Eliminar progreso de todos los bloques del curso
-			for (Bloque bloque : curso.getBloques()) {
-				servicioProgreso.eliminarProgreso(usuario, bloque);
-			}
-			mostrarSelectorBloques(curso);
-		}
-	}
 
 	/**
 	 * Método para limpiar cursos duplicados basándose en el título

@@ -17,6 +17,9 @@ class PiolifyTest {
     @Mock
     private ImportacionController importacionControllerMock;
     
+    @Mock
+    private ProgresoController progresoControllerMock;
+    
     
     private Piolify piolify;
     
@@ -24,7 +27,8 @@ class PiolifyTest {
     void setUp() {
         usuarioControllerMock = mock(UsuarioController.class);
         importacionControllerMock = mock(ImportacionController.class);
-        piolify = new Piolify(usuarioControllerMock, importacionControllerMock);
+        progresoControllerMock = mock(ProgresoController.class);
+        piolify = new Piolify(usuarioControllerMock, importacionControllerMock, progresoControllerMock);
     }
     
     @Test
@@ -41,6 +45,7 @@ class PiolifyTest {
     void testGetControllers() {
         assertEquals(usuarioControllerMock, piolify.getUsuarioController());
         assertEquals(importacionControllerMock, piolify.getImportacionController());
+        assertEquals(progresoControllerMock, piolify.getProgresoController());
     }
     
     @Test
