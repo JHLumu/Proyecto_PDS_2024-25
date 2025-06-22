@@ -71,7 +71,7 @@ El usuario inicia sesión para acceder a la plataforma con su cuenta.
 ### Flujo Básico
 
 1. El usuario accede al proceso de inicio de sesión.
-2. El usuario introduce las credenciales necesarias (Nombre de Usuario/Correo Electrónico y Contraseña).
+2. El usuario introduce las credenciales necesarias (Correo Electrónico y Contraseña).
 3. El sistema comprueba los datos introducidos.
 4. El sistema autentica al usuario y le permite el acceso a la plataforma.
 
@@ -167,31 +167,35 @@ El estudiante escoge uno de los cursos disponibles en el catálogo de cursos que
 1. El estudiante accede a la sección de cursos del sistema.
 2. El sistema muestra la biblioteca interna del estudiante, con una lista de los cursos actuales que dispone.
 3. El estudiante selecciona el curso que desea realizar.
-4. El sistema solicita al estudiante que escoja la estrategia de aprendizaje que desea para la sesión de aprendizaje, mostrando las tres opciones con una breve descripción:
+4. El sistema muestra la lista de bloques del curso, pudiendo seleccionar el estudiante el bloque que desee.
+5. El estudiante selecciona el bloque que desee realizar.
+6. El sistema solicita al estudiante que escoja la estrategia de aprendizaje que desea para la sesión de aprendizaje, mostrando las tres opciones con una breve descripción:
    * Estrategia secuencial.
    * Estrategia de repetición espaciada.
    * Estrategia adaptativa.
-5. El usuario escoge la estrategia de aprendizaje que desee utilizar, registrando la elección el sistema.
-6. El sistema muestra la lista de bloques del curso, pudiendo seleccionar el estudiante aquellos bloques que estén desbloqueados (bloques que ya haya completado, bloques que se hayan desbloqueado por completar los anteriores).
-7. El estudiante selecciona el bloque que desee realizar.
+7. El usuario escoge la estrategia de aprendizaje que desee utilizar, registrando la elección el sistema.
 8. El sistema inicia la sesión de aprendizaje mostrando una secuencia de ejercicios cuyo orden depende de la estrategia de aprendizaje elegida.
-9. El estudiante responde cada uno de estos ejercicios, registrando el sistema varias estadísticas y el progreso realizado en la sesión (tiempo de estudio, porcentaje de aciertos y ejercicios completados). Para cada ejercicio que responde, si el estudiante acierta, el sistema le notifica que la respuesta es correcta. En caso contrario, muestra una respuesta correcta esperada.
+9. El estudiante responde cada uno de estos ejercicios, registrando el sistema en tiempo real varias estadísticas y el progreso realizado en la sesión (tiempo de estudio, porcentaje de aciertos, número de ejercicios completados, número de aciertos y número de fallos). Para cada ejercicio que responde, el sistema muestra si ha acertado o fallado, permitiendo volver a responder en caso en fallo o ver la respuesta esperada si así lo solicita.
 10. El estudiante termina de responder la secuencia de ejercicios, notificando el sistema que ha completado el bloque y volviendo a la biblioteca interna de cursos.
 
 ### Flujo Alternativo
 
-#### 7a. El estudiante escoge un bloque de aprendizaje inacabado
+#### 7a. El estudiante escoge un bloque de aprendizaje con una sesion guardada sin completar.
 1. El sistema recupera el punto en el que el estudiante estuvo antes de salirse de la sesión.
 2. El sistema continúa la sesión de aprendizaje desde ese punto.
 
-#### 9a. El estudiante se sale de la sesión de aprendizaje sin terminar la secuencia de ejercicios
+#### 9a. El usuario pulsa el botón "Guardar y Salir" durante la sesión de aprendizaje.
 1. El sistema guarda el estado actual de la sesión de aprendizaje y del curso.
-2. El estudiante regresa a la biblioteca interna de loscursos, pudiendo reanudar la sesión de aprendizaje desde el mismo punto.
+2. El estudiante regresa a la biblioteca interna de cursos, pudiendo reanudar la sesión de aprendizaje desde el mismo punto.
+
+#### 9b. El usuario abandona la sesión de aprendizaje sin guardar el progreso actual.
+1. El sistema no guarda el estado actual de la sesión ni las respuestas del bloque en curso.
 
 ### Postcondiciones
 
 * El sistema debe actualizar las estadísticas generales y específicas del estudiante.
 * El sistema debe actualizar la lista de bloques de aprendizaje, desbloqueando bloques de aprendizaje si es necesario y si se ha completado un bloque.
+* El sistema debe guardar el estado actual de la sesión si el usuario así lo ha solicitado.
 
 ---
 
@@ -223,7 +227,7 @@ El estudiante accede a sus estadísticas (tiempo de estudio, racha de días, etc
 Estudiante.
 
 ### Descripción
-Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sistema el archivo JSON/YAML del curso. Una vez se haya adjuntado, la aplicación muestra el curso y el estudiante puede acceder a él en cualquier momento.
+Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sistema el archivo JSON del curso. Una vez se haya adjuntado, la aplicación muestra el curso y el estudiante puede acceder a él en cualquier momento.
 
 ### Precondiciones
 
@@ -234,8 +238,8 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 1. El estudiante accede a la sección de cursos de la aplicación.
 2. El sistema muestra una opción para importar un curso.
 3. El estudiante escoge la opción de importar un curso.
-4. El estudiante selecciona el archivo JSON/YAML del curso que desea instalar.
-5. El sistema verifica la estructura del archivo JSON/YAML.
+4. El estudiante selecciona el archivo JSON del curso que desea instalar.
+5. El sistema verifica la estructura del archivo JSON.
 6. El sistema registra el curso en la biblioteca interna del estudiante y le notifica que se ha añadido correctamente.
 7. El sistema muestra en la biblioteca interna del estudiante el curso añadido, pudiendo acceder desde ese momento.
 
@@ -243,7 +247,7 @@ Un estudiante puede instalar un curso a su biblioteca interna adjuntando al sist
 
 #### 4a. El sistema comprueba que el archivo seleccionado no cumple con la estructura esperada
 1. El sistema notifica al estudiante que no se ha podido añadir el curso debido a que no cumple la estructura que el sistema espera.
-2. El sistema muestra una opción al estudiante de visualizar la estructura esperada en el archivo JSON/YAML, y otra opción para reintentar la instalación del curso.
+2. El sistema muestra una opción al estudiante de visualizar la estructura esperada en el archivo JSON, y otra opción para reintentar la instalación del curso.
 3. Si el estudiante escoge la segunda opción, se vuelve al paso 3 del flujo básico.
 
 ### Postcondiciones
@@ -266,7 +270,7 @@ El usuario puede enviar una petición de amistad a otro usuario, y este puede ac
 ### Flujo Básico
 1. El usuario accede a la opción de añadir amigos, dentro de la sección social definida dentro del sistema.
 2. El sistema ofrece al usuario la búsqueda de usuarios registrados del sistema.
-3. El usuario introduce el nombre del usuario al que desea envíar la petición y lo escoge.
+3. El usuario introduce el correo electrónico del usuario al que desea envíar la petición y lo escoge.
 4. El sistema muestra la opción de añadir amigo al usuario, y el usuario la selecciona.
 5. El sistema notifica al emisor que la petición de amistad se ha enviado correctamente, y al receptor que ha recibido una nueva petición de amistad.
 
