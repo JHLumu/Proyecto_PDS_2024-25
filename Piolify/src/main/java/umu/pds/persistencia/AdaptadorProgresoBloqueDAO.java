@@ -84,7 +84,7 @@ public class AdaptadorProgresoBloqueDAO implements ProgresoBloqueDAO {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<ProgresoBloque> query = em.createQuery(
-                "SELECT p FROM ProgresoBloque p WHERE p.usuario = :usuario ORDER BY p.ultimaActualizacion DESC", 
+                "SELECT p FROM ProgresoBloque p WHERE p.usuario = :usuario ORDER BY p.ultimaActividad DESC", 
                 ProgresoBloque.class);
             query.setParameter("usuario", usuario);
             return query.getResultList();
@@ -118,7 +118,7 @@ public class AdaptadorProgresoBloqueDAO implements ProgresoBloqueDAO {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<ProgresoBloque> query = em.createQuery(
-                "SELECT p FROM ProgresoBloque p WHERE p.usuario = :usuario AND p.bloqueCompletado = false ORDER BY p.ultimaActualizacion DESC", 
+                "SELECT p FROM ProgresoBloque p WHERE p.usuario = :usuario AND p.completado = false ORDER BY p.ultimaActividad DESC", 
                 ProgresoBloque.class);
             query.setParameter("usuario", usuario);
             return query.getResultList();

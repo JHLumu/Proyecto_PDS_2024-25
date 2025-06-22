@@ -320,7 +320,7 @@ public class ProgresoController {
      * @param progreso El objeto ProgresoBloque que se utilizará para registrar y mostrar el progreso.
      * @param parentComponent El componente padre para los diálogos.
      */
-    private void abrirVentanaEjercicios(Bloque bloque, Estrategia estrategia, ProgresoBloque progreso, Component parentComponent) {
+    void abrirVentanaEjercicios(Bloque bloque, Estrategia estrategia, ProgresoBloque progreso, Component parentComponent) {
         try {
             // Verifica si el bloque contiene ejercicios.
             if (bloque.getEjercicios() == null || bloque.getEjercicios().isEmpty()) {
