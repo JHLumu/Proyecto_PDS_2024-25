@@ -1,0 +1,196 @@
+{
+  "titulo": "Desarrollo Web Backend",
+  "descripcion": "Curso completo sobre desarrollo web backend con Node.js, Express y Bases de Datos",
+  "dificultad": "Intermedio",
+  "autor": "Dr. Carlos Sánchez",
+  "bloques": [
+    {
+      "titulo": "Node.js: Fundamentos",
+      "descripcion": "Introducción a Node.js y su ecosistema para el desarrollo del lado del servidor.",
+      "orden": 1,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Qué es Node.js?",
+          "respuesta": "B",
+          "dificultad": 1,
+          "orden": 1,
+          "opciones": [
+            "Un lenguaje de programación",
+            "Un entorno de ejecución de JavaScript del lado del servidor",
+            "Una base de datos",
+            "Un framework de CSS"
+          ]
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "Para importar un módulo en Node.js se utiliza la función _____.",
+          "respuesta": "require",
+          "dificultad": 2,
+          "orden": 2
+        },
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué es NPM?",
+          "respuesta": "Node Package Manager - es el gestor de paquetes por defecto para Node.js, usado para instalar y gestionar dependencias.",
+          "dificultad": 1,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Cuál de estos módulos de Node.js se usa para trabajar con el sistema de archivos?",
+          "respuesta": "A",
+          "dificultad": 2,
+          "orden": 4,
+          "opciones": [
+            "fs (File System)",
+            "http",
+            "path",
+            "url"
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Express.js: Framework de Servidor",
+      "descripcion": "Construcción de APIs y aplicaciones web robustas con el framework Express.js.",
+      "orden": 2,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Qué es Express.js?",
+          "respuesta": "C",
+          "dificultad": 1,
+          "orden": 1,
+          "opciones": [
+            "Una base de datos",
+            "Un motor de plantillas",
+            "Un framework minimalista para aplicaciones web sobre Node.js",
+            "Un cliente HTTP"
+          ]
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "En Express, una función _____ es aquella que tiene acceso al objeto de solicitud (req), al objeto de respuesta (res) y a la siguiente función en el ciclo de la aplicación.",
+          "respuesta": "middleware",
+          "dificultad": 3,
+          "orden": 2
+        },
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué es el enrutamiento (routing) en Express?",
+          "respuesta": "Se refiere a cómo una aplicación responde a una solicitud de un cliente en un endpoint particular, que es una URI (o ruta) y un método de solicitud HTTP específico (GET, POST, etc.).",
+          "dificultad": 2,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "En una ruta definida como '/users/:id', ¿cómo se accede al valor de 'id' en Express?",
+          "respuesta": "A",
+          "dificultad": 2,
+          "orden": 4,
+          "opciones": [
+            "req.params.id",
+            "req.query.id",
+            "req.body.id",
+            "req.id"
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "Bases de Datos con MongoDB",
+      "descripcion": "Integración y gestión de bases de datos NoSQL con MongoDB y Mongoose.",
+      "orden": 3,
+      "ejercicios": [
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué tipo de base de datos es MongoDB?",
+          "respuesta": "Es una base de datos NoSQL, orientada a documentos, que almacena datos en estructuras similares a JSON (llamadas BSON).",
+          "dificultad": 1,
+          "orden": 1
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Qué es Mongoose?",
+          "respuesta": "D",
+          "dificultad": 2,
+          "orden": 2,
+          "opciones": [
+            "Un driver nativo de MongoDB",
+            "Un lenguaje de consulta para MongoDB",
+            "Un servidor de base de datos",
+            "Una librería de modelado de objetos (ODM) para MongoDB en Node.js"
+          ]
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "En Mongoose, un _____ define la estructura de los documentos, y un _____ es un constructor que se encarga de crear y leer documentos de la base de datos.",
+          "respuesta": "Schema|Model",
+          "dificultad": 2,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Qué método de Mongoose se utiliza para encontrar un único documento por su campo '_id'?",
+          "respuesta": "B",
+          "dificultad": 2,
+          "orden": 4,
+          "opciones": [
+            "Model.findOne()",
+            "Model.findById()",
+            "Model.find()",
+            "Model.fetchById()"
+          ]
+        }
+      ]
+    },
+    {
+      "titulo": "APIs REST y Autenticación",
+      "descripcion": "Principios para el diseño de APIs RESTful y estrategias de autenticación como JWT.",
+      "orden": 4,
+      "ejercicios": [
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Qué verbo HTTP se utiliza comúnmente para crear un nuevo recurso en una API REST?",
+          "respuesta": "B",
+          "dificultad": 1,
+          "orden": 1,
+          "opciones": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ]
+        },
+        {
+          "tipo": "FLASHCARD",
+          "contenido": "¿Qué significa JWT?",
+          "respuesta": "JSON Web Token. Es un estándar abierto para crear tokens de acceso que permiten la propagación de identidad y privilegios de forma segura.",
+          "dificultad": 2,
+          "orden": 2
+        },
+        {
+          "tipo": "COMPLETAR_HUECOS",
+          "contenido": "Un JWT se compone de tres partes separadas por puntos: _____, _____ y _____.",
+          "respuesta": "Header|Payload|Signature",
+          "dificultad": 3,
+          "orden": 3
+        },
+        {
+          "tipo": "OPCION_MULTIPLE",
+          "contenido": "¿Por qué se considera que la autenticación con JWT es 'stateless' (sin estado)?",
+          "respuesta": "C",
+          "dificultad": 3,
+          "orden": 4,
+          "opciones": [
+            "Porque el token se guarda en una cookie.",
+            "Porque el servidor necesita consultar la base de datos en cada petición.",
+            "Porque toda la información para verificar al usuario está en el propio token.",
+            "Porque no requiere una firma digital."
+          ]
+        }
+      ]
+    }
+  ]
+}
