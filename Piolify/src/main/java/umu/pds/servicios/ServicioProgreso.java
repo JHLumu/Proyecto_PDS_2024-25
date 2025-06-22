@@ -20,10 +20,6 @@ public class ServicioProgreso {
         this.progresoBloqueDAO = factoria.getProgresoBloqueDAO();
     }
     
-    // ==========================================
-    // MÉTODOS PRINCIPALES
-    // ==========================================
-    
     /**
      * Inicia o recupera el progreso de un bloque
      */
@@ -98,10 +94,6 @@ public class ServicioProgreso {
             System.out.println("Progreso eliminado para bloque: " + bloque.getTitulo());
         }
     }
-    
-    // ==========================================
-    // MÉTODOS DE CONSULTA
-    // ==========================================
     
     /**
      * Obtiene todos los progresos de un usuario en un curso

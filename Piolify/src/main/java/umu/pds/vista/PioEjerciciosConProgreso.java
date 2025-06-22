@@ -356,7 +356,7 @@ public class PioEjerciciosConProgreso extends BaseRoundedFrame {
         if (cursoCompletado) {
             mensaje = String.format(
                 "¡Felicidades! Has completado el bloque \"%s\" y con él TODO el curso \"%s\"!\n\n" +
-                "¡Excelente trabajo! 🎉",
+                "¡Excelente trabajo!",
                 progresoBloque.getBloque().getTitulo(),
                 curso.getTitulo()
             );
@@ -364,7 +364,7 @@ public class PioEjerciciosConProgreso extends BaseRoundedFrame {
             Bloque siguienteBloque = servicioProgreso.obtenerSiguienteBloqueRecomendado(usuarioActual, curso);
             if (siguienteBloque != null) {
                 mensaje = String.format(
-                    "¡Bloque \"%s\" completado! 🎉\n\n" +
+                    "¡Bloque \"%s\" completado!\n\n" +
                     "Progreso del curso: %.1f%%\n\n" +
                     "Siguiente bloque recomendado: \"%s\"\n" +
                     "Puedes continuar desde la biblioteca.",
@@ -374,7 +374,7 @@ public class PioEjerciciosConProgreso extends BaseRoundedFrame {
                 );
             } else {
                 mensaje = String.format(
-                    "¡Bloque \"%s\" completado! 🎉\n\n" +
+                    "¡Bloque \"%s\" completado! \n\n" +
                     "Progreso del curso: %.1f%%",
                     progresoBloque.getBloque().getTitulo(),
                     servicioProgreso.calcularPorcentajeCurso(usuarioActual, curso)
@@ -464,10 +464,6 @@ public class PioEjerciciosConProgreso extends BaseRoundedFrame {
     private boolean hayMasEjercicios() {
         return indiceActual < listaEjercicios.size() - 1;
     }
-
-    // ==========================================
-    // MÉTODOS PÚBLICOS PARA COMPATIBILIDAD
-    // ==========================================
 
     public boolean validarRespuesta() {
         EjercicioRenderer rendererActual = renderers.get(indiceActual);
