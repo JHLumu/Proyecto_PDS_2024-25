@@ -17,9 +17,9 @@ import umu.pds.vista.PioEjerciciosConProgreso;
  * Facilita la interacción entre la interfaz de usuario y el modelo de datos relacionado con el progreso.
  */
 public class ProgresoController {
-    Piolify controlador;
+    private Piolify controlador;
 
-    ServicioProgreso servicioProgreso;
+    private ServicioProgreso servicioProgreso;
     
     /**
      * Constructor del controlador de progreso.
@@ -56,7 +56,7 @@ public class ProgresoController {
      * @param curso El curso del cual se mostrarán los bloques.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void mostrarSelectorBloques(Curso curso, Component parentComponent) {
+    private void mostrarSelectorBloques(Curso curso, Component parentComponent) {
         List<Bloque> bloques = curso.getBloques();
         
         // Comprueba si el curso tiene bloques asociados.
@@ -120,7 +120,7 @@ public class ProgresoController {
      * @param bloque El bloque de ejercicios seleccionado.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void manejarSeleccionBloque(Bloque bloque, Component parentComponent) {
+    private void manejarSeleccionBloque(Bloque bloque, Component parentComponent) {
         // Obtiene el progreso del bloque para el usuario actual.
         ProgresoBloque progreso = servicioProgreso.obtenerProgreso(controlador.getUsuarioActual(), bloque);
         
@@ -143,7 +143,7 @@ public class ProgresoController {
      * @param progreso El objeto ProgresoBloque que representa el estado actual del progreso.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void manejarBloqueEnProgreso(Bloque bloque, ProgresoBloque progreso, Component parentComponent) {
+    private void manejarBloqueEnProgreso(Bloque bloque, ProgresoBloque progreso, Component parentComponent) {
         String estrategiaActual = progreso.getEstrategiaUtilizada().toString();
         
         // Construye el mensaje a mostrar en el diálogo de opciones.
@@ -189,7 +189,7 @@ public class ProgresoController {
      * @param bloque El bloque de ejercicios a iniciar.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void iniciarBloqueNuevo(Bloque bloque, Component parentComponent) {
+    private void iniciarBloqueNuevo(Bloque bloque, Component parentComponent) {
         // Muestra el selector de estrategias. Si se cancela, no se hace nada.
         Estrategia estrategia = mostrarSelectorEstrategia(parentComponent);
         if (estrategia == null) return;
@@ -210,7 +210,7 @@ public class ProgresoController {
      * @param progreso El objeto ProgresoBloque que contiene el estado actual del progreso.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void continuarBloque(Bloque bloque, ProgresoBloque progreso, Component parentComponent) {
+    private void continuarBloque(Bloque bloque, ProgresoBloque progreso, Component parentComponent) {
         // Obtiene la estrategia actual basada en el tipo almacenado en el progreso.
         String estrategiaActual = progreso.getEstrategiaUtilizada().toString();
         Estrategia estrategia = controlador.getImportacionController().getEstrategia(estrategiaActual);
@@ -225,7 +225,7 @@ public class ProgresoController {
      * @param progreso El objeto ProgresoBloque que representa el estado actual del progreso.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void cambiarEstrategiaYContinuar(Bloque bloque, ProgresoBloque progreso, Component parentComponent) {
+    private void cambiarEstrategiaYContinuar(Bloque bloque, ProgresoBloque progreso, Component parentComponent) {
         // Muestra el selector de estrategias para elegir una nueva.
         Estrategia nuevaEstrategia = mostrarSelectorEstrategia(parentComponent);
         if (nuevaEstrategia == null) return;
@@ -242,7 +242,7 @@ public class ProgresoController {
      * @param bloque El bloque de ejercicios a reiniciar.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void reiniciarBloque(Bloque bloque, Component parentComponent) {
+    private void reiniciarBloque(Bloque bloque, Component parentComponent) {
         // Solicita al usuario seleccionar una nueva estrategia para el bloque reiniciado.
         Estrategia estrategia = mostrarSelectorEstrategia(parentComponent);
         if (estrategia == null) return;
@@ -262,7 +262,7 @@ public class ProgresoController {
      * @param bloque El bloque de ejercicios que ya está completado.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void manejarBloqueCompletado(Bloque bloque, Component parentComponent) {
+    private void manejarBloqueCompletado(Bloque bloque, Component parentComponent) {
         // Pregunta al usuario si desea repetir el bloque.
         int respuesta = JOptionPane.showConfirmDialog(parentComponent,
             "El bloque \"" + bloque.getTitulo() + "\" ya está completado.\n¿Deseas repetirlo?", 
@@ -280,7 +280,7 @@ public class ProgresoController {
      * @param curso El curso que ya está completado.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void manejarCursoCompletado(Curso curso, Component parentComponent) {
+    private void manejarCursoCompletado(Curso curso, Component parentComponent) {
 		// Pregunta al usuario si desea repetir el curso.
 		int respuesta = JOptionPane.showConfirmDialog(parentComponent,
 				"\"" + curso.getTitulo() + "\" ya está completado.\n¿Deseas repetirlo?", "Curso Completado",
@@ -302,7 +302,7 @@ public class ProgresoController {
      * @param parentComponent El componente padre para los diálogos.
      * @return La estrategia seleccionada por el usuario, o null si el usuario cancela la selección.
      */
-    Estrategia mostrarSelectorEstrategia(Component parentComponent) {
+    private Estrategia mostrarSelectorEstrategia(Component parentComponent) {
         // Obtiene los nombres de las estrategias definidas para mostrarlas como opciones.
         String[] opciones = controlador.getImportacionController().getTiposEstrategiasDefinidas().stream().map(t -> t.toString()).toArray(String[]::new);
         // Muestra el diálogo de selección de estrategia.
@@ -321,7 +321,7 @@ public class ProgresoController {
      * @param progreso El objeto ProgresoBloque que se utilizará para registrar y mostrar el progreso.
      * @param parentComponent El componente padre para los diálogos.
      */
-    void abrirVentanaEjercicios(Bloque bloque, Estrategia estrategia, ProgresoBloque progreso, Component parentComponent) {
+    private void abrirVentanaEjercicios(Bloque bloque, Estrategia estrategia, ProgresoBloque progreso, Component parentComponent) {
         try {
             // Verifica si el bloque contiene ejercicios.
             if (bloque.getEjercicios() == null || bloque.getEjercicios().isEmpty()) {

@@ -11,6 +11,8 @@
     <class>umu.pds.modelo.Amistad</class>
     <class>umu.pds.modelo.Logro</class>
     <class>umu.pds.modelo.Estadisticas</class>
+    <class>umu.pds.modelo.ProgresoBloque</class>
+    <class>umu.pds.modelo.SesionAprendizaje</class>
 		<properties>
 			<property name="jakarta.persistence.jdbc.driver"
 				value="org.sqlite.JDBC" />
