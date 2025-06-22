@@ -42,7 +42,10 @@ public class JPAFactoriaDAO extends FactoriaDAO {
 	public SesionAprendizajeDAO getSesionAprendizajeDAO() {
 		return new AdaptadorSesionAprendizajeDAO(emf);
 	}
-	
-  
+
+	@Override
+	public ProgresoBloqueDAO getProgresoBloqueDAO() {
+		return new AdaptadorProgresoBloqueDAO(emf);
+	}
 	
 }

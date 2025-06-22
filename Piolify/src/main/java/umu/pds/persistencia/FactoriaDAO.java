@@ -39,5 +39,6 @@ public abstract class FactoriaDAO {
 	public abstract CursoDAO getCursoDAO();
 	public abstract AmistadDAO getAmistadDAO();
 	public abstract SesionAprendizajeDAO getSesionAprendizajeDAO();
+	public abstract ProgresoBloqueDAO getProgresoBloqueDAO();
 	
 }

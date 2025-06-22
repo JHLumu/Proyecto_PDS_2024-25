@@ -2,6 +2,7 @@ package umu.pds.modelo;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -110,6 +111,25 @@ public class Bloque {
 
 	public void setOrden(int orden) {
 		this.orden = orden;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(curso, descripcion, ejercicios, id, orden, titulo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bloque other = (Bloque) obj;
+		return Objects.equals(curso, other.curso) && Objects.equals(descripcion, other.descripcion)
+				&& Objects.equals(ejercicios, other.ejercicios) && Objects.equals(id, other.id) && orden == other.orden
+				&& Objects.equals(titulo, other.titulo);
 	}
 	
 	

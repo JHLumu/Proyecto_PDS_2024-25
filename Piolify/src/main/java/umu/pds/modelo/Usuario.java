@@ -104,6 +104,13 @@ public class Usuario {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Curso> biblioteca = new ArrayList<>(); 
 
+	/**
+	 * Lista de instancias {@link ProgresoBloque} asociadas al usuario, recuperados
+	 * con la estrategia {@code LAZY} (al cargar en memoria una instancia
+	 * {@link Usuario}, se cargarán en memoria estas instancias
+	 * {@link ProgresoBloque} asociadas sólo cuando sea necesario)*/
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProgresoBloque> progresosBloques = new ArrayList<>();
     
     /**
      * Constructor necesario para JPA.
@@ -229,6 +236,14 @@ public class Usuario {
 		this.amistadesRecibidas = amistadesRecibidas;
 	}
 	
+	public List<ProgresoBloque> getProgresosBloques() {
+		return progresosBloques;
+	}
+	
+	public void setProgresosBloques(List<ProgresoBloque> progresosBloques) {
+		this.progresosBloques = progresosBloques;
+	}
+	
 	/**
 	 * Devuelve una lista de amigos para este usuario.
 	 * <p>
@@ -318,13 +333,13 @@ public class Usuario {
 	}
 
 	/**
-	 * Método que devuelve el número de cursos empezados por el usuario.
+	 * Método que devuelve el número de cursos empezados por el usuario
+	 * @return Número de cursos en la biblioteca del usuario
 	 */
 	public int getCursosComenzados() {
 		
 		return this.biblioteca.size();
 	}
-
 	
 
 }

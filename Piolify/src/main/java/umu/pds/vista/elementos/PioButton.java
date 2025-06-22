@@ -13,7 +13,7 @@ public class PioButton extends JButton{
 	private static final long serialVersionUID = 1L;
 
 	
-	PioButton(){
+	public PioButton(){
 		super();
 		setBorderPainted(false);
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
