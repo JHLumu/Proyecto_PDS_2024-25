@@ -1,18 +1,18 @@
 # Manual de Usuario Piolify
 
-## Ejecución
+## 🚀 Ejecución
 
 Para iniciar la aplicación, se debe ejecutar la clase `Login`, ubicado en el paquete `umu.pds.vista` del repositorio. Una vez lanzada la aplicación, se muestra la siguiente ventana:  
 
-<p align="center"><img src="./imagenes/login.png"  alt="Ventana Login" width=500></p>  
+<p align="center"><img src="./imagenes/login.png"  alt="Ventana Login" width=700></p>  
 
 En esta pantalla, el usuario debe introducir sus credenciales (correo electrónico y contraseña) para tener acceso total a la plataforma. Si es la primera vez que ha iniciado la aplicación, lo más probable es que no tenga una cuenta de usuario. Para registrarse en Piolify, se debe pulsar el botón **Registrarse**, redirigiéndolo al formulario de registro.
 
-<p align="center"><img src="./imagenes/registro.png"  alt="Ventana Registro" width=500></p>
+<p align="center"><img src="./imagenes/registro.png"  alt="Ventana Registro" width=700></p>
 
 Para registrarse, debe rellenar todos los campos del formulario y, opcionalmente, proporcionar una foto de perfil. Una vez se haya registrado exitosamente, su cuenta queda registrada y podrá iniciar sesión, a partir de la ventana **Login** mostrada anteriormente.
 
-## Ventana Principal de Piolify
+## 🏠 Ventana Principal de Piolify
 
 La aplicación se divide en cuatro secciones:
 
@@ -21,16 +21,16 @@ La aplicación se divide en cuatro secciones:
 - [**Amigos**](#amigos): Sección social de la plataforma.
 - [**Mi perfil**](#mi-perfil): Gestión de la información personal del usuario.
 
-### Mis Cursos
+### 📚 Mis Cursos
 
-<p align="center"><img src="./imagenes/miscursos.png"  alt="Ventana Principal`" width=500 style="padding-top:1rem"></p>
+<p align="center"><img src="./imagenes/miscursos.png"  alt="Ventana Principal`" width=700 style="padding-top:1rem"></p>
 
 Es la sección por defecto al iniciar sesión en Piolify. El usuario es capaz de:
 
 - Importar nuevos cursos en formato  `.json` mediante el botón [**Importar curso**](#importar-cursos).
 - Acceder a todos los cursos que ha importado anteriormente. Si no se tienen cursos cargados, se muestra un mensaje por defecto.
 
-### Estadísticas
+### 📊 Estadísticas
 
 Permite al usuario visualizar un resumen de su actividad dentro de la plataforma, ideal para un mejor seguimiento del progreso de su aprendizaje. Esta sección muestra:
 
@@ -43,17 +43,17 @@ Permite al usuario visualizar un resumen de su actividad dentro de la plataforma
 - Los **Logros Obtenidos** por el usuario durante las sesiones de aprendizaje.
 - El **Progreso por Cursos**
 
-<p align="center"><img src="./imagenes/estadisticas.png"  alt="Ventana Estadísticas" width=500 style="padding-top:1rem"></p>
+<p align="center"><img src="./imagenes/estadisticas.png"  alt="Ventana Estadísticas" width=700 style="padding-top:1rem"></p>
 
-### Amigos
+### 👥 Amigos
 
 Permite al usuario interactuar con otros usuarios de la plataforma, permitiendo enviar solicitudes de amistad a partir de su correo electrónico, gestionar solicitudes recibidas y consultar su lista de amigos.
 
-<p align="center"><img src="./imagenes/amigos.png"  alt="Ventana Amigos" width=500 style="padding-top:1rem"></p>
+<p align="center"><img src="./imagenes/amigos.png"  alt="Ventana Amigos" width=700 style="padding-top:1rem"></p>
 
-### Mi perfil
+### 👤 Mi perfil
 
-<p align="center"><img src="./imagenes/miperfil.png"  alt="Ventana Mi Perfil" width=500 style="padding-top:1rem"></p>
+<p align="center"><img src="./imagenes/miperfil.png"  alt="Ventana Mi Perfil" width=700 style="padding-top:1rem"></p>
 
 El usuario puede:
 
@@ -73,7 +73,7 @@ Piolify notificará con un mensaje en pantalla si los cambios solicitados no pue
 
 ## Funcionalidades del sistema
 
-### Importar Cursos
+### 📥 Importar Cursos
 
 Para importar un curso, el usuario debe estar en la sección de **Mis Cursos** y pulsar el botón **Importar curso**. Tras ello, se muestra una ventana para que el usuario escoja el archivo .json que contiene el curso que desea importar.
 
@@ -89,14 +89,19 @@ Una vez seleccionado y pulsado el botón **Abrir**, la plataforma verifica si es
       <img src="./imagenes/exitoimportacion.png" alt="Éxito de importación" width="400"/>
     </td>
     <td align="center" valign="middle">
-      <img src="./imagenes/miscursos-2.png" alt="Mis cursos" width="400"/>
+      <img src="./imagenes/miscursos-2.png" alt="Mis cursos" width="500"/>
     </td>
   </tr>
 </table>
 
-### Realizar un curso
+### 🎓 Realizar un curso
 
-Para empezar una sesión de aprendizaje de un curso, se debe pulsar el curso que se quiere realizar mostrado en **Biblioteca de Cursos**. Una vez hecho, Piolify permitirá elegir al usuario la estrategia de aprendizaje que desea para **esa** sesión. Dependiendo de la estrategia, el orden de los ejercicios de la sesión será diferente. Se muestran tres posibilidades:
+Para empezar una sesión de aprendizaje de un curso, se debe pulsar el curso que se quiere realizar mostrado en **Biblioteca de Cursos**. Una vez hecho, Piolify permitirá elegir al usuario el bloque que desea para la sesión, mostrando tanto el progreso general del curso, como el progreso específico para cada curso.
+
+<p align="center"><img src="./imagenes/seleccionarbloque.png"  alt="Ventana Seleccionar Bloque" width=500></p>
+
+
+Tras seleccionar el bloque, Piolify permite elegir al usuario la estrategia de aprendizaje que desea para **esa** sesión. Dependiendo de la estrategia, el orden de los ejercicios de la sesión será diferente. Se muestran tres posibilidades:
 
 - **Secuencial**: El orden viene impuesto por el definido en el archivo JSON. Esta es la estrategia por defecto.
 - **Repetición espaciada**: Cada tres preguntas como intervalo, se repite una pregunta vista anteriormente (siguiendo un orden secuencial).
@@ -104,30 +109,38 @@ Para empezar una sesión de aprendizaje de un curso, se debe pulsar el curso que
 
 <p align="center"><img src="./imagenes/seleccionarestrategia.png"  alt="Ventana Seleccionar Estrategia" width=400></p>
 
-Una vez seleccionado, a continuación la plataforma pregunta al usuario que bloque del curso desea realizar.
+Una vez seleccionado la estrategia, si el usuario dejó una sesión incompleta guardada, Piolify permite:
 
-<p align="center"><img src="./imagenes/seleccionarbloque.png"  alt="Ventana Seleccionar Bloque" width=500></p>
+- **Continuar** la sesión por donde lo dejó la última vez.
+- **Cambiar** la estrategia de aprendizaje seleccionada la última vez y continuar desde ese mismo punto.
+- **Reiniciar** la sesión desde el principio. Se vuelve a solicitar una estrategia de aprendizaje.
+- **Cancelar** la sesión de aprendizaje actual.
 
-Tras seleccionar el bloque, Piolify inicia automáticamente la sesión de aprendizaje. Durante la sesión:
+<p align="center"><img src="./imagenes/sesionencurso.png"  alt="Ventana Sesion en Curso" width=700></p>
 
-- Las preguntas se muestran una a una. El usuario puede retrodecer al ejercicio anterior en cualquier momento, pero para pasar a la siguiente, el usuario debe responder **correctamente** al ejercicio. Es por ello que, en caso de que el usuario se atasque, si se pulsa el botón **Solución** se muestra la respuesta correcta.
+Una vez que el usuario selecciona cómo desea retomar la sesión, se presentan los ejercicios del bloque correspondiente.
+
+- Las preguntas se muestran una a una. El usuario puede retrodecer al ejercicio anterior en cualquier momento, pero para pasar a la siguiente, el usuario debe responder **correctamente** al ejercicio. 
+- En el caso de que el usuario se atasque, si se pulsa el botón **Solución** se muestra la respuesta correcta.
 - Para que el usuario envíe una respuesta debe pulsar el botón **Validar**, notificando Piolify del acierto o fallo.
 - Pueden aparecer diferentes tipos de ejercicios: **Selección Múltiple**, **Completar Huecos** o **Flashcards**.
 
-<p align="center"><img src="./imagenes/realizarejercicio.png"  alt="Ventana Realizar Bloque" width=900, style="padding-top:1rem"></p>
+<p align="center"><img src="./imagenes/realizarejercicio.png"  alt="Ventana Realizar Ejercicio" width=900, style="padding-top:1rem"></p>
+
+En cualquier momento, durante la sesión, el usuario puede pulsar el botón **Guardar y Salir**, guardando automáticamente el estado actual de la sesión y saliendo de la sesión, pudiendo retomarla posteriormente como se ha explicado anteriormente.
+
+> Si el usuario cierra la ventana sin pulsar el botón **Guardar y Salir**, el progreso de la sesión no se guarda y debera comenzarse desde el inicio la próxima vez. Sin embargo, las estadísticas obtenidas hasta ese momento si quedan registradas en el sistema.
 
 Una vez finalizada la sesión, Piolify muestra un resumen con las estadísticas obtenidas durante esta sesión, incluyendo: Número de ejercicios completados, aciertos, fallos,Precisión de aciertos y tiempo total de la sesión.
 
-> Si el usuario cierra la ventana de la sesión antes de completarla, no se guarda la sesión por lo que deberá comenzar desde el principio la próxima vez. No obstante, sus estadísticas quedaron registradas en el sistema.
+<p align="center"><img src="./imagenes/resumensesion.png"  alt="Ventana Resumen Sesión" width=300, style="padding-top:1rem"></p>
 
-<p align="center"><img src="./imagenes/resumensesion.png"  alt="Ventana Realizar Bloque" width=300, style="padding-top:1rem"></p>
-
-### Consultar Estadísticas y Logros
+### 📈 Consultar Estadísticas y 🏅 Logros
 
 En esta sección, el usuario puede obtener una visión detallada sobre su desempeño en la plataforma Piolify.
 
 <p align="center">
-  <img src="./imagenes/dashboard.png" alt="Dashboard general" width="700" style="padding-top: 1rem;">
+  <img src="./imagenes/dashboard.png" alt="Dashboard general" width="900" style="padding-top: 1rem;">
 </p>
 
 La información se encuentra organizada en tres apartados principales:
@@ -180,7 +193,7 @@ La información se encuentra organizada en tres apartados principales:
 <p>Esto permite al usuario evaluar su progreso en cada curso, identificar fortalezas y debilidades, y decidir dónde enfocar su siguiente sesión de estudio.</p>
 
 
-### Enviar solicitudes de amistad
+### 📩 Enviar solicitudes de amistad
 
 La sección **Amigos** de Piolify permite a los usuarios interactuar socialmente dentro de la plataforma. Desde aquí, se puede buscar a otros usuarios, enviar solicitudes de amistad, aceptar o rechazar solicitudes recibidas, ver la lista de amigos y consultar el perfil de cada uno.
 
@@ -200,14 +213,13 @@ Para enviar una solicitud de amistad:
 
 Una vez enviada, la solicitud quedará en estado pendiente hasta que el otro usuario la acepte o rechace.
 
-
-### Gestionar solicitudes de amistad
+### 📬 Gestionar solicitudes de amistad
 
 En la misma sección, se pueden gestionar las solicitudes recibidas. Al recibir una solicitud, el sistema mostrará el nombre y correo del remitente, junto con las opciones **Aceptar** o **Rechazar**.
 
 
 <p align="center">
-  <img src="./imagenes/solicitud-pendiente.png" alt="Progreso por curso" width="400" style="padding-top: 1rem;">
+  <img src="./imagenes/solicitud-pendiente.png" alt="Progreso por curso" width="700" style="padding-top: 1rem;">
 </p>
 
 - Si se **acepta** la solicitud, el usuario pasa a formar parte de tu lista de amigos.
@@ -226,7 +238,7 @@ Cada tarjeta de amigo permite acceder a su perfil donde se puede consultar el no
 
 
 <p align="center">
-  <img src="./imagenes/perfil-amigo.png" alt="Progreso por curso" width="400" style="padding-top: 1rem;">
+  <img src="./imagenes/perfil-amigo.png" alt="Progreso por curso" width="700" style="padding-top: 1rem;">
 </p>
 
 Con estas funciones, Piolify no solo actúa como una plataforma educativa, sino también como una red social académica que motiva a los usuarios a estudiar mediante interacción social y logros compartidos.
