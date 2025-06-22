@@ -140,7 +140,7 @@ Una vez finalizada la sesión, Piolify muestra un resumen con las estadísticas 
 En esta sección, el usuario puede obtener una visión detallada sobre su desempeño en la plataforma Piolify.
 
 <p align="center">
-  <img src="./imagenes/dashboard.png" alt="Dashboard general" width="700" style="padding-top: 1rem;">
+  <img src="./imagenes/dashboard.png" alt="Dashboard general" width="900" style="padding-top: 1rem;">
 </p>
 
 La información se encuentra organizada en tres apartados principales:
@@ -219,7 +219,7 @@ En la misma sección, se pueden gestionar las solicitudes recibidas. Al recibir 
 
 
 <p align="center">
-  <img src="./imagenes/solicitud-pendiente.png" alt="Progreso por curso" width="400" style="padding-top: 1rem;">
+  <img src="./imagenes/solicitud-pendiente.png" alt="Progreso por curso" width="700" style="padding-top: 1rem;">
 </p>
 
 - Si se **acepta** la solicitud, el usuario pasa a formar parte de tu lista de amigos.
@@ -238,7 +238,7 @@ Cada tarjeta de amigo permite acceder a su perfil donde se puede consultar el no
 
 
 <p align="center">
-  <img src="./imagenes/perfil-amigo.png" alt="Progreso por curso" width="400" style="padding-top: 1rem;">
+  <img src="./imagenes/perfil-amigo.png" alt="Progreso por curso" width="700" style="padding-top: 1rem;">
 </p>
 
 Con estas funciones, Piolify no solo actúa como una plataforma educativa, sino también como una red social académica que motiva a los usuarios a estudiar mediante interacción social y logros compartidos.
