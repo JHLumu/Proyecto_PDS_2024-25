@@ -62,7 +62,7 @@ public class UsuarioController {
 		usuarioValidador.validarLogin(email, password);
 		Usuario usuario = usuarioService.iniciarSesion(email, password);
 		if(usuario != null) {
-			//limpiar cursos duplicados al iniciar sesión
+			//Limpiar cursos duplicados al iniciar sesión
 			usuarioService.limpiarCursosDuplicados(usuario);
 			
 			controlador.setUsuarioActual(usuario);
@@ -102,7 +102,7 @@ public class UsuarioController {
 		if(modificado) {
 			if (usuarioActual != null && usuarioActual.getEmail().equals(usuario.getEmail())) {
 	            controlador.setUsuarioActual(usuario);
-	            controlador.notificarCambiosUsuario(); //notificar a los observadores
+	            controlador.notificarCambiosUsuario(); //Notifica a los observadores
 	        }
 			
 		} else {
@@ -128,7 +128,6 @@ public class UsuarioController {
 		usuario.setNombre(nombre);
 		usuario.setApellidos(apellidos);
 		usuario.setGenero(genero);
-		// TODO Auto-generated method stub
 		if (imagenCambiada) {
 			usuario.setImagenPerfil(nuevaRutaImagen);
 		}

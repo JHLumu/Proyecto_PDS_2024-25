@@ -52,7 +52,7 @@ public class ServicioLogros {
     public List<TipoLogro> comprobarYDesbloquearLogros(Usuario usuario) {
         List<TipoLogro> logrosDesbloqueados = new ArrayList<>();
         Estadisticas estadisticas = usuario.getEstadisticas();
-        int cursosComenzados = usuario.getCursosComenzados(); // Asumiendo que existe este método
+        int cursosComenzados = usuario.getCursosComenzados();
         
         // Comprobar todos los tipos de logros
         for (TipoLogro tipoLogro : TipoLogro.values()) {

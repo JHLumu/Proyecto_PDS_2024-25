@@ -33,7 +33,9 @@ public class CursoDTO {
 	  */
 	 private List<BloqueDTO> bloques;
 	 
-	 // Constructor por defecto.
+	 /**
+	  *  Constructor por defecto.
+	  */
 	 public CursoDTO() {}
 	 
 	 /**

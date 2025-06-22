@@ -41,7 +41,6 @@ public class Biblioteca extends JPanel {
 		panelCentral = new JPanel();
 		panelCentral.setBackground(PioColores.BLANCO);
 
-		// Usamos GridBagLayout para organizar los paneles de estadísticas
 		GridBagLayout gbl_panelCentral = new GridBagLayout();
 		gbl_panelCentral.columnWidths = new int[] { 20, 0, 20, 0, 20, 0 };
 		gbl_panelCentral.rowHeights = new int[] { 20, 0, 20, 0, 20, 0 };
@@ -87,8 +86,7 @@ public class Biblioteca extends JPanel {
 		panelListaCursos.setBorder(BorderFactory.createCompoundBorder(
 				new MatteBorder(1, 1, 1, 1, new Color(220, 220, 220)), new EmptyBorder(15, 15, 15, 15)));
 
-		// Usamos BorderLayout para unificar estructura con el panel de importar
-		panelListaCursos.setLayout(new BorderLayout(0, 15)); // 15px de espacio vertical
+		panelListaCursos.setLayout(new BorderLayout(0, 15)); 
 
 		// Título
 		JLabel lblTitulo = new JLabel(titulo);
@@ -163,8 +161,7 @@ public class Biblioteca extends JPanel {
 					JOptionPane.showMessageDialog(this, "Error al importar el curso: No cumple con el formato esperado",
 							"Error de Importación", JOptionPane.ERROR_MESSAGE);
 				} else {
-					// Actualizar usuario desde el controlador para obtener los cambios más
-					// recientes
+					//Obtener usuario actual desde el controlador
 					this.usuario = controlador.getUsuarioActual();
 
 					// Contar cursos después de la importación
@@ -216,7 +213,7 @@ public class Biblioteca extends JPanel {
 	    if (cursos.isEmpty()) {
 	        panelListaCursos.add(descripcionAreaListaCursos, BorderLayout.CENTER);
 	    } else {
-	        // Crear panel para los botones de cursos
+
 	        JPanel panelBotonesCursos = new JPanel();
 	        panelBotonesCursos.setLayout(new BoxLayout(panelBotonesCursos, BoxLayout.Y_AXIS));
 	        panelBotonesCursos.setOpaque(false);
@@ -255,7 +252,6 @@ public class Biblioteca extends JPanel {
 			return cursos;
 		}
 
-		// Usar un Map para eliminar duplicados por título
 		Map<String, Curso> cursosUnicos = new LinkedHashMap<>();
 
 		for (Curso curso : cursos) {

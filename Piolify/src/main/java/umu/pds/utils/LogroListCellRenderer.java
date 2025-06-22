@@ -23,20 +23,21 @@ public class LogroListCellRenderer extends JPanel implements ListCellRenderer<Lo
      * el icono, nombre, descripción y fecha del logro.
      */
     public LogroListCellRenderer() {
-        setLayout(new BorderLayout(15, 5)); // Más espacio horizontal entre icono y texto
-        setBorder(new EmptyBorder(10, 15, 10, 15)); // Más padding general
+    	
+        setLayout(new BorderLayout(15, 5)); 
+        setBorder(new EmptyBorder(10, 15, 10, 15));
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         
         // Panel izquierdo para el icono
         JPanel panelIcon = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        panelIcon.setPreferredSize(new Dimension(70, 60)); // Tamaño fijo para el contenedor del icono
+        panelIcon.setPreferredSize(new Dimension(70, 60)); 
         panelIcon.setMinimumSize(new Dimension(70, 60));
         panelIcon.setMaximumSize(new Dimension(70, 60));
         
         lblIcon = new JLabel("");
         lblIcon.setHorizontalAlignment(JLabel.CENTER);
         lblIcon.setVerticalAlignment(JLabel.CENTER);
-        lblIcon.setPreferredSize(new Dimension(60, 60)); // Tamaño del icono
+        lblIcon.setPreferredSize(new Dimension(60, 60)); 
         panelIcon.add(lblIcon);
         
         // Panel central para nombre y descripción

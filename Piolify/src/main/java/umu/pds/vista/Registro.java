@@ -312,7 +312,7 @@ public class Registro extends JFrame {
 		gbc_btnNewButton.gridy = 19;
 		panel_1.add(btnNewButton, gbc_btnNewButton);
 		
-		// boton enter para registrar usuario
+		// Botón enter para registrar usuario
 		getRootPane().setDefaultButton(btnNewButton);
 	}
 	

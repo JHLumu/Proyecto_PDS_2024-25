@@ -221,7 +221,7 @@ public class Login {
 		});
 		panel_2.add(btnNewButton_1, gbc_btnNewButton_1);
 		
-		// Boton enter para boton login
+		// Boton Enter para boton Login
 		frmLoginPiolify.getRootPane().setDefaultButton(btnNewButton);
 		
 	}

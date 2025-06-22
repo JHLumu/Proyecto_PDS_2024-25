@@ -32,7 +32,10 @@ public class BaseRoundedFrame extends JFrame {
         initComponents();
     }
 
-    // Constructor por defecto.
+    /**
+     *  Constructor por defecto.
+     * @param title Titulo del Frame.
+     */
     public BaseRoundedFrame(String title) {
         super(title);
         initComponents();
@@ -59,9 +62,7 @@ public class BaseRoundedFrame extends JFrame {
         
         // Panel principal
         JPanel mainPanel = new JPanel(new BorderLayout()) {
-            /**
-			 * 
-			 */
+
 			private static final long serialVersionUID = 1L;
 
 			@Override

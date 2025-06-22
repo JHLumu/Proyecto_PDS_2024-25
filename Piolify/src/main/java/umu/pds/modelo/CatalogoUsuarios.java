@@ -12,12 +12,18 @@ import umu.pds.persistencia.UsuarioDAO;
 
 public class CatalogoUsuarios {
 
-		//Instancia única de {@link CatalogoUsuarios} (Singleton).
+		/**
+		 * Instancia única de {@link CatalogoUsuarios} (Singleton).
+		 */
 		private static CatalogoUsuarios instancia = new CatalogoUsuarios();
-		//Mapa que asocia correos electrónicos con las instancias {@link Usuario} correspondientes.
+		/**
+		 * Mapa que asocia correos electrónicos con las instancias {@link Usuario} correspondientes.
+		 */
 		private final Map<String,Usuario> usuarios;
 		
-		//Instancia {@link UsuarioDAO} para la persistencia de usuarios.
+		/**
+		 * Instancia {@link UsuarioDAO} para la persistencia de usuarios.
+		 */
 		private final UsuarioDAO usuarioDAO;
 		
 		/**
@@ -90,7 +96,6 @@ public class CatalogoUsuarios {
 					this.usuarios.put(usuario.getEmail(), usuario);
 				}
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				System.err.println();
 				e.printStackTrace();
 			}

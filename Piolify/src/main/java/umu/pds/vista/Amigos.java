@@ -44,7 +44,7 @@ public class Amigos extends JPanel {
         JPanel panelCentral = new JPanel(new GridBagLayout());
         panelCentral.setBackground(PioColores.BLANCO);
 
-        // lista de anugis
+        // Lista de amigos
         GridBagConstraints gbc1 = new GridBagConstraints();
         gbc1.insets = new Insets(20, 20, 10, 10);
         gbc1.fill = GridBagConstraints.BOTH;
@@ -64,7 +64,8 @@ public class Amigos extends JPanel {
         lblTituloAmigos.setForeground(PioColores.GRIS_TEXT);
         panelListaAmigos.add(lblTituloAmigos, BorderLayout.NORTH);
         panelCentral.add(panelListaAmigos, gbc1);
-        // solicitudes
+        
+        // Solicitudes
         GridBagConstraints gbc2 = new GridBagConstraints();
         gbc2.insets = new Insets(20, 10, 10, 20);
         gbc2.fill = GridBagConstraints.BOTH;
@@ -104,7 +105,7 @@ public class Amigos extends JPanel {
         lblTituloBuscar.setForeground(PioColores.GRIS_TEXT);
         panelBuscarAmigos.add(lblTituloBuscar, BorderLayout.NORTH);
 
-        // buscar por email
+        // Buscar por email
         JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelBusqueda.setOpaque(false);
         

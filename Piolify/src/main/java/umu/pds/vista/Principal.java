@@ -162,7 +162,7 @@ public class Principal extends JFrame {
 		});
 		panelNorte.add(btnCursos);
 		
-		// Botón Estadísticas - MODIFICADO para usar refrescarEstadisticas()
+		// Botón Estadísticas
 		btnEstadisticas = new PioButton("Estadísticas");
 		btnEstadisticas.setBackground(PioColores.MARRON_BUTTON);
 		btnEstadisticas.addActionListener(new ActionListener() {
@@ -178,7 +178,7 @@ public class Principal extends JFrame {
 		});
 		panelNorte.add(btnEstadisticas);
 		
-		// Botón amigos
+		// Botón Amigos
 		btnAmistades = new PioButton("Amigos");
 		btnAmistades.setBackground(PioColores.MARRON_BUTTON);
 		panelNorte.add(btnAmistades);

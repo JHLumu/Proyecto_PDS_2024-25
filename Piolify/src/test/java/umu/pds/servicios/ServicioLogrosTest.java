@@ -4,13 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import umu.pds.modelo.Curso;
 import umu.pds.modelo.Estadisticas;
 import umu.pds.modelo.TipoLogro;
 import umu.pds.modelo.Usuario;

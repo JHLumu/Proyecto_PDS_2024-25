@@ -30,8 +30,7 @@ public class EjercicioFlashcard extends Ejercicio {
 	 */
 	@Override
 	public void renderEjercicio() {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 	/**
@@ -39,9 +38,7 @@ public class EjercicioFlashcard extends Ejercicio {
 	 */
 	@Override
 	public boolean validarRespuesta(String respuestaUsuario) {
-		// TODO Auto-generated method stub
 		return false;
-		
 	}
 	
 }

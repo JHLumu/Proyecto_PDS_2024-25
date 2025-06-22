@@ -9,7 +9,6 @@ import umu.pds.persistencia.*;
 
 /**
  * Servicio simplificado que se enfoca solo en ProgresoBloque.
- * Elimina la complejidad de ProgresoCurso.
  */
 public class ServicioProgreso {
     

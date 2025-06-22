@@ -56,7 +56,9 @@ public class ProgresoBloque {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaInicio;
 
-	// Constructores
+	/**
+	 * Constructor por defecto de la aplicación.
+	 */
 	public ProgresoBloque() {
 		this.fechaInicio = new Date();
 		this.ultimaActividad = new Date();
@@ -71,8 +73,6 @@ public class ProgresoBloque {
 		this.bloque = bloque;
 		this.estrategiaUtilizada = estrategia;
 	}
-
-	// Métodos de negocio simplificados
 
 	/**
 	 * Avanza al siguiente ejercicio

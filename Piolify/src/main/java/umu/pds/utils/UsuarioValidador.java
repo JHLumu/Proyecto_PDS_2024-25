@@ -33,7 +33,6 @@ public class UsuarioValidador {
 	 * @throws IllegalArgumentException si el correo electrónico o el password están vacíos.
 	 */
 	public void validarLogin(String email, String password) {
-		// TODO Auto-generated method stub
 		if (email.isEmpty() || password.isEmpty()) {
 			throw new IllegalArgumentException("Por favor, complete todos los campos.");
 	    }

@@ -76,7 +76,6 @@ public class DashboardEstadisticas extends JPanel {
         panelCentral.setBackground(Color.WHITE);
         add(panelCentral, BorderLayout.CENTER);
         
-        // Usamos GridBagLayout para organizar los paneles de estadísticas
         GridBagLayout gbl_panelCentral = new GridBagLayout();
         gbl_panelCentral.columnWidths = new int[]{20, 0, 20, 0, 20, 0};
         gbl_panelCentral.rowHeights = new int[]{20, 0, 20, 0, 20, 0};
@@ -84,7 +83,7 @@ public class DashboardEstadisticas extends JPanel {
         gbl_panelCentral.rowWeights = new double[]{0.0, 0.4, 0.0, 0.6, 0.0, Double.MIN_VALUE};
         panelCentral.setLayout(gbl_panelCentral);
         
-        // Panel de resumen de actividad (arriba a la izquierda)
+        // Panel de Resumen de Actividad
         JPanel panelResumen = new JPanel();
         panelResumen.setBackground(PioColores.GRIS_PANEL);
         panelResumen.setBorder(BorderFactory.createCompoundBorder(
@@ -93,13 +92,13 @@ public class DashboardEstadisticas extends JPanel {
         ));
         panelResumen.setLayout(new BorderLayout(0, 15));
         
-        // Título del panel resumen
+        // Título del panel Resumen
         JLabel lblTituloResumen = new JLabel("Resumen General");
         lblTituloResumen.setFont(new Font("Arial", Font.BOLD, 16));
         lblTituloResumen.setForeground(PioColores.GRIS_TEXT);
         panelResumen.add(lblTituloResumen, BorderLayout.NORTH);
         
-        // Panel de datos del resumen (se actualizará dinámicamente)
+        // Panel de Datos del Resumen
         panelResumenData = new JPanel();
         panelResumenData.setOpaque(false);
         panelResumen.add(panelResumenData, BorderLayout.CENTER);
@@ -111,7 +110,7 @@ public class DashboardEstadisticas extends JPanel {
         gbc_panelResumen.gridy = 1;
         panelCentral.add(panelResumen, gbc_panelResumen);
         
-        // Panel de logros (arriba a la derecha)
+        // Panel de Logros
         JPanel panelLogros = new JPanel();
         panelLogros.setBackground(PioColores.GRIS_PANEL);
         panelLogros.setBorder(BorderFactory.createCompoundBorder(
@@ -126,7 +125,7 @@ public class DashboardEstadisticas extends JPanel {
         lblTituloLogros.setForeground(PioColores.GRIS_TEXT);
         panelLogros.add(lblTituloLogros, BorderLayout.NORTH);
         
-        // Contenedor de logros (se actualizará dinámicamente)
+        // Contenedor de Logros
         panelLogrosContainer = new JPanel();
         panelLogrosContainer.setOpaque(false);
         panelLogros.add(panelLogrosContainer, BorderLayout.CENTER);
@@ -138,7 +137,7 @@ public class DashboardEstadisticas extends JPanel {
         gbc_panelLogros.gridy = 1;
         panelCentral.add(panelLogros, gbc_panelLogros);
         
-        // Panel de progreso en cursos (abajo, spanning dos columnas)
+        // Panel de progreso en cursos
         JPanel panelProgreso = new JPanel();
         panelProgreso.setBackground(PioColores.GRIS_PANEL);
         panelProgreso.setBorder(BorderFactory.createCompoundBorder(
@@ -147,13 +146,13 @@ public class DashboardEstadisticas extends JPanel {
         ));
         panelProgreso.setLayout(new BorderLayout(0, 15));
         
-        // Título del panel progreso
+        // Título del panel Progreso
         JLabel lblTituloProgreso = new JLabel("Progreso por Cursos");
         lblTituloProgreso.setFont(new Font("Arial", Font.BOLD, 16));
         lblTituloProgreso.setForeground(PioColores.GRIS_TEXT);
         panelProgreso.add(lblTituloProgreso, BorderLayout.NORTH);
         
-        // Contenedor de progreso de cursos (se actualizará dinámicamente)
+        // Contenedor de progreso de cursos
         panelProgresoCursos = new JPanel();
         panelProgresoCursos.setOpaque(false);
         panelProgreso.add(panelProgresoCursos, BorderLayout.CENTER);
@@ -163,7 +162,7 @@ public class DashboardEstadisticas extends JPanel {
         gbc_panelProgreso.fill = GridBagConstraints.BOTH;
         gbc_panelProgreso.gridx = 1;
         gbc_panelProgreso.gridy = 3;
-        gbc_panelProgreso.gridwidth = 3; // Spanning dos columnas
+        gbc_panelProgreso.gridwidth = 3;
         panelCentral.add(panelProgreso, gbc_panelProgreso);
     }
     
@@ -203,10 +202,9 @@ public class DashboardEstadisticas extends JPanel {
         String rachaActual = stats != null ? stats.getRachaDias() + " días" : "0 días";
         String mejorRacha = stats != null ? stats.getMejorRacha() + " días" : "0 días";
         
-        // El tiempo total ya está en segundos en la base de datos
         String tiempoTotal;
         if (stats != null) {
-            int tiempoTotalSegundos = stats.getTiempoTotal(); // Ya está en segundos
+            int tiempoTotalSegundos = stats.getTiempoTotal(); 
             int minutos = tiempoTotalSegundos / 60;
             int segundos = tiempoTotalSegundos % 60;
             tiempoTotal = minutos + "m " + segundos + "s";
@@ -245,7 +243,7 @@ public class DashboardEstadisticas extends JPanel {
             gbc.gridx = 1;
             gbc.insets = new Insets(8, 15, 8, 5);
             panelResumenData.add(lblValor, gbc);
-            gbc.insets = new Insets(8, 5, 8, 5); // Reset insets
+            gbc.insets = new Insets(8, 5, 8, 5); 
         }
         
         panelResumenData.revalidate();
@@ -273,7 +271,7 @@ public class DashboardEstadisticas extends JPanel {
             // Configurar layout para la lista
             panelLogrosContainer.setLayout(new BorderLayout());
             
-            // lista logros
+            // Lista Logros
             DefaultListModel<Logro> listModel = new DefaultListModel<>();
             for (Logro logro : logros) {
                 listModel.addElement(logro);
@@ -282,7 +280,7 @@ public class DashboardEstadisticas extends JPanel {
             JList<Logro> listaLogros = new JList<>(listModel);
             listaLogros.setCellRenderer(new LogroListCellRenderer());
             listaLogros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listaLogros.setFixedCellHeight(80); // Altura aumentada para iconos más grandes
+            listaLogros.setFixedCellHeight(80);
             listaLogros.setBackground(PioColores.GRIS_PANEL);
             
             // Scroll pane para la lista
@@ -403,14 +401,14 @@ public class DashboardEstadisticas extends JPanel {
         lblProgresoValor.setForeground(PioColores.VERDE_BUTTON.darker());
         infoPanel.add(lblProgresoValor, gbc);
         
-        // Tiempo dedicado (necesitamos recalcular con segundos)
+        // Tiempo dedicado 
         gbc.gridx = 0; gbc.gridy = 2;
         JLabel lblTiempo = new JLabel("Tiempo:");
         lblTiempo.setFont(new Font("Arial", Font.PLAIN, 12));
         infoPanel.add(lblTiempo, gbc);
         
         gbc.gridx = 1;
-        // Necesitamos obtener el tiempo total en segundos para mostrar m y s
+        // Obtener el tiempo total en segundos para mostrar m y s
         int tiempoTotalSegundos = estadistica.getTiempoTotalSegundos();
         int minutos = tiempoTotalSegundos / 60;
         int segundos = tiempoTotalSegundos % 60;
@@ -451,7 +449,7 @@ public class DashboardEstadisticas extends JPanel {
      * Método mejorado para mostrar detalles completos del curso
      */
     private void mostrarDetallesCurso(EstadisticasCurso estadistica) {
-        // Crear un panel personalizado para mostrar más detalles
+       
         JPanel panelDetalle = new JPanel(new BorderLayout());
         panelDetalle.setPreferredSize(new Dimension(500, 400));
         

@@ -109,13 +109,11 @@ public class ServicioEstadisticas {
 	public void actualizarEstadisticasUsuario(Usuario usuario) {
 		List<SesionAprendizaje> todasLasSesiones = sesionDAO.buscarSesionesPorUsuario(usuario);
 
-		// Asegurarnos de que el usuario y sus estadísticas estén correctamente
-		// enlazados
+		// Asegurarnos de que el usuario y sus estadísticas estén correctamente enlazados
 		Usuario usuarioActualizado = null;
 		try {
 			usuarioActualizado = usuarioDAO.recuperarUsuario(usuario.getId());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Estadisticas stats = usuarioActualizado.getEstadisticas();
