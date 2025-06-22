@@ -5,12 +5,9 @@ A continuación se presenta el diagrama de clases que representa el modelo de do
 ```mermaid
 %%{ init: {"theme": "neutral"} }%%
 classDiagram
-    EstrategiaAprendizaje <|-- EstrategiaSecuencial
-    EstrategiaAprendizaje <|-- EstrategiaAleatoria
-    EstrategiaAprendizaje <|-- EstrategiaRepeticionEspaciada
-    Ejercicio <|-- EjercicioOpcionMultiple
-    Ejercicio <|-- EjercicioRellenarHuecos
-    Ejercicio <|-- EjercicioFlashcard
+
+    EstrategiaAprendizaje <|-- TipoEstrategia
+    Ejercicio <|-- TipoEjercicio
 
     direction LR
     
@@ -37,6 +34,7 @@ classDiagram
     }
     
     class Ejercicio {
+        <<interface>>
         +contenido
         +respuesta
         +dificultad
@@ -53,6 +51,15 @@ classDiagram
         +fallos
         +tiempoTotal
         +completada
+    }
+    
+    class ProgresoBloque {
+        +indiceEjercicioActual
+        +ejerciciosCompletados
+        +completado
+        +estrategiaUtilizada
+        +ultimaActividad
+        +fechaInicio
     }
     
     class EstrategiaAprendizaje {
@@ -115,24 +122,6 @@ classDiagram
         ALEATORIA
     }
 
-    class EjercicioOpcionMultiple {
-        +opciones
-    }
-
-    class EjercicioRellenarHuecos {
-    }
-
-    class EjercicioFlashcard {
-    }
-
-    class EstrategiaSecuencial {
-    }
-
-    class EstrategiaAleatoria {
-    }
-
-    class EstrategiaRepeticionEspaciada {
-    }
     
     %% Relaciones
     Usuario "1" --> "0..*" Amistad : solicitante
@@ -141,9 +130,15 @@ classDiagram
     Usuario "1" --> "0..*" Curso : biblioteca
     Usuario "1" --> "1" Estadisticas : posee
     Usuario "1" --> "0..*" SesionAprendizaje : realiza
+    Usuario "1" --> "0..*" ProgresoBloque : progreso
     
     Curso "1" --> "1..*" Bloque : contiene
     Bloque "1" --> "1..*" Ejercicio : incluye
+    Bloque "1" --> "0..*" ProgresoBloque : seguimiento
+    
+    ProgresoBloque "1" --> "1" Usuario : pertenece_a
+    ProgresoBloque "1" --> "1" Bloque : registra_progreso
+    ProgresoBloque "1" --> "1" EstrategiaAprendizaje : utiliza
     
     SesionAprendizaje "1" --> "1" Usuario : pertenece_a
     SesionAprendizaje "1" --> "1" Curso : asociado_a
@@ -154,6 +149,5 @@ classDiagram
     Logro "1" --> "1" Usuario : pertenece_a
     
     Amistad "1" --> "1" EstadoAmistad : estado
-    
-    Ejercicio "1" --> "1" TipoEjercicio : tipo
 
+```
